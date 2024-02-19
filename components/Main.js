@@ -1,84 +1,115 @@
-
-import { StyleSheet, Text, View, Button, TouchableOpacity,FlatList, Image, Modal } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import MainModalMenu from './MainModalMenu';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gStyle } from '../styles/style';
-import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import Form from './Form';
-import Target from './Target';
-export default function Main({navigation}) {
+import { LinearGradient } from 'expo-linear-gradient';
 
-    const [news, setnews] = useState([
-        {name: "Google", annons: "google!!!!", full: "Goggle is cool", key: "1",img :'https://avatars.mds.yandex.net/i?id=5928f2b58c6f204d0e0c3a5c41c07e1315ddb837-10511855-images-thumbs&n=13'},
-        {name: "Apple", annons: "Apple!!!!", full: "Apple is cool", key: "2", img: 'https://avatars.mds.yandex.net/i?id=5753da361355038984a1044e6d2f406455f07e2d-10105725-images-thumbs&n=13'},
-        {name: "VK", annons: "VK!!!!", full: "VK is cool", key: "3", img:'https://avatars.mds.yandex.net/i?id=c29ae4471dc0b86ac490deb0901dca12bedea9b2-3602423-images-thumbs&n=13'}
-    ])
+export default function Main({ navigation }) {
+    const [modalVisible, setModalVisible] = useState(false);
 
-    const [modalWindow, setModalWindow] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
-    const loadScreen = () => {
-        navigation.navigate('FullInfo') //переадресация по имени
-    }
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+  const goToMain = () => {
+    navigation.navigate('Главная')
+    closeModal();
+  };
 
-    const addArtical = (artical) => {
-      setnews(
-        (list) => {
-          artical.key = Math.random().toString();
-        return [artical, ...list]
-      });
-      setModalWindow(false);
-    }
-    
-  
-  return (
-    <View style={gStyle.main}>
-      <Modal visible = {modalWindow}>
-            <Ionicons name="close" size={24} color="red" onPress={() => setModalWindow(false)} />
-            <View style={gStyle.main}>
-              <Text style ={styles.title }>Форма добавления статей</Text>
-              <Form addArtical = {addArtical}/>
-            </View>
-      </Modal>
-      <Ionicons name="add-circle" size={45} color="black" onPress={() => setModalWindow(true)} />
-      <Text style={[gStyle.title, styles.header]}>Главная страница</Text>
+  const goToProfile = () => {
+    navigation.navigate('Профиль')
+    closeModal();
+  };
+  const goToArrows = () => {
+    navigation.navigate('Стрелы')
+    closeModal();
+  };
+  const goToBow = () => {
+    navigation.navigate('Лук')
+    closeModal();
+  };
+  const goToWeather = () => {
+    navigation.navigate('Погода')
+    closeModal();
+  };
+  const goToNotes = () => {
+    navigation.navigate('Заметки')
+    closeModal();
+  };
 
-      <FlatList data = {news} renderItem={({item} )=> (
-        <TouchableOpacity style ={styles.item } onPress={ () => navigation.navigate('FullInfo', item)}>
-           <Image source={{
-            width:'100%',
-            height:200,
-            uri: item.img
-           }}
-           />
-            <Text style ={styles.title } >{item.name}</Text>
-            <Text style ={styles.annons } >{item.annons}</Text>
-        </TouchableOpacity>
-      )}/>
-      <Target/>
-      <Button title = "Открыть страницу" onPress={loadScreen} />
-    </View>
-  );
-  
-}
+    return (
+      <LinearGradient
+      colors={['#0f0c29', '#302b63', '#24243e']}
+    //  colors={['#a1ffce', '#ffffff']}
+    // colors={['#93f9b9','#1d976c','#ffffff']}
+      style={gStyle.main} 
+      
+     >
+      
+         <Text style={styles.MainOption}  onPress={() => navigation.navigate('Feed')}>
+            <Ionicons name="stats-chart-sharp" size={33} color="black" style={styles.MainIcon}  />
+            Статистика(feed)
+        </Text>
+         <Text style={styles.MainOption}  onPress={() => navigation.navigate('Лук')}>
+            <MaterialCommunityIcons name="bow-arrow" size={33} color="black" style={styles.MainIcon} />
+            Лук
+        </Text>
 
-const styles = StyleSheet.create({
-  header:{
-    marginBottom:30,
-  },
- item:{
-  width:'100%',
-  marginBottom:30,
- },
- title:{
-  fontSize:22,
-  textAlign:'center',
-  marginTop:20,
-  color:'#0d2910'
- },
- annons:{
-  fontSize:16,
-  textAlign:'center',
-  marginTop:7,
-  color:'#105e18'
- },
+        <Text style={styles.MainOption}  onPress={() => navigation.navigate('Стрелы')}>
+            <MaterialCommunityIcons name="arrow-projectile" size={33} color="black" style={styles.MainIcon}/>
+            Стрелы
+        </Text>
+        <Text style={styles.MainOption}  onPress={openModal}>
+            <Ionicons name="list-circle-outline" size={33} color="black" style={styles.MainIcon} />
+            Дополнительно
+        </Text>
+         <MainModalMenu
+        visible={modalVisible}
+        closeModal={closeModal}
+        goToMain={goToMain}
+        goToProfile={goToProfile}
+        goToArrows={goToArrows}
+        goToBow={goToBow}
+        goToWeather={goToWeather}
+        goToNotes={goToNotes}
+      />
+      
+      </LinearGradient>
+    );
 
-});
+  }
+
+
+  const styles = StyleSheet.create({
+    MainOption: {
+        height:"8%",
+        fontSize: 23,
+        marginVertical:10,
+        color:'#fff'
+        
+    },
+    MainIcon: {
+        borderWidth: 2, // Толщина ободка
+        borderRadius: 5, // Скругление углов
+        marginRight:20, 
+        borderColor: 'white', 
+        backgroundColor:'black',
+        color:'#fff',
+    },
+   
+    button: {
+        padding: 10,
+        borderRadius: 5,
+      },
+      buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 18,
+      },
+   
+  });
