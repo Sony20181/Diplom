@@ -68,9 +68,9 @@ const ArrowForm = ({navigation,route}) => {
             <ScrollView style={styles.container} >
                 <TouchableOpacity onPress={pickImage}>
                     {photo ? (
-                        <Image source={{uri: photo}} style={{width: "100%", height: 200}} />
+                        <Image source={{uri: photo}} style={{width: "100%", height: 200, marginVertical:30,}} />
                     ) : (
-                        <Image source={ {uri: 'https://img.goodfon.ru/original/2560x1600/3/a0/luk-strela-vystrel.jpg'}} style={{width: "100%", height: 200}} />
+                        <Image source={ {uri: 'https://img.goodfon.ru/original/2560x1600/3/a0/luk-strela-vystrel.jpg'}} style={{width: "100%", height: 200,marginVertical:30,}} />
                     )}
                 </TouchableOpacity>
                 <View style={styles.row}>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
        
       },
       content:{
-       // marginTop:30,
+        marginTop:30,
         flexDirection: "row",
         justifyContent:"space-between",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
