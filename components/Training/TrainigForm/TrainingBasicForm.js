@@ -25,20 +25,15 @@ export default function TrainingBasicForm({navigation}) {
   const [windDirection, setWindDirection] = useState("Нет");
   const [weather, setWeather] = useState("Солнечно");
   const [rounds, setRounds] = useState("1");
-  const [sliderValueArrow, setSliderValueArrow] = useState(0);
+  
 
 
   const addTrainigs = () => {
       if (name.trim().length){
           navigation.navigate('TargetMenu', {trainingName : name, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-            windDirection,weather,rounds,sliderValueArrow })
+            windDirection,weather,rounds })
          
       }
-  };
-  const handleDistancePress = () => {
-    navigation.navigate('Дистанция', { setDistance });
-   
-    
   };
   const handleArrowPress = () => {
     if (arrows[0]) {
@@ -49,6 +44,9 @@ export default function TrainingBasicForm({navigation}) {
       navigation.navigate('ArrowForm',{setSelectedArrow});
       
     }
+  };
+  const handleRoundPress = (value) => {
+    setRounds(value);
   };
   const handleBowPress = () => {
     if (bows[0]) {
@@ -117,7 +115,16 @@ export default function TrainingBasicForm({navigation}) {
 
           <Text style={styles.label} onPress={handleArrowPress}>{selectedArrow}</Text>
           <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text>
-          
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Количество раундов: {rounds}</Text>
+            <TouchableOpacity onPress={() => handleRoundPress(1)}>
+              <Text>1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleRoundPress(2)}>
+              <Text>2</Text>
+            </TouchableOpacity>
+            
+          </View>
           <View style={styles.label}>
             <Text  style={styles.labelEnvironment}>Окружение</Text>
             <Text  style={styles.labelText}>Погода</Text>

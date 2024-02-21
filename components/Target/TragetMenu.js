@@ -96,6 +96,8 @@ const TargetMenu = ({ route , navigation}) => {
       updatedPoints.pop();
       setPoints(updatedPoints);
     };
+
+    
     
     return (
         <LinearGradient   
@@ -124,19 +126,7 @@ const TargetMenu = ({ route , navigation}) => {
                 
             
               <TouchableWithoutFeedback onPress={handlePress}>           
-                <View style={styles.canvas}>
-              {/*    <Svg height="300" width="300">
-                    <Circle cx="150" cy="150" r="150" fill="#08068c" style={{ borderColor: 'white', }} />
-                    <Circle cx="150" cy="150" r="128" fill="#2d2b94" />
-                    <Circle cx="150" cy="150" r="106" fill="#c22b3c" />
-                    <Circle cx="150" cy="150" r="84" fill="#bf2133" />
-                    <Circle cx="150" cy="150" r="62" fill="#fbff00" />
-                    <Circle cx="150" cy="150" r="40" fill="#ecf013" />
-                    <Circle cx="150" cy="150" r="18" fill="#fbff00" />
-                    <Circle cx="150" cy="150" r="4" fill="#000" />
-                  </Svg>  
-                   <WAFull/>*/}
-                  
+                <View style={styles.canvas}>     
                 {componentToRender}
                   {points.map((point, index) => (
                     <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
