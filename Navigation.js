@@ -169,13 +169,7 @@ export default function MainNavigation() {
         options={{ headerShown: false }}
         />
         <Stack.Screen name="Тренировка со стандартным раундом" component={TrainingBasicForm}
-        options={{
-          title: "Тренировка со стандартным раундом",
-          headerStyle: { backgroundColor: "black", height: 80 },
-          headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
-          headerTitleAlign: 'center',
-          headerTintColor: '#ffffff',
-        }}
+        options={{ headerShown: false }}
         />
          <Stack.Screen name="Информация о тренировке" component={TrainingInfo}
           options={{ headerShown: false }}

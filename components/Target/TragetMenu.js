@@ -13,7 +13,7 @@ import WAFull from './WAFull';
 const TargetMenu = ({ route , navigation}) => {
    
     const { trainingName, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-      windDirection,weather  } = route.params;
+      windDirection,weather,rounds  } = route.params;
 
     const dispatch = useDispatch();
     const [points, setPoints] = useState([]);
@@ -27,7 +27,7 @@ const TargetMenu = ({ route , navigation}) => {
     }
     const addTrainigs = () => {
             dispatch(addTraining({trainingName,points, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather }))
+              windDirection,weather,rounds }))
             navigation.navigate('Тренировки')
     };
 

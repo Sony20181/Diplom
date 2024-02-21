@@ -160,6 +160,11 @@ const TrainingInfo = ({navigation,route}) => {
         </View>
         <Text>{training.distance}</Text>
         <Text>{training.selectedArrow}</Text>
+        <Text>{training.rounds}</Text>
+        <Text>{training.selectedMenu}</Text>
+        <Text>{training.windSpeed}</Text>
+        <Text>{training.windDirection}</Text>
+        <Text>{training.weather}</Text>
 
       <View style={styles.container}>
         <TouchableWithoutFeedback>

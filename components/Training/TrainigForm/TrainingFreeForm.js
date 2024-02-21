@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput,StyleSheet,TouchableOpacity,Text,Modal } from 'react-native';
+import { View, TextInput,StyleSheet,TouchableOpacity,Text,Modal,ScrollView } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
 
 import  { } from '../../Store/TrainingSlice'
 
@@ -23,12 +24,14 @@ const TrainingFreeForm = ({navigation}) => {
     const [windSpeed, setWindSpeed] = useState("Нет");
     const [windDirection, setWindDirection] = useState("Нет");
     const [weather, setWeather] = useState("Солнечно");
-    const [sliderValue, setSliderValue] = useState(0);
+    const [rounds, setRounds] = useState("1");
+    const [sliderValueArrow, setSliderValueArrow] = useState(0);
+
  
     const addTrainigs = () => {
         if (name.trim().length){
             navigation.navigate('TargetMenu', {trainingName : name, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather })
+              windDirection,weather,rounds,sliderValueArrow })
            
         }
     };
@@ -37,7 +40,6 @@ const TrainingFreeForm = ({navigation}) => {
      
       
     };
-    
     const handleArrowPress = () => {
       if (arrows[0]) {
         // Переход на страницу с выбранной стрелой
@@ -59,9 +61,6 @@ const TrainingFreeForm = ({navigation}) => {
         
       }
     };
-
-    
-
     const handleMenuSelect = (menu) => {
       setSelectedMenu(menu);
       setIsModalVisible(false)
@@ -90,7 +89,7 @@ const TrainingFreeForm = ({navigation}) => {
                     <Text>{ formattedDate}</Text>
             </View>
           </View >
-          <View style={styles.FormContent}>
+          <ScrollView style={styles.FormContent}>
             <Text style={styles.label} onPress={handleDistancePress}>Дистанция: {distance} м</Text>
 
            
@@ -113,9 +112,31 @@ const TrainingFreeForm = ({navigation}) => {
                 </View>
               </View>
             </Modal>
+            <View style={styles.Slider}>
+              <Text style={styles.labelText} >Количество стрел:   {sliderValueArrow}</Text>
+              <Slider
+                style={{ padding:10 }}
+                minimumValue={1}
+                maximumValue={24}
+                step={1}
+                value={sliderValueArrow}
+                onValueChange={value => setSliderValueArrow(value)}
+                minimumTrackTintColor="#212421"
+                maximumTrackTintColor="#000000"
+              />
+            </View>
+            <View style={styles.labelRound}>
+            <Text style={styles.labelRoundText} >Количество раундов:</Text>
+              <TextInput
+                style={styles.labelRoundTextInput}
+                onChangeText={(text) => setRounds(text)}
+                value={rounds}
+              />       
+            </View>
 
             <Text style={styles.label} onPress={handleArrowPress}>{selectedArrow}</Text>
             <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text>
+            
             <View style={styles.label}>
               <Text  style={styles.labelEnvironment}>Окружение</Text>
               <Text  style={styles.labelText}>Погода</Text>
@@ -138,7 +159,7 @@ const TrainingFreeForm = ({navigation}) => {
               />
             </View>
          
-           </View>
+           </ScrollView>
         </LinearGradient>
    )
 };
@@ -189,7 +210,6 @@ const styles = StyleSheet.create({
        marginRight:10,
        
      },
-    
      AddInput:{
        justifyContent: "center",
        color:"#0c5733",
@@ -221,22 +241,43 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase', 
     marginBottom:10, 
   },
+  labelRound:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    padding:20,
+    
+  },
+  labelRoundText:{
+    fontSize: 16,
+    color: '#666',
+    textTransform: 'uppercase', 
+  },
+  labelRoundTextInput:{
+    fontSize: 16,
+    width:"30%",
+    paddingHorizontal:20,
+  },
   input:{
     backgroundColor:'#ccc',
     padding:10,
     margin:10,
-    
+  },
+  Slider:{
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    paddingVertical:20,
+    paddingHorizontal:10,
   },
 
   modalBackground: {
     flex: 1,
-    backgroundColor: 'rgba(225, 245, 227, 1)', // полупрозрачный темно-зеленый фон
+    backgroundColor: 'rgba(225, 245, 227, 1)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContainer: {
-   // backgroundColor: 'rgba(0, 128, 0, 0.2)', 
-   // borderRadius: 10,
     padding: 20,
     width: '80%',
     alignItems: 'center',
