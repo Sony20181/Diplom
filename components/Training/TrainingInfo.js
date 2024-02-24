@@ -1,118 +1,3 @@
-/*import React from "react";
-import { Text } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { selectTrainingById } from "../Store/TrainingSlice";
-
-export default function TrainingInfo({navigation,route}) {
-    const { trainingId } = route.params;
-    const training = useSelector((state) => selectTrainingById(state, trainingId));
-    console.log(training)
-    return (
-      
-<Text>hjfhsdjfhjk</Text>
-     
-        
-    );
-  }*/
-
-  /*import React from 'react';
-import { View, Text,Button , TextInput,StyleSheet} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { gStyle } from '../../styles/style';
-import { selectArrowById, updateArrow } from '../Store/ArrowSlice';
-import { useState } from 'react';
-
-const ArrowInfo = ({navigation, route}) => {
-  const { ArrrowId } = route.params;
-  const dispatch = useDispatch();
-  const arrow = useSelector((state) => selectArrowById(state, ArrrowId)); 
-  
-  const [updatedName, setUpdatedName] = useState(arrow.name);
-
-  
-  const loadScreen = () => {
-      navigation.goBack() 
-  }
-  const handleUpdateBow = () => {
-    const updatedArrow = {
-      ...arrow,
-      name: updatedName || arrow.name,
-      
-    };
-    dispatch(updateArrow(updatedArrow));
-    navigation.navigate('Стрелы');
-  };
-    
-  return (
-    <LinearGradient   
-      colors={['#a1ffce', '#ffffff']}
-      style ={styles.main }
-    >
-      <View style={styles.row}>
-        <Text style={styles.text} >Название: </Text>       
-        <TextInput style={styles.InputText}  value={updatedName} onChangeText={setUpdatedName} />
-      </View>
-      
-      <Button title = "Вернутся" onPress={loadScreen} />
-    </LinearGradient>
-  );
-  
-};
-
-export default ArrowInfo;
-
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-   
-  },
-  content:{
-    marginTop:30,
-    //padding:5,
-    flexDirection: "row",
-    justifyContent:"space-between",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  container: {
-    paddingHorizontal: 20,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  TypeBow:{
-    fontSize: 16,
-    paddingVertical:10,
-    justifyContent:"center",
-  },
-  text: {
-    fontSize: 16,
-    width: "45%",
-   
-  },
-  InputText: {
-    flex: 1,
-   // borderWidth: 1,
-    borderBottomWidth:1,
-    borderColor: 'black',
-   // padding: 10,
-  },
-  InputTextarea: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: 'black',
-    padding: 10,
-    height: 100,
-  },
-  AddInput:{
-    justifyContent: "center",
-    color:"#0c5733",
-    fontSize:20,
-},
-});*/
-
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, ScrollView,  TextInput,StyleSheet,TouchableOpacity,Image,TouchableWithoutFeedback } from 'react-native';
@@ -123,6 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { selectArrowById } from '../Store/TrainingSlice';
 import { updateTraining } from '../Store/TrainingSlice';
 import Svg, { Circle } from 'react-native-svg';
+import WA6Ring from '../Target/WA6Ring';
+import WAFull from '../Target/WAFull';
 
 const TrainingInfo = ({navigation,route}) => {
  
@@ -130,19 +17,24 @@ const TrainingInfo = ({navigation,route}) => {
   const training = useSelector((state) => selectArrowById(state, trainingId));
   const dispatch = useDispatch();
   const [updatedName, setUpdatedName] = useState(training.trainingName || "");
-
   
-
   const handleUpdateTraining = () => {
     const updatedTraining = {
       ...training,
       trainingName: updatedName || training.trainingName,
-    
-    
     };
     dispatch(updateTraining(updatedTraining));
     navigation.navigate('Тренировки');
   };
+
+  let componentToRender = null;
+    if (training.selectedMenu === 'WA Полный') {
+      componentToRender = <WAFull />;
+    } else if (training.selectedMenu === 'WA 6 колец') {
+      componentToRender = <WA6Ring />;
+    } else if (training.selectedMenu === 'WA 5 колец') {
+      componentToRender = <WAFull />;
+    }
   
 
   return (
@@ -166,11 +58,10 @@ const TrainingInfo = ({navigation,route}) => {
         <Text>{training.windDirection}</Text>
         <Text>{training.weather}</Text>
 
-      <View style={styles.container}>
+     <View style={styles.container}>
         <TouchableWithoutFeedback>
-        
           <View style={styles.canvas}>
-            <Svg height="300" width="300">
+        {/*    <Svg height="300" width="300">
             <Circle cx="150" cy="150" r="150" fill="#08068c" style={{ borderColor: 'white', }} />
             <Circle cx="150" cy="150" r="128" fill="#2d2b94" />
             <Circle cx="150" cy="150" r="106" fill="#c22b3c" />
@@ -179,21 +70,51 @@ const TrainingInfo = ({navigation,route}) => {
             <Circle cx="150" cy="150" r="40" fill="#ecf013" />
             <Circle cx="150" cy="150" r="18" fill="#fbff00" />
             <Circle cx="150" cy="150" r="3" fill="#000" />
-            </Svg>
-            
-            {training.points.map((point, index) => (
-              <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
+            </Svg>*/}
+            {componentToRender}
+             {training.allPoints.map((item, index) => (
+              <View key={index} >
+                {item.map((point, i) => (
+                  <View key={i} style={[styles.point, { left: point.x, top: point.y }]}/>
+                ))}
+              </View>
             ))}
+      {/*      {training.points.map((point, index) => (
+              <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
+            ))} */}
+            
+        
           </View>
+         
         </TouchableWithoutFeedback>
+
+       
 
       </View>
     
       
-      <ScrollView style={styles.container}>
+     <ScrollView style={styles.container}>
         <Text>Очки: {training.points.reduce((acc, point) => acc + point.score, 0)}</Text>
         <Text>Очки по точкам: {training.points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
-      </ScrollView>
+      </ScrollView> 
+      {/*  <View style={styles.container2}>
+                
+            
+                <TouchableWithoutFeedback >           
+                  <View style={styles.canvas}>     
+                  {componentToRender}
+                  {training.allPoints.map((item, index) => (
+              <View key={index}>
+                {item.map((point, i) => (
+                  <View key={i} style={[styles.point, { left: point.x, top: point.y }]}/>
+                ))}
+              </View>
+            ))}
+               
+                  </View>
+                </TouchableWithoutFeedback>
+              
+            </View>*/}
       
     </LinearGradient>
   );
@@ -257,5 +178,30 @@ point: {
   borderRadius: 3,
   position: 'absolute',
 },
+/*
+container2: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  
+ },
+canvas: {
+  width: 300,
+  height: 300,
+ // backgroundColor: 'lightgray',
+ //borderRadius: 150,
+  alignItems: 'center',
+   justifyContent: 'center',
+   position: 'relative',
+ 
+ },
+ point: {
+  position: 'absolute',
+  width: 4,
+  height: 4,
+  backgroundColor: 'pink',
+  borderRadius: 2,
+  
+ },*/
 });
 

@@ -63,8 +63,8 @@ export default function Arrow({navigation}) {
 
   return (
     <LinearGradient   
-    colors={['#a1ffce', '#ffffff']}
-    style={gStyle.container}
+    colors={['#0f0c29', '#302b63', '#24243e']}
+    style={styles.container}
     >
       <Modal
         visible={modalVisible}
@@ -89,7 +89,7 @@ export default function Arrow({navigation}) {
           </Animated.View>
           {!openButtonVisible && (
           <TouchableOpacity onPress={handleCloseModal} style={styles.closeButtonTraining}>
-            <Ionicons name="close-circle" size={45} color="black"  />
+            <Ionicons name="close-circle" size={45} color="white"  />
           </TouchableOpacity>
           )}
         </View>
@@ -101,14 +101,14 @@ export default function Arrow({navigation}) {
           <View style ={gStyle.content }>
             <Text style ={ gStyle.text} >{item.trainingName}</Text>
             <Text style ={gStyle.text} >{item.formattedDate}</Text>
-            <MaterialCommunityIcons name="delete-empty-outline" size={24} color="black"  onPress={()=> dispatch(removeTrainig(item.id))} />
+            <MaterialCommunityIcons name="delete-empty-outline" size={24} color="white"  onPress={()=> dispatch(removeTrainig(item.id))} />
           </View>
       </TouchableOpacity>
        
     )}/>
      {openButtonVisible && (
         <TouchableOpacity onPress={handleOpenModal} style={gStyle.openButton}>
-          <Ionicons name="add-circle" size={45} /> 
+          <Ionicons name="add-circle" size={45}  color="white"  /> 
         </TouchableOpacity>
       )}
     </LinearGradient>
@@ -117,10 +117,15 @@ export default function Arrow({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    
+  },
   closeButtonTraining: {
     borderRadius: 5,
     marginLeft:10,
     marginBottom: 75,
+    color:"white",
    
   },
   modalButtonTraining: {
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
     marginLeft:10,
     marginVertical: 5,
     alignItems:"center",
-  
+   
   },
 });
 

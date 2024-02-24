@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput,StyleSheet,TouchableOpacity,Image ,Text, ScrollView,TouchableWithoutFeedback} from 'react-native';
+import { View, TextInput,StyleSheet,TouchableOpacity,Image ,Text, ScrollView,TouchableWithoutFeedback, Button} from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { addTraining} from '../Store/TrainingSlice';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WA6Ring from './WA6Ring';
 import WAFull from './WAFull';
+import { useEffect } from 'react';
 
 
 const TargetMenu = ({ route , navigation}) => {
@@ -17,6 +18,9 @@ const TargetMenu = ({ route , navigation}) => {
 
     const dispatch = useDispatch();
     const [points, setPoints] = useState([]);
+    const [allPoints, setAllPoints] = useState([]);
+    //const [allPoints, setAllPoints] = useState(Array.from({ length: 10 }, () => []));
+    const [count, setCount] = useState(1);
     let componentToRender = null;
     if (selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
@@ -26,79 +30,105 @@ const TargetMenu = ({ route , navigation}) => {
       componentToRender = <WAFull />;
     }
     const addTrainigs = () => {
+           
             dispatch(addTraining({trainingName,points, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather,rounds }))
-            navigation.navigate('Тренировки')
+              windDirection,weather,rounds,allPoints }))
+              navigation.navigate('Тренировки')
+            
     };
 
     const handlePress = (event) => {
       const { locationX, locationY } = event.nativeEvent;
-      let score = 0;
-      const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
-      if (selectedMenu === 'WA 6 колец') {
-        if (distanceFromCenter <= 5) { // всмето 11 и 11 нужен крестик
-          score= 11;
-        } else if (distanceFromCenter > 5 && distanceFromCenter <= 18) {
-          score= 11;
-        } else if ( distanceFromCenter > 18 && distanceFromCenter <= 40) {
-          score= 10;
-        } else if ( distanceFromCenter > 40 && distanceFromCenter <= 62) {
-          score= 9;
-        } else if ( distanceFromCenter > 62 && distanceFromCenter <= 84) {
-          score= 8;
-        } else if ( distanceFromCenter > 84 && distanceFromCenter <= 106) {
-          score= 7;
-        } else if ( distanceFromCenter > 106 && distanceFromCenter <= 128) {
-          score= 6;
-        } else if ( distanceFromCenter > 128 && distanceFromCenter <= 150) {
-          score= 5;
-        } else {
-          score= 0;
+      if (points.length < 3 ){
+    //  if (points.length < 3 && count <= 10){
+        let score = 0;
+        const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
+        if (selectedMenu === 'WA 6 колец') {
+          if (distanceFromCenter <= 5) { // всмето 11 и 11 нужен крестик
+            score= 11;
+          } else if (distanceFromCenter > 5 && distanceFromCenter <= 18) {
+            score= 11;
+          } else if ( distanceFromCenter > 18 && distanceFromCenter <= 40) {
+            score= 10;
+          } else if ( distanceFromCenter > 40 && distanceFromCenter <= 62) {
+            score= 9;
+          } else if ( distanceFromCenter > 62 && distanceFromCenter <= 84) {
+            score= 8;
+          } else if ( distanceFromCenter > 84 && distanceFromCenter <= 106) {
+            score= 7;
+          } else if ( distanceFromCenter > 106 && distanceFromCenter <= 128) {
+            score= 6;
+          } else if ( distanceFromCenter > 128 && distanceFromCenter <= 150) {
+            score= 5;
+          } else {
+            score= 0;
+          }
+         // setPoints([...points, { x: locationX, y: locationY, score }]);
+          
         }
+        else if (selectedMenu === 'WA Полный') {
+          if (distanceFromCenter <= 5) {
+            score= 12;
+          } else if (distanceFromCenter > 5 && distanceFromCenter <= 10) {
+            score= 11;
+          } else if ( distanceFromCenter > 10 && distanceFromCenter <= 24) {
+            score= 10;
+          } else if ( distanceFromCenter > 24 && distanceFromCenter <= 38) {
+            score= 9;
+          } else if ( distanceFromCenter > 38 && distanceFromCenter <= 52) {
+            score= 8;
+          } else if ( distanceFromCenter > 52 && distanceFromCenter <= 66) {
+            score= 7;
+          } else if ( distanceFromCenter > 66 && distanceFromCenter <= 80) {
+            score= 6;
+          } else if ( distanceFromCenter > 80 && distanceFromCenter <= 94) {
+            score= 5;
+          } else if ( distanceFromCenter > 94 && distanceFromCenter <= 108) {
+            score= 4;
+          } else if ( distanceFromCenter > 108 && distanceFromCenter <= 122) {
+            score= 3;
+          } else if ( distanceFromCenter > 122 && distanceFromCenter <= 136) {
+            score= 2;
+          } else if ( distanceFromCenter > 136 && distanceFromCenter <= 150) {
+            score= 1;
+          } else {
+            score= 0;
+          }
 
+         // setPoints([...points, { x: locationX, y: locationY, score }]);
+        }
+    
         setPoints([...points, { x: locationX, y: locationY, score }]);
       }
-      else if (selectedMenu === 'WA Полный') {
-        if (distanceFromCenter <= 5) {
-          score= 12;
-        } else if (distanceFromCenter > 5 && distanceFromCenter <= 10) {
-          score= 11;
-        } else if ( distanceFromCenter > 10 && distanceFromCenter <= 24) {
-          score= 10;
-        } else if ( distanceFromCenter > 24 && distanceFromCenter <= 38) {
-          score= 9;
-        } else if ( distanceFromCenter > 38 && distanceFromCenter <= 52) {
-          score= 8;
-        } else if ( distanceFromCenter > 52 && distanceFromCenter <= 66) {
-          score= 7;
-        } else if ( distanceFromCenter > 66 && distanceFromCenter <= 80) {
-          score= 6;
-        } else if ( distanceFromCenter > 80 && distanceFromCenter <= 94) {
-          score= 5;
-        } else if ( distanceFromCenter > 94 && distanceFromCenter <= 108) {
-          score= 4;
-        } else if ( distanceFromCenter > 108 && distanceFromCenter <= 122) {
-          score= 3;
-        } else if ( distanceFromCenter > 122 && distanceFromCenter <= 136) {
-          score= 2;
-        } else if ( distanceFromCenter > 136 && distanceFromCenter <= 150) {
-          score= 1;
-        } else {
-          score= 0;
-        }
+      
+        setAllPoints([...allPoints, points]);
+      
 
-        setPoints([...points, { x: locationX, y: locationY, score }]);
-      }
+    };
+    const handleNext = () =>{
+     if (count < 10){
+      //setAllPoints([...allPoints, points]);
+      setPoints([]);
+      setCount(count + 1);
+     }
+     else{
+      setPoints([]);
+      setCount(1);
+     } 
+    };
+    const handlePrev = () => {
+      if (count > 1) {
+        setAllPoints(allPoints.slice(0, -1));
+        setCount(count-1);
         
+      }
     };
     const handleClearPoints = () => {
       const updatedPoints = [...points];
       updatedPoints.pop();
       setPoints(updatedPoints);
     };
-
-    
-    
+    console.log(allPoints)
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
@@ -111,8 +141,8 @@ const TargetMenu = ({ route , navigation}) => {
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={addTrainigs} />    
             </View>
             <View style ={styles.contentTitle }>
-                <Text style = {styles.title}>Серия</Text>
-                <Text style = {styles.title}>Раунд</Text>
+                <Text style = {styles.title}>Серия {count}/10</Text>
+                <Text style = {styles.title}>Раунд / {rounds} </Text>
                 <Text style = {styles.title}>Среднее</Text>  
             </View>
             
@@ -136,7 +166,38 @@ const TargetMenu = ({ route , navigation}) => {
               <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
               <Text>Очки по точкам: {points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
             </View>
-           
+            <TouchableOpacity onPress={handleNext} >
+              <Text style={styles.Button1} >Далее</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handlePrev} >
+              <Text  style={styles.Button1} >Предыдущая серия</Text>
+            </TouchableOpacity>
+        {/**    <Text>Очки: { allPoints.length > 0 ? allPoints[count-1].reduce((acc, point) => acc + point.score, 0) : 0}</Text>
+            <Text>Очки по точкам: { allPoints.length > 0 ? allPoints[count-1].map((point, index) => (index === 0 ? '' : ', ') + point.score) : null}</Text>
+            
+              <View>
+              {allPoints.map((item, index) => (5
+                <View key={index}>
+                  {item.map((coord, i) => (
+                    <Text key={i}>x: {coord.x}, y: {coord.y}</Text>
+                  ))} 
+            </View>
+      ))}
+    </View>*/}
+    <View>
+      {allPoints.map((subList, index) => (
+        <View key={index}>
+          {subList.map((point, pointIndex) => (
+            <View key={pointIndex}>
+              
+              <Text>Score: {point.score}</Text>
+            </View>
+          ))}
+        </View>
+      ))}
+    </View>
+   
+     
             
              </ScrollView>  
        </LinearGradient>
@@ -180,7 +241,7 @@ const styles = StyleSheet.create({
      text: {
        fontSize: 16,
        //width: "40%",
-      padding:10,
+       padding:10,
      },
      InputText: {
        flex: 1,
@@ -226,6 +287,12 @@ deleteButton: {
   padding: 10,
   marginTop: 10,
   
+},
+Button1:{
+  fontSize:20,
+  color:"black",
+  padding: 10,
+  marginTop: 10,
 },
 
  });

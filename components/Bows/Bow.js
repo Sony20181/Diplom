@@ -56,7 +56,7 @@ export default function  Bow ({ navigation }) {
 
   return (
     <LinearGradient   
-    colors={['#a1ffce', '#ffffff']}
+    colors={['#0f0c29', '#302b63', '#24243e']}
     style={gStyle.container}
     >
       
@@ -98,7 +98,7 @@ export default function  Bow ({ navigation }) {
           </Animated.View>
           {!openButtonVisible && (
           <TouchableOpacity onPress={handleCloseModal} style={gStyle.closeButton}>
-            <Ionicons name="close-circle" size={45} color="black" />
+            <Ionicons name="close-circle" size={45} color="white" />
           </TouchableOpacity>
           )}
         </View>
@@ -109,14 +109,14 @@ export default function  Bow ({ navigation }) {
       <TouchableOpacity style ={gStyle.item } onPress={() => handleBowClick(item.id)}>
           <View style ={gStyle.content }>
             <Text style ={gStyle.text} >{item.name}</Text>
-            <MaterialCommunityIcons name="delete-empty-outline" size={24} color="black"  onPress={()=> dispatch(removeBow(item.id))} />
+            <MaterialCommunityIcons name="delete-empty-outline" size={24} color="white"  onPress={()=> dispatch(removeBow(item.id))} />
           </View>
       </TouchableOpacity>
     )}/>
 
       {openButtonVisible && (
         <TouchableOpacity onPress={handleOpenModal} style={gStyle.openButton}>
-          <Ionicons name="add-circle" size={45} /> 
+          <Ionicons name="add-circle" size={45} color="white" /> 
         </TouchableOpacity>
       )}
     

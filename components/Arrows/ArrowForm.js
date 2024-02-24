@@ -61,18 +61,22 @@ const ArrowForm = ({navigation,route}) => {
             colors={['#a1ffce', '#ffffff']}
             style ={styles.main }
         >
-            <View style ={styles.content }>
+            
+            <View style ={styles.contentHeader }>
                 <Ionicons name="close-sharp" size={24} color="black" onPress={() =>  navigation.goBack()}/>
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={addArrows} />
             </View>
+                
+            <TouchableOpacity onPress={pickImage}>
+                {photo ? (
+                    <Image source={{uri: photo}} style={{width: "100%", height: 200, marginBottom:30,}} />
+                ) : (
+                    <Image source={ {uri: 'https://img.goodfon.ru/original/2560x1600/3/a0/luk-strela-vystrel.jpg'}} style={{width: "100%", height: 200,marginBottom:30,}} />
+                )}
+            </TouchableOpacity>
+            
             <ScrollView style={styles.container} >
-                <TouchableOpacity onPress={pickImage}>
-                    {photo ? (
-                        <Image source={{uri: photo}} style={{width: "100%", height: 200, marginVertical:30,}} />
-                    ) : (
-                        <Image source={ {uri: 'https://img.goodfon.ru/original/2560x1600/3/a0/luk-strela-vystrel.jpg'}} style={{width: "100%", height: 200,marginVertical:30,}} />
-                    )}
-                </TouchableOpacity>
+                
                 <View style={styles.row}>
                     <Text style={styles.text} >Название:</Text>
                     <TextInput
@@ -184,8 +188,10 @@ const styles = StyleSheet.create({
         flex: 1,
        
       },
-      content:{
+      contentHeader:{
         marginTop:30,
+        paddingVertical:5,
+        paddingHorizontal:3,
         flexDirection: "row",
         justifyContent:"space-between",
         backgroundColor: "rgba(0, 0, 0, 0.5)",

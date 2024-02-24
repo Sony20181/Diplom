@@ -46,8 +46,8 @@ const Stack = createStackNavigator();
 function Root() {
   return (
     <Tab.Navigator useLegacyImplementation 
-      activeColor="#f0edf6"
-      inactiveColor="#668569"
+      activeColor="#aab9f2"
+      inactiveColor="#213a91"
       barStyle={{ backgroundColor: 'black' }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color }) => {

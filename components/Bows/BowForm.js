@@ -76,7 +76,6 @@ const BowForm = ({route, navigation}) => {
                 <Ionicons name="close-sharp" size={24} color="black" onPress={() => navigation.navigate('Лук')}/>
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={handleSubmit} />
       </View>
-      <ScrollView style={styles.container}>
       <TouchableOpacity onPress={pickImage}>
           {photo ? (
             <Image source={{uri: photo}} style={{width: "100%", height: 200}} />
@@ -84,6 +83,8 @@ const BowForm = ({route, navigation}) => {
             <Image source={ {uri: 'https://i.eurosport.com/2015/06/14/1614315-34283941-2560-1440.jpg'}} style={{width: "100%", height: 200}} />
           )}
         </TouchableOpacity>
+      <ScrollView style={styles.container}>
+      
 
         <Text style={styles.TypeBow} >Тип лука:{selectedText} </Text>
         <View style={styles.row}>

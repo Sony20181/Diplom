@@ -26,10 +26,14 @@ export const gStyle = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
       },
+      modalNavHome:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 10,
+      },
     modalNavText: {
         fontSize: 18,
         fontWeight: "bold",
-        marginBottom: 10,
     },
     modalNavIcon: {
        paddingRight:"7%",
@@ -47,13 +51,14 @@ export const gStyle = StyleSheet.create({
         color:"#fff",
         fontSize: 16,
     },
-    /// ГЛАВНЫЙ ЭКРАН  ДЛЯ  СТРЕЛ ЛУКА И ТРЕНИРОВОК
+    /// ГЛАВНЫЙ ЭКРАН  ДЛЯ  СТРЕЛ, ЛУКА И ТРЕНИРОВОК
     container: {
         flex: 1,
       },
       openButton: {
         borderRadius: 5,
         margin: 20,
+        
       },
       closeButton: {
         borderRadius: 5,
@@ -84,19 +89,23 @@ export const gStyle = StyleSheet.create({
       
       },
       item: {
-        height:50,
+        paddingVertical:15,
         justifyContent: "center",
-        borderBottomWidth:2,
+        borderBottomWidth:1.5,
+        borderColor:"white",
+        
       },
       content:{
         paddingLeft:20,
         paddingRight:20,
         flexDirection: "row",
         justifyContent:"space-between",
+        
       },
       text:{
         fontSize:20,
-        color:"black",
+        //color:"black",
+        color:"white",
       },
     
 

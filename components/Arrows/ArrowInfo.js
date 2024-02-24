@@ -171,14 +171,17 @@ const ArrowInfo = ({navigation,route}) => {
                 <Ionicons name="close-sharp" size={24} color="black" onPress={() => navigation.navigate('Стрелы')}/>
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={handleUpdateBow} />
       </View>
-      <ScrollView style={styles.container}>
-        <TouchableOpacity onPress={pickImage} style={{paddingVertical:20}} >
+                
+      <TouchableOpacity onPress={pickImage}  >
             {updatedPhoto ? (
-              <Image source={{uri: updatedPhoto}} style={{width: "100%", height: 200}} />
+              <Image source={{uri: updatedPhoto}} style={{width: "100%", height: 200,marginBottom:30}} />
             ) : (
-              <Image source={ {uri: 'https://img.goodfon.ru/original/2560x1600/3/a0/luk-strela-vystrel.jpg'}} style={{width: "100%", height: 200}} />
+              <Image source={ {uri: 'https://img.goodfon.ru/original/2560x1600/3/a0/luk-strela-vystrel.jpg'}} style={{width: "100%", height: 200,marginBottom:30}} />
             )}
         </TouchableOpacity>
+      
+      <ScrollView style={styles.container}>
+        
         <View style={styles.row}>
           
           <Text style={styles.text} >Название: </Text>       
@@ -250,7 +253,8 @@ const styles = StyleSheet.create({
   },
   content:{
     marginTop:30,
-    //padding:5,
+    paddingVertical:5,
+    paddingHorizontal:3,
     flexDirection: "row",
     justifyContent:"space-between",
     backgroundColor: "rgba(0, 0, 0, 0.5)",

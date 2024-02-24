@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MainModalMenu from './MainModalMenu';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gStyle } from '../styles/style';
@@ -50,24 +50,30 @@ export default function Main({ navigation }) {
       style={gStyle.main} 
       
      >
-      
-         <Text style={styles.MainOption}  onPress={() => navigation.navigate('Feed')}>
-            <Ionicons name="stats-chart-sharp" size={33} color="black" style={styles.MainIcon}  />
-            Статистика(feed)
-        </Text>
-         <Text style={styles.MainOption}  onPress={() => navigation.navigate('Лук')}>
-            <MaterialCommunityIcons name="bow-arrow" size={33} color="black" style={styles.MainIcon} />
-            Лук
-        </Text>
-
-        <Text style={styles.MainOption}  onPress={() => navigation.navigate('Стрелы')}>
-            <MaterialCommunityIcons name="arrow-projectile" size={33} color="black" style={styles.MainIcon}/>
-            Стрелы
-        </Text>
-        <Text style={styles.MainOption}  onPress={openModal}>
-            <Ionicons name="list-circle-outline" size={33} color="black" style={styles.MainIcon} />
-            Дополнительно
-        </Text>
+      <TouchableOpacity style={styles.MainOption}  onPress={() => navigation.navigate('Feed')}>
+            <View style={styles.MainOptionBackIcon}>
+            <Ionicons name="stats-chart-sharp" size={33} color="white" />
+            </View>
+            <Text style={styles.MainOptionText}>Статистика(feed)</Text>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.MainOption}  onPress={() => navigation.navigate('Лук')}>
+            <View style={styles.MainOptionBackIcon}>
+            <MaterialCommunityIcons name="bow-arrow" size={33} color="white"  />
+            </View>
+            <Text style={styles.MainOptionText}>Лук</Text>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.MainOption}  onPress={() => navigation.navigate('Стрелы')}>
+            <View style={styles.MainOptionBackIcon}>
+            <MaterialCommunityIcons name="arrow-projectile" size={33} color="white" />
+            </View>
+            <Text style={styles.MainOptionText}>Стрелы</Text>
+         </TouchableOpacity>
+        <TouchableOpacity style={styles.MainOption}  onPress={openModal}>
+            <View style={styles.MainOptionBackIcon}>
+              <Ionicons name="list-circle-outline" size={33} color="white" />
+            </View>
+            <Text style={styles.MainOptionText}>Дополнительно</Text>
+         </TouchableOpacity>
          <MainModalMenu
         visible={modalVisible}
         closeModal={closeModal}
@@ -86,30 +92,24 @@ export default function Main({ navigation }) {
 
 
   const styles = StyleSheet.create({
-    MainOption: {
-        height:"8%",
-        fontSize: 23,
-        marginVertical:10,
-        color:'#fff'
-        
+
+    MainOptionBackIcon:{
+      borderWidth: 2, 
+      borderRadius: 5, 
+      borderColor: 'white', 
+      backgroundColor:'black',
+      
     },
-    MainIcon: {
-        borderWidth: 2, // Толщина ободка
-        borderRadius: 5, // Скругление углов
-        marginRight:20, 
-        borderColor: 'white', 
-        backgroundColor:'black',
-        color:'#fff',
-    },
-   
-    button: {
+
+      MainOption: {
+        flexDirection: 'row',
+        alignItems: 'center',
         padding: 10,
-        borderRadius: 5,
       },
-      buttonText: {
-        color: '#fff',
-        textAlign: 'center',
-        fontSize: 18,
+      MainOptionText: {
+        marginLeft: 20,
+        color:"white",
+        fontSize: 20,
       },
    
   });

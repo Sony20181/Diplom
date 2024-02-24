@@ -57,7 +57,7 @@ const ProfileForm = () => {
   };
 
   const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync({
+    let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -75,7 +75,7 @@ const ProfileForm = () => {
   return (
     <LinearGradient    //Это условное выражение, которое отображает компонент Image только в том случае, если переменная image содержит значение (т.е. если было выбрано или сделано фото). 
 
-            colors={['#a1ffce', '#ffffff']}
+    colors={['#0f0c29', '#302b63', '#24243e']}
             style={gStyle.main} 
         >
       <View style={styles.containerPhoto} >
@@ -111,11 +111,7 @@ const ProfileForm = () => {
       <View style={styles.content}>
         <Text style={styles.Text}>Лицензия:</Text>
         <TextInput value={profile.license} onChangeText={handleLicenseChange} style={styles.TextInput} />
-      </View>
-
-      
-      
-      
+      </View>      
     </LinearGradient>
   );
 };
@@ -130,7 +126,7 @@ const styles = StyleSheet.create({
   },
   Text:{
     fontSize: 18, 
-   
+    color:"white",
     width: "40%",
   },
 
@@ -142,6 +138,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    color:"white",
     
   },
   containerPhoto: {
@@ -161,6 +158,8 @@ const styles = StyleSheet.create({
     height: 150,
     marginTop: "5%",
     borderRadius:100,
+    borderColor:"white",
+    borderWidth:2,
     
   },
  

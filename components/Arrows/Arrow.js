@@ -19,7 +19,7 @@ export default function Arrow({navigation}) {
 
   return (
     <LinearGradient   
-    colors={['#a1ffce', '#ffffff']}
+    colors={['#0f0c29', '#302b63', '#24243e']}
     style={gStyle.container}
     >
      
@@ -27,12 +27,12 @@ export default function Arrow({navigation}) {
       <TouchableOpacity style ={gStyle.item } onPress={() => handleArrowClick(item.id)}>
           <View style ={gStyle.content }>
             <Text style ={gStyle.text} >{item.name}</Text>
-            <MaterialCommunityIcons name="delete-empty-outline" size={24} color="black"  onPress={()=> dispatch(removeArrow(item.id))} />
+            <MaterialCommunityIcons name="delete-empty-outline" size={24} color="white"  onPress={()=> dispatch(removeArrow(item.id))} />
           </View>
       </TouchableOpacity>
        
     )}/>
-    <Ionicons name="add-circle" size={45}  style ={gStyle.openButton } onPress={() => navigation.navigate('ArrowForm',{setSelectedArrow})} />
+    <Ionicons name="add-circle" size={45} color="white" style ={gStyle.openButton } onPress={() => navigation.navigate('ArrowForm',{setSelectedArrow})} />
     </LinearGradient>
   );
 

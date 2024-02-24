@@ -6,7 +6,7 @@ export default function Timer() {
   return (
     <LinearGradient
            
-    colors={['#52c234', '#061700', '#ffffff']}
+    colors={['#0f0c29', '#302b63', '#24243e']}
     style={gStyle.main} 
     
    >

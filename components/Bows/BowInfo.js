@@ -85,8 +85,6 @@ const BowInfo = ({navigation,route}) => {
                 <Ionicons name="close-sharp" size={24} color="black" onPress={() => navigation.navigate('Лук')}/>
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={handleUpdateBow} />
       </View>
-      <ScrollView style={styles.container}>
-
       <TouchableOpacity onPress={pickImage} >
           {updatedPhoto ? (
             <Image source={{uri: updatedPhoto}} style={{width: "100%", height: 200}} />
@@ -94,6 +92,9 @@ const BowInfo = ({navigation,route}) => {
             <Image source={ {uri: 'https://i.eurosport.com/2015/06/14/1614315-34283941-2560-1440.jpg'}} style={{width: "100%", height: 200}} />
           )}
       </TouchableOpacity>
+      <ScrollView style={styles.container}>
+
+      
 
 
         <Text style={styles.TypeBow} >Тип лука: {bow.selectedText}</Text>
