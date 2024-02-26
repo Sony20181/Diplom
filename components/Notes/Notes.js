@@ -1,10 +1,11 @@
-import { Text, TextInput,TouchableOpacity, StyleSheet,FlatList, View, CheckBox } from "react-native";
+import { Text, TextInput,TouchableOpacity, StyleSheet,FlatList, View} from "react-native";
 import { gStyle } from "../../styles/style";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, removeTodo, completeTodo } from "../Store/NotesSlice";
 
+import Checkbox from 'expo-checkbox';
 
 export default function Notes() {
  
@@ -19,6 +20,7 @@ export default function Notes() {
         }
     };
 
+    const [isChecked, setChecked] = useState(false);
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
@@ -36,13 +38,13 @@ export default function Notes() {
                     <Text style={styles.button}>Добавить</Text>
                 </TouchableOpacity>
             </View>
-           
+            
 
             <FlatList data = {todos} renderItem={({item} )=> (
                 <View  style={styles.Text} >
-                    <CheckBox
-                    value={item.completed} // устанавливаем значение чекбокса равное `completed`
-                    onValueChange={() => dispatch(completeTodo(item.id))} // обновляем значение `completed`
+                    <Checkbox
+                        value={item.completed}
+                        onValueChange={() => dispatch(completeTodo(item.id))}
                     />
                     <Text style={item.completed ? styles.completedText : styles.NocompletedText}>{item.text}</Text>
                     <Text style={styles.Delete} onPress={()=> dispatch(removeTodo(item.id))}>&times;</Text>
@@ -63,6 +65,7 @@ const styles = StyleSheet.create({
        
     },
     input: {
+        width:"60%",
         borderRadius:5,
         borderWidth: 1,
         padding: 10,
@@ -72,7 +75,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: 'center',
-       /* justifyContent: 'center',*/
        justifyContent:"flex-start",
         margin:5,
         borderBottomWidth:1,

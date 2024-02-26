@@ -112,6 +112,7 @@ const ArrowInfo = ({navigation,route}) => {
   const { arrowId } = route.params;
   const arrows = useSelector((state) => selectArrowById(state, arrowId));
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const [updatedName, setUpdatedName] = useState(arrows.name || "");
   const [updatedNumber, setUpdatedNumber] = useState(arrows.Number || "");
@@ -141,7 +142,7 @@ const ArrowInfo = ({navigation,route}) => {
       tipWeight: updatedTipWeight || arrows.tipWeight,
       feathers: updatedFeathers || arrows.feathers,
       shank: updatedShank || arrows.shank,
-      length: updatedComments || arrows.comments,
+      comments: updatedComments || arrows.comments,
       photo: updatedPhoto,
     
     };
@@ -191,6 +192,61 @@ const ArrowInfo = ({navigation,route}) => {
           <Text style={styles.text} >Максимальный номер стрелы: </Text>       
           <TextInput style={styles.InputText}  value={updatedNumber} onChangeText={setUpdatedNumber} />
         </View>
+
+        { !showAdditionalFields && updatedLength && (
+            <View style={styles.row}>
+              <Text style={styles.text} >Длина: </Text>       
+              <TextInput style={styles.InputText}  value={updatedLength} onChangeText={setupdatedLength} />
+            </View>
+        )}
+        {!showAdditionalFields && updatedMaterial && (
+            <View style={styles.row}>
+              <Text style={styles.text} >Материал: </Text>       
+              <TextInput style={styles.InputText}  value={updatedMaterial} onChangeText={setupdatedMaterial} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedSpine && (
+            <View style={styles.row}>
+              <Text style={styles.text} >Спайн: </Text>       
+              <TextInput style={styles.InputText}  value={updatedSpine} onChangeText={setupdatedSpine} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedDiameter && (
+            <View style={styles.row}>
+              <Text style={styles.text} >Диаметр (мм): </Text>       
+              <TextInput style={styles.InputText}  value={updatedDiameter} onChangeText={setupdateDdiameter} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedBoomWeight && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Вес стрелы: </Text>       
+            <TextInput style={styles.InputText}  value={updatedBoomWeight} onChangeText={setupdatedBoomWeight} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedTipWeight && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Вес наконечника: </Text>       
+            <TextInput style={styles.InputText}  value={updatedTipWeight} onChangeText={setupdatedTipWeight} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedFeathers && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Перья: </Text>       
+            <TextInput style={styles.InputText}  value={updatedFeathers} onChangeText={setupdatedFeathers} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedShank && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Хвостовик: </Text>       
+            <TextInput style={styles.InputText}  value={updatedShank} onChangeText={setupdatedShank} />
+          </View>
+        )}
+        {!showAdditionalFields && updatedComments && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Комментарии: </Text>       
+            <TextInput style={styles.InputText}  value={updatedComments} onChangeText={setupdatedComments} />
+          </View>
+        )}
        
         
         {showAdditionalFields && (

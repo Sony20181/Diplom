@@ -106,7 +106,116 @@ const BowInfo = ({navigation,route}) => {
           <Text style={styles.text} >Производитель:</Text>
           <TextInput style={styles.InputText} value={updatedManufacturer} onChangeText={setUpdatedManufacturer}/>
         </View>
-        
+        { !showAdditionalFields && updatedHandlleLength && (
+            <View style={styles.row}>
+              <Text style={styles.text} >Длина рукоятки:</Text>
+              <TextInput style={styles.InputText} value={updatedHandlleLength} onChangeText={setUpdatedHandlleLength}/>
+            </View>
+        )}
+        { !showAdditionalFields && updatedTensionForse && (
+            <View style={styles.row}>
+              <Text style={styles.text} >Сила нятяжения:</Text>
+              <TextInput style={styles.InputText} value={updatedTensionForse} onChangeText={setUpdatedTensionForse}/>
+            </View>
+        )}
+        { !showAdditionalFields && updatedShelf && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Полочка:</Text>
+            <TextInput style={styles.InputText} value={updatedShelf} onChangeText={setUpdatedShelf}/>
+            </View>
+        )}
+        { !showAdditionalFields && updatedVerticalposition && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Положение по вертикали:</Text>
+            <TextInput style={styles.InputText} value={updatedVerticalposition} onChangeText={setUpdatedVerticalposition}/>
+
+            </View>
+        )}
+            { !showAdditionalFields && updatedHorizontalposition && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Положение по горизонтали:</Text>
+            <TextInput style={styles.InputText} value={updatedHorizontalposition} onChangeText={setUpdatedHorizontalposition}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedRigidity && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Жесткость:</Text>
+            <TextInput style={styles.InputText} value={updatedRigidity} onChangeText={setUpdatedRigidity}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedUpperArmMode && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Режим верхнего плеча:</Text>
+            <TextInput style={styles.InputText} value={updatedUpperArmMode} onChangeText={setUpdatedUpperArmMode}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedLowerShoulderMode && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Режим нижнего плеча:</Text>
+            <TextInput style={styles.InputText} value={updatedLowerShoulderMode} onChangeText={setUpdatedLowerShoulderMode}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedShoulders && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Плечи:</Text>
+            <TextInput style={styles.InputText} value={updatedShoulders} onChangeText={setUpdatedShoulders}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedAim && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Прицел:</Text>
+            <TextInput style={styles.InputText} value={updatedAim} onChangeText={setUpdatedAim}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedStabilizer && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Стабилизатор:</Text>
+            <TextInput style={styles.InputText} value={updatedStabilizer} onChangeText={setUpdatedStabilizer}/>
+          
+            </View>
+        )}
+        { !showAdditionalFields && updatedClicker && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Кликер:</Text>
+            <TextInput style={styles.InputText} value={updatedClicker} onChangeText={setUpdatedClicker}/>
+
+           
+            </View>
+        )}
+        { !showAdditionalFields && updatedSaddle && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Седло:</Text>
+            <TextInput style={styles.InputText} value={updatedSaddle} onChangeText={setUpdatedSaddle}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedBowstring && (
+            <View style={styles.row}>
+            <Text style={styles.text} >Тетива:</Text>
+            <TextInput style={styles.InputText} value={updatedBowstring} onChangeText={setUpdatedBowstring}/>
+
+            </View>
+         )}
+         { !showAdditionalFields && updatedPlunger && (   
+            <View style={styles.row}>
+            <Text style={styles.text} >Плунжер:</Text>
+            <TextInput style={styles.InputText} value={updatedPlunger} onChangeText={setUpdatedPlunger}/>
+
+            </View>
+        )}
+        { !showAdditionalFields && updatedDescription && (
+            <View style={styles.row}>
+            <Text style={styles.text}>Описание </Text>
+            <TextInput style={styles.InputTextarea}  value={updatedDescription} multiline numberOfLines={4}  onChangeText={setUpdatedDescription}  />
+      
+            </View>
+        )}
         {showAdditionalFields && (
           <View>
             <View style={styles.row}>
