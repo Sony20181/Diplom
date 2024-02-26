@@ -18,9 +18,10 @@ const TargetMenu = ({ route , navigation}) => {
 
     const dispatch = useDispatch();
     const [points, setPoints] = useState([]);
+    
     const [allPoints, setAllPoints] = useState([]);
     //const [allPoints, setAllPoints] = useState(Array.from({ length: 10 }, () => []));
-    const [count, setCount] = useState(1);
+    
     let componentToRender = null;
     if (selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
@@ -40,7 +41,7 @@ const TargetMenu = ({ route , navigation}) => {
     const handlePress = (event) => {
       const { locationX, locationY } = event.nativeEvent;
       if (points.length < 3 ){
-    //  if (points.length < 3 && count <= 10){
+    
         let score = 0;
         const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
         if (selectedMenu === 'WA 6 колец') {
@@ -101,34 +102,38 @@ const TargetMenu = ({ route , navigation}) => {
         setPoints([...points, { x: locationX, y: locationY, score }]);
       }
       
-        setAllPoints([...allPoints, points]);
+       // setAllPoints([...allPoints, points]);
       
 
     };
-    const handleNext = () =>{
-     if (count < 10){
-      //setAllPoints([...allPoints, points]);
-      setPoints([]);
-      setCount(count + 1);
-     }
-     else{
-      setPoints([]);
-      setCount(1);
-     } 
-    };
-    const handlePrev = () => {
-      if (count > 1) {
-        setAllPoints(allPoints.slice(0, -1));
-        setCount(count-1);
-        
-      }
-    };
+   
     const handleClearPoints = () => {
       const updatedPoints = [...points];
       updatedPoints.pop();
       setPoints(updatedPoints);
     };
     console.log(allPoints)
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    //console.log("points",points)
+    //const updatedPoints = [...points]
+    if (currentIndex < 10) {
+   // if (currentIndex < allPoints.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setAllPoints([...allPoints, points]);
+      setPoints([]);
+     // setAllPoints([...allPoints, points]);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  console.log(allPoints)
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
@@ -141,7 +146,7 @@ const TargetMenu = ({ route , navigation}) => {
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={addTrainigs} />    
             </View>
             <View style ={styles.contentTitle }>
-                <Text style = {styles.title}>Серия {count}/10</Text>
+                <Text style = {styles.title}>Серия {currentIndex+1}/10</Text>
                 <Text style = {styles.title}>Раунд / {rounds} </Text>
                 <Text style = {styles.title}>Среднее</Text>  
             </View>
@@ -151,51 +156,38 @@ const TargetMenu = ({ route , navigation}) => {
           <ScrollView>
           <MaterialCommunityIcons  style={styles.deleteButton} name="backspace-reverse-outline" size={35} color="black"  onPress={handleClearPoints} />
          
-        
-            <View style={styles.container2}>
-                
-            
+            <View style={styles.container2}>       
               <TouchableWithoutFeedback onPress={handlePress}>           
                 <View style={styles.canvas}>     
                 {componentToRender}
                   {points.map((point, index) => (
                     <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
                   ))}
+                  
                 </View>
               </TouchableWithoutFeedback>
               <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
               <Text>Очки по точкам: {points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
             </View>
-            <TouchableOpacity onPress={handleNext} >
+            <TouchableOpacity onPress={handleNext}  >
               <Text style={styles.Button1} >Далее</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handlePrev} >
+            <TouchableOpacity onPress={handlePrev}  >
               <Text  style={styles.Button1} >Предыдущая серия</Text>
             </TouchableOpacity>
-        {/**    <Text>Очки: { allPoints.length > 0 ? allPoints[count-1].reduce((acc, point) => acc + point.score, 0) : 0}</Text>
-            <Text>Очки по точкам: { allPoints.length > 0 ? allPoints[count-1].map((point, index) => (index === 0 ? '' : ', ') + point.score) : null}</Text>
-            
-              <View>
-              {allPoints.map((item, index) => (5
-                <View key={index}>
-                  {item.map((coord, i) => (
-                    <Text key={i}>x: {coord.x}, y: {coord.y}</Text>
-                  ))} 
-            </View>
-      ))}
-    </View>*/}
+       
     <View>
-      {allPoints.map((subList, index) => (
+   {/*   <Button title="Назад" onPress={handlePrev} disabled={currentIndex === 0} />
+      <Button title="Вперед" onPress={handleNext} disabled={currentIndex === allPoints.length - 1} />
+      
+       Отображение текущего подсписка */}
+      {allPoints[currentIndex] && allPoints[currentIndex].map((points, index) => (
         <View key={index}>
-          {subList.map((point, pointIndex) => (
-            <View key={pointIndex}>
-              
-              <Text>Score: {point.score}</Text>
-            </View>
-          ))}
+          <Text>{`Score: ${points.score}, X: ${points.x}, Y: ${points.y}`}</Text>
         </View>
       ))}
     </View>
+    
    
      
             

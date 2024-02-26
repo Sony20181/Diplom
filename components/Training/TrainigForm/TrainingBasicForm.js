@@ -5,7 +5,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import Slider from '@react-native-community/slider';
 
 import  { } from '../../Store/TrainingSlice'
 
@@ -89,10 +88,12 @@ export default function TrainingBasicForm({navigation}) {
         </View >
         <ScrollView style={styles.FormContent}>
           
-          <View >
-          <Text  style={styles.labelSelectedMenu} onPress={() => setIsModalVisible(true) }>{selectedMenu}</Text>
-          <Text style={styles.label} onPress={() => setIsModalVisible(true) }>Изменить вид мишени</Text>
+          <View style={styles.Target}>
+            <Feather name="target" size={28} color="black" />
+            <Text  style={styles.labelSelectedMenu} onPress={() => setIsModalVisible(true) }>{selectedMenu}</Text>
           </View>
+          <Text style={styles.label} onPress={() => setIsModalVisible(true) }>Изменить вид мишени</Text>
+          
           
           <Modal visible={isModalVisible} transparent>
             <View style={styles.modalBackground}>
@@ -115,16 +116,19 @@ export default function TrainingBasicForm({navigation}) {
 
           <Text style={styles.label} onPress={handleArrowPress}>{selectedArrow}</Text>
           <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Количество раундов: {rounds}</Text>
-            <TouchableOpacity onPress={() => handleRoundPress(1)}>
-              <Text>1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleRoundPress(2)}>
-              <Text>2</Text>
-            </TouchableOpacity>
-            
+
+          <View style={styles.labelRounds}> 
+            <Text style={styles.labelRoundsText}>Количество раундов:  {rounds}</Text> 
+            <View style={styles.roundButton}>
+              <TouchableOpacity onPress={() => handleRoundPress(1)}> 
+                  <Text style={styles.roundButtonText}>1</Text> 
+              </TouchableOpacity> 
+              <TouchableOpacity onPress={() => handleRoundPress(2)}> 
+                  <Text style={styles.roundButtonText}>2</Text> 
+              </TouchableOpacity> 
+            </View>
           </View>
+
           <View style={styles.label}>
             <Text  style={styles.labelEnvironment}>Окружение</Text>
             <Text  style={styles.labelText}>Погода</Text>
@@ -203,13 +207,18 @@ const styles = StyleSheet.create({
      FormContent: {
        flex: 1,
      },
-     labelSelectedMenu:{
-      textTransform: 'uppercase',
-      justifyContent: "center",
-      fontSize: 14,
-      letterSpacing: 2,
+     Target:{
+      flexDirection:"row",
+      alignItems:"center",
       paddingHorizontal:20,
       paddingTop:10
+     },
+     labelSelectedMenu:{
+      textTransform: 'uppercase',
+      fontSize: 18,
+      letterSpacing: 2,
+      paddingLeft:10,
+      color:"#4d4e52"
      },
  
  label: {
@@ -238,6 +247,31 @@ const styles = StyleSheet.create({
    padding:10,
    margin:10,
  },
+ labelRounds: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  borderBottomColor: '#ccc',
+  borderBottomWidth: 1,
+  padding:20,
+ },
+labelRoundsText: {
+  fontSize: 16,
+  textTransform: 'uppercase', 
+},
+roundButton: {
+  flexDirection: 'row',
+  alignItems: 'center',
+},
+roundButtonText: {
+  fontSize: 16,
+  backgroundColor:"#ccc",
+  paddingHorizontal: 10,
+  paddingVertical:4,
+  margin:2,
+  borderRadius: 5,
+},
+
  modalBackground: {
    flex: 1,
    backgroundColor: 'rgba(225, 245, 227, 1)',
