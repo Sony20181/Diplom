@@ -1,35 +1,33 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput,Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
-const DistancePickerScreen = ({ navigation, route }) => {
-  const setDistance = route.params.setDistance;
+const DistancePickerScreen = ({ onSelect }) => {
   const [customDistance, setCustomDistance] = useState('');
   const distances = [10, 15, 18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 90];
 
-  const handleDistanceSelect = (value) => {
-    setDistance(value);
-    navigation.goBack();
-  };
+
 
   const handleCustomDistance = () => {
     if (customDistance !== '' && !isNaN(customDistance)) {
-      handleDistanceSelect(parseInt(customDistance));
+      onSelect(parseInt(customDistance));
     }
   };
+
   return (
     <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
             style={styles.container}
         >
+        
     
     <View style={styles.buttonContainer}>
         {distances.map((distance) => (
           <TouchableOpacity
             key={distance}
             style={styles.button}
-            onPress={() => handleDistanceSelect(distance)}
+            onPress={() => onSelect(distance)}
           >
             <Text style={styles.buttonText}>{distance}</Text>
           </TouchableOpacity>
@@ -53,7 +51,6 @@ const DistancePickerScreen = ({ navigation, route }) => {
 };
 
 export default DistancePickerScreen;
-
 
 const styles = StyleSheet.create({
   container: {

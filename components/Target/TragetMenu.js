@@ -14,14 +14,32 @@ import { useEffect } from 'react';
 const TargetMenu = ({ route , navigation}) => {
    
     const { trainingName, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-      windDirection,weather,rounds  } = route.params;
+      windDirection,weather,rounds,countSeries  } = route.params;
 
     const dispatch = useDispatch();
     const [points, setPoints] = useState([]);
-    
     const [allPoints, setAllPoints] = useState([]);
-    //const [allPoints, setAllPoints] = useState(Array.from({ length: 10 }, () => []));
+    const [allRounds, setAllRounds] = useState([]);
+
+   /* const roundsToAdd = [
+      [
+        [{"score": 1, "x": 136.6666717529297, "y": 218.6666717529297}], 
+        [{"score": 1, "x": 143.3333282470703, "y": 215}]
+      ],
+      [
+        [{"score": 2, "x": 136.6666717529297, "y": 218.6666717529297}], 
+        [{"score": 2, "x": 143.3333282470703, "y": 215}]
+      ]
+    ];
     
+    console.log("roundsToAdd", JSON.stringify(roundsToAdd));
+    
+    const firstRound = roundsToAdd[0];
+    const secondRound = roundsToAdd[1];
+    
+    console.log("First round:", JSON.stringify(firstRound));
+    console.log("Second round:", JSON.stringify(secondRound));*/
+
     let componentToRender = null;
     if (selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
@@ -33,14 +51,14 @@ const TargetMenu = ({ route , navigation}) => {
     const addTrainigs = () => {
            
             dispatch(addTraining({trainingName,points, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather,rounds,allPoints }))
+              windDirection,weather,rounds,allRounds }))
               navigation.navigate('Тренировки')
             
     };
 
     const handlePress = (event) => {
       const { locationX, locationY } = event.nativeEvent;
-      if (points.length < 3 ){
+      if (points.length < 3 && allPoints.length < countSeries && allRounds.length < rounds  ){
     
         let score = 0;
         const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
@@ -101,10 +119,6 @@ const TargetMenu = ({ route , navigation}) => {
     
         setPoints([...points, { x: locationX, y: locationY, score }]);
       }
-      
-       // setAllPoints([...allPoints, points]);
-      
-
     };
    
     const handleClearPoints = () => {
@@ -112,28 +126,42 @@ const TargetMenu = ({ route , navigation}) => {
       updatedPoints.pop();
       setPoints(updatedPoints);
     };
-    console.log(allPoints)
-    const [currentIndex, setCurrentIndex] = useState(0);
+    
+    const [currentSeria, setcurrentSeria] = useState(1);
+    const [currentRound, setCurrentRound] = useState(1);
+    const [stopSeries, setStopSeries] = useState(true);
+    const [stopRound, setStopRound] = useState(true);
 
-  const handleNext = () => {
-    //console.log("points",points)
-    //const updatedPoints = [...points]
-    if (currentIndex < 10) {
-   // if (currentIndex < allPoints.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+  const handleNextSeries = () => {
+    
+    
+    if (currentSeria <= countSeries && stopSeries == true) {
       setAllPoints([...allPoints, points]);
+      if (currentSeria == countSeries){setcurrentSeria(countSeries); setStopSeries(false)}
+      else{setcurrentSeria(currentSeria+1);}
       setPoints([]);
-     // setAllPoints([...allPoints, points]);
+      
+    }
+  };
+  const handleNextRound = () => { 
+    if (currentRound <= rounds && stopRound == true ) {
+      setAllRounds([...allRounds, allPoints]);
+      setStopSeries(true)
+      setcurrentSeria(1)
+      setAllPoints([]);
+      if (currentRound == rounds){setCurrentRound(rounds); setStopRound(false)}
+      else{setCurrentRound(currentRound+1);}
     }
   };
 
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+    if (currentSeria > 0) {
+      setcurrentSeria(currentSeria - 2);
     }
+   
   };
 
-  console.log(allPoints)
+
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
@@ -146,8 +174,8 @@ const TargetMenu = ({ route , navigation}) => {
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={addTrainigs} />    
             </View>
             <View style ={styles.contentTitle }>
-                <Text style = {styles.title}>Серия {currentIndex+1}/10</Text>
-                <Text style = {styles.title}>Раунд / {rounds} </Text>
+                <Text style = {styles.title}>Серия {currentSeria}/{countSeries}</Text>
+                <Text style = {styles.title}>Раунд {currentRound} / {rounds} </Text>
                 <Text style = {styles.title}>Среднее</Text>  
             </View>
             
@@ -169,21 +197,20 @@ const TargetMenu = ({ route , navigation}) => {
               <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
               <Text>Очки по точкам: {points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
             </View>
-            <TouchableOpacity onPress={handleNext}  >
-              <Text style={styles.Button1} >Далее</Text>
+            <TouchableOpacity onPress={allPoints.length === countSeries ? handleNextRound : handleNextSeries}>
+              <Text style={styles.Button1} >{allPoints.length === countSeries ? 'Следующий раунд' : 'Добавить'}</Text>
+             
             </TouchableOpacity>
-            <TouchableOpacity onPress={handlePrev}  >
+            
+         {/**   <TouchableOpacity onPress={handlePrev}  >
               <Text  style={styles.Button1} >Предыдущая серия</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
        
     <View>
-   {/*   <Button title="Назад" onPress={handlePrev} disabled={currentIndex === 0} />
-      <Button title="Вперед" onPress={handleNext} disabled={currentIndex === allPoints.length - 1} />
-      
-       Отображение текущего подсписка */}
-      {allPoints[currentIndex] && allPoints[currentIndex].map((points, index) => (
+             
+      {allPoints[currentSeria-1] && allPoints[currentSeria-1].map((points, index) => (
         <View key={index}>
-          <Text>{`Score: ${points.score}, X: ${points.x}, Y: ${points.y}`}</Text>
+          <Text>{`Score: ${points.score}`}</Text>
         </View>
       ))}
     </View>

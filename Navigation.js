@@ -177,15 +177,7 @@ export default function MainNavigation() {
         <Stack.Screen name="TargetMenu" component={TargetMenu}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Дистанция" component={DistancePickerScreen}
-        options={{
-          title: "Дистанция",
-          headerStyle: { backgroundColor: "black", height: 80 },
-          headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
-          headerTitleAlign: 'center',
-          headerTintColor: '#ffffff',
-        }} 
-        />
+      
          <Stack.Screen name="TrainingArrow" component={TrainingArrow}
         options={{
           title: "TrainingArrow",

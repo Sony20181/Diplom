@@ -24,13 +24,13 @@ export default function TrainingBasicForm({navigation}) {
   const [windDirection, setWindDirection] = useState("Нет");
   const [weather, setWeather] = useState("Солнечно");
   const [rounds, setRounds] = useState("1");
-  
+  const countSeries = 10;
 
 
   const addTrainigs = () => {
       if (name.trim().length){
           navigation.navigate('TargetMenu', {trainingName : name, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-            windDirection,weather,rounds })
+            windDirection,weather,rounds,countSeries })
          
       }
   };

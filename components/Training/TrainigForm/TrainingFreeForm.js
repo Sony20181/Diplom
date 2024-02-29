@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, TextInput,StyleSheet,TouchableOpacity,Text,Modal,ScrollView } from 'react-native';
+import { View, TextInput,StyleSheet,TouchableOpacity,Text,Modal,ScrollView, Button } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
-
+import DistancePickerScreen from './DistancePickerScreen';
+import TrainigArrow from '../Training';
+import ArrowForm from '../../Arrows/ArrowForm';
 import  { } from '../../Store/TrainingSlice'
 
 const TrainingFreeForm = ({navigation}) => {
@@ -15,7 +17,7 @@ const TrainingFreeForm = ({navigation}) => {
     const arrows = useSelector(state => state.arrow.arrow)
     const bows = useSelector(state => state.bows.bows)
     const[name,setName] = useState('Тренировка');
-    const [distance, setDistance] = useState("10");
+    const [distance, setDistance] = useState(10);
     const [selectedArrow, setSelectedArrow] = useState( arrows[0] ? arrows[0].name : "добавить стрелу");
     
     const [selectedBow, setSelectedBow] = useState( bows[0] ? bows[0].name : "добавить лук");
@@ -25,22 +27,18 @@ const TrainingFreeForm = ({navigation}) => {
     const [windDirection, setWindDirection] = useState("Нет");
     const [weather, setWeather] = useState("Солнечно");
     const [rounds, setRounds] = useState("1");
-    const [sliderValueArrow, setSliderValueArrow] = useState(0);
+    const [countSeries, setcountSeries] = useState(1);
 
  
     const addTrainigs = () => {
         if (name.trim().length){
             navigation.navigate('TargetMenu', {trainingName : name, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather,rounds,sliderValueArrow })
+              windDirection,weather,rounds,countSeries })
            
         }
     };
-    const handleDistancePress = () => {
-      navigation.navigate('Дистанция', { setDistance });
-     
-      
-    };
-    const handleArrowPress = () => {
+ 
+   /* const handleArrowPress = () => {
       if (arrows[0]) {
         // Переход на страницу с выбранной стрелой
         navigation.navigate('TrainingArrow', {setSelectedArrow});
@@ -49,7 +47,7 @@ const TrainingFreeForm = ({navigation}) => {
         navigation.navigate('ArrowForm',{setSelectedArrow});
         
       }
-    };
+    };*/
     const handleBowPress = () => {
       if (bows[0]) {
         // Переход на страницу с выбранной стрелой
@@ -66,12 +64,36 @@ const TrainingFreeForm = ({navigation}) => {
       setIsModalVisible(false)
     };
    
+    const [modalDistanceVisible, setModalDistanceVisible] = useState(false);
+    const [modalArrowVisible, setModalArrowVisible] = useState(false);
+    let componentToArrow = null;
+    const handleArrowPress = (value) => {
+      if (arrows[0]) {
+        // Переход на страницу с выбранной стрелой
+        componentToArrow = <TrainigArrow />
+        setSelectedArrow(value)
+        setModalArrowVisible(false)
+       // navigation.navigate('TrainingArrow', {setSelectedArrow});
+      } else {
+        // Переход на форму для заполнения стрелы
+        componentToArrow = <ArrowForm/>
+        setSelectedArrow(value)
+        setModalArrowVisible(false)
+       // navigation.navigate('ArrowForm',{setSelectedArrow});
+        
+      }
+    };
+
+  const handleSelectsetDistance = (value) => {
+    setDistance(value);
+    setModalDistanceVisible(false);
+  };
 
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
             style ={styles.main }
-        >
+        >  
           <View style ={styles.content }>
             <View style ={styles.contentTitle }>
                 <Ionicons name="close-sharp" size={24} color="black" onPress={() => navigation.navigate('Тренировки')}/>
@@ -90,7 +112,17 @@ const TrainingFreeForm = ({navigation}) => {
             </View>
           </View >
           <ScrollView style={styles.FormContent}>
-            <Text style={styles.label} onPress={handleDistancePress}>Дистанция: {distance} м</Text>
+          
+      
+      
+            <Modal visible={modalDistanceVisible}>
+              <DistancePickerScreen onSelect={handleSelectsetDistance} />
+            </Modal>
+            <Modal visible={modalArrowVisible}>
+              {componentToArrow }
+            </Modal>
+    
+            <Text style={styles.label} onPress={() => setModalDistanceVisible(true)}>Дистанция: {distance} м</Text> 
 
            
             <Text style={styles.label} onPress={() => setIsModalVisible(true) }>Вид мишени: {selectedMenu}</Text>
@@ -113,14 +145,14 @@ const TrainingFreeForm = ({navigation}) => {
               </View>
             </Modal>
             <View style={styles.Slider}>
-              <Text style={styles.labelText} >Количество стрел:   {sliderValueArrow}</Text>
+              <Text style={styles.labelText} >Количество серий:   {countSeries}</Text>
               <Slider
                 style={{ padding:10 }}
                 minimumValue={1}
                 maximumValue={24}
                 step={1}
-                value={sliderValueArrow}
-                onValueChange={value => setSliderValueArrow(value)}
+                value={countSeries}
+                onValueChange={value => setcountSeries(value)}
                 minimumTrackTintColor="#212421"
                 maximumTrackTintColor="#000000"
               />

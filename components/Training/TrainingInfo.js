@@ -36,7 +36,9 @@ const TrainingInfo = ({navigation,route}) => {
       componentToRender = <WAFull />;
     }
   
-
+    console.log(training.allRounds)
+    console.log("roundsToAdd", JSON.stringify(training.allRounds));
+    console.log(training.allRounds.length)
   return (
     <LinearGradient   
       colors={['#a1ffce', '#ffffff']}
@@ -72,14 +74,14 @@ const TrainingInfo = ({navigation,route}) => {
             <Circle cx="150" cy="150" r="3" fill="#000" />
             </Svg>*/}
             {componentToRender}
-             {training.allPoints.map((item, index) => (
+       {/*      {training.allPoints.map((item, index) => (
               <View key={index} >
                 {item.map((point, i) => (
                   <View key={i} style={[styles.point, { left: point.x, top: point.y }]}/>
                 ))}
               </View>
             ))}
-      {/*      {training.points.map((point, index) => (
+            {training.points.map((point, index) => (
               <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
             ))} */}
             
