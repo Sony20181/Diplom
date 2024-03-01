@@ -7,9 +7,7 @@ import { addArrow } from '../Store/ArrowSlice';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
-const ArrowForm = ({navigation,route}) => {
-   
-    const setSelectedArrow = route.params.setSelectedArrow;
+const ArrowForm = ({navigation,route,onSelectArrow}) => {
 
     const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const dispatch = useDispatch();
@@ -30,8 +28,7 @@ const ArrowForm = ({navigation,route}) => {
     const addArrows = () => {
         if (name.trim().length){
             dispatch(addArrow({name,Number,length,material,spine,diameter,boomWeight,tipWeight,feathers,shank,comments,photo}))
-            setSelectedArrow(name);
-            navigation.goBack();
+            if (onSelectArrow != undefined){onSelectArrow(name);}
         }
     };
     const pickImage = async () => {
@@ -63,7 +60,7 @@ const ArrowForm = ({navigation,route}) => {
         >
             
             <View style ={styles.contentHeader }>
-                <Ionicons name="close-sharp" size={24} color="black" onPress={() =>  navigation.goBack()}/>
+                <Ionicons name="close-sharp" size={24} color="black" onPress={() =>  onSelectArrow("добавить стрелу")}/>
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={addArrows} />
             </View>
                 
@@ -187,9 +184,11 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
        
+
+        
       },
       contentHeader:{
-        marginTop:30,
+       // marginTop:30,
         paddingVertical:5,
         paddingHorizontal:3,
         flexDirection: "row",

@@ -6,25 +6,20 @@ import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
-const TrainingBow = ({ navigation, route }) => {
-  let selectedBow = route.params.selectedBow;
- //const setSelectedBow = route.params.setSelectedBow;
+const TrainingBow = ({ navigation, onSelectBow }) => {
+  
   const bows = useSelector(state => state.bows.bows)
-  const handleBowClick = (value) => {
-    //setSelectedBow(value);
-    selectedBow = value
-    navigation.goBack();
-  };
+ 
  
   
   return (
     <LinearGradient   
-            colors={['#a1ffce', '#ffffff']}
-            style={styles.container}
+    colors={['#0f0c29', '#302b63', '#24243e']}
+    style={gStyle.container}
         >
 
 <FlatList data = {bows} renderItem={({item} )=> (
-      <TouchableOpacity style ={gStyle.item } onPress={() => handleBowClick(item.name)}>
+      <TouchableOpacity style ={gStyle.item } onPress={() => onSelectBow(item.name)}>
           <View style ={gStyle.content }>
             <Text style ={gStyle.text} >{item.name}</Text>
           </View>

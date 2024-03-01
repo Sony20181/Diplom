@@ -7,8 +7,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import DistancePickerScreen from './DistancePickerScreen';
-import TrainigArrow from '../Training';
+import TrainingArrow from './TrainigArrow';
 import ArrowForm from '../../Arrows/ArrowForm';
+import TrainingBow from './TrainingBow';
+import TrainingBowForm from './TrainingBowForm';
 import  { } from '../../Store/TrainingSlice'
 
 const TrainingFreeForm = ({navigation}) => {
@@ -47,7 +49,7 @@ const TrainingFreeForm = ({navigation}) => {
         navigation.navigate('ArrowForm',{setSelectedArrow});
         
       }
-    };*/
+    };
     const handleBowPress = () => {
       if (bows[0]) {
         // Переход на страницу с выбранной стрелой
@@ -58,7 +60,7 @@ const TrainingFreeForm = ({navigation}) => {
         navigation.navigate('BowForm',{setSelectedBow});
         
       }
-    };
+    };*/
     const handleMenuSelect = (menu) => {
       setSelectedMenu(menu);
       setIsModalVisible(false)
@@ -66,29 +68,38 @@ const TrainingFreeForm = ({navigation}) => {
    
     const [modalDistanceVisible, setModalDistanceVisible] = useState(false);
     const [modalArrowVisible, setModalArrowVisible] = useState(false);
-    let componentToArrow = null;
+    const [modalBowVisible, setModalBowVisible] = useState(false);
+    
     const handleArrowPress = (value) => {
-      if (arrows[0]) {
-        // Переход на страницу с выбранной стрелой
-        componentToArrow = <TrainigArrow />
-        setSelectedArrow(value)
-        setModalArrowVisible(false)
-       // navigation.navigate('TrainingArrow', {setSelectedArrow});
+      setSelectedArrow(value)
+      setModalArrowVisible(false)
+    };
+    const renderModalContentArrow = () => {
+      if (selectedArrow != "добавить стрелу") {
+        return <TrainingArrow onSelectArrow={handleArrowPress} />;
       } else {
-        // Переход на форму для заполнения стрелы
-        componentToArrow = <ArrowForm/>
-        setSelectedArrow(value)
-        setModalArrowVisible(false)
-       // navigation.navigate('ArrowForm',{setSelectedArrow});
+        return <ArrowForm onSelectArrow={handleArrowPress} />;
+      }
+    };
+   
+    const handleSelectsetDistance = (value) => {
+      setDistance(value);
+      setModalDistanceVisible(false);
+    };
+    const handleBowPress = (value) => {
+      setSelectedBow(value)
+      setModalBowVisible(false)
+    };
+    const renderModalContentBow = () => {
+      if (selectedBow != "добавить лук") {
+        return <TrainingBow onSelectBow={handleBowPress} />;
+      } else {
+        console.log("in")
+        return <TrainingBowForm onSelectBow={handleBowPress} />;
         
       }
     };
-
-  const handleSelectsetDistance = (value) => {
-    setDistance(value);
-    setModalDistanceVisible(false);
-  };
-
+ 
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
@@ -112,15 +123,18 @@ const TrainingFreeForm = ({navigation}) => {
             </View>
           </View >
           <ScrollView style={styles.FormContent}>
-          
-      
       
             <Modal visible={modalDistanceVisible}>
               <DistancePickerScreen onSelect={handleSelectsetDistance} />
             </Modal>
             <Modal visible={modalArrowVisible}>
-              {componentToArrow }
+              {renderModalContentArrow()}
             </Modal>
+            <Modal visible={modalBowVisible}>
+              {renderModalContentBow()}
+            </Modal>
+       
+            
     
             <Text style={styles.label} onPress={() => setModalDistanceVisible(true)}>Дистанция: {distance} м</Text> 
 
@@ -165,9 +179,10 @@ const TrainingFreeForm = ({navigation}) => {
                 value={rounds}
               />       
             </View>
-
-            <Text style={styles.label} onPress={handleArrowPress}>{selectedArrow}</Text>
-            <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text>
+            <Text style={styles.label} onPress={() => setModalArrowVisible(true) }>{selectedArrow}</Text>
+            <Text style={styles.label} onPress={() => setModalBowVisible(true) }>{selectedBow}</Text>
+           
+           {/** <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text> */}
             
             <View style={styles.label}>
               <Text  style={styles.labelEnvironment}>Окружение</Text>

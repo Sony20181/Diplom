@@ -1,4 +1,4 @@
-import { Text,View,Modal ,FlatList,TouchableOpacity, Image} from "react-native";
+import { Text,View,Modal ,FlatList,TouchableOpacity} from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from "react";
 
@@ -10,11 +10,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gStyle } from "../../styles/style";
 
 export default function Arrow({navigation}) {
-  const [selectedArrow, setSelectedArrow] = useState("Добавить стрелу")
+  const [modalArrowVisible, setModalArrowVisible] = useState(false);
   const dispatch = useDispatch();
   const arrows = useSelector(state => state.arrow.arrow)
   const handleArrowClick = (id) => {
     navigation.navigate('ArrowInfo', { arrowId: id });
+  };
+  const handleArrowPress = (value) => {
+    setModalArrowVisible(false)
   };
 
   return (
@@ -22,6 +25,9 @@ export default function Arrow({navigation}) {
     colors={['#0f0c29', '#302b63', '#24243e']}
     style={gStyle.container}
     >
+      <Modal  visible={modalArrowVisible}>
+          <ArrowForm onSelectArrow = {handleArrowPress}/>
+      </Modal>
      
       <FlatList data = {arrows} renderItem={({item} )=> (
       <TouchableOpacity style ={gStyle.item } onPress={() => handleArrowClick(item.id)}>
@@ -32,7 +38,7 @@ export default function Arrow({navigation}) {
       </TouchableOpacity>
        
     )}/>
-    <Ionicons name="add-circle" size={45} color="white" style ={gStyle.openButton } onPress={() => navigation.navigate('ArrowForm',{setSelectedArrow})} />
+    <Ionicons name="add-circle" size={45} color="white" style ={gStyle.openButton } onPress={() => setModalArrowVisible(true)} />
     </LinearGradient>
   );
 

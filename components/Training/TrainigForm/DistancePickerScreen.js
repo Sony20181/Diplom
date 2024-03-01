@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
 const DistancePickerScreen = ({ onSelect }) => {
+  console.log(onSelect)
   const [customDistance, setCustomDistance] = useState('');
   const distances = [10, 15, 18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 90];
 

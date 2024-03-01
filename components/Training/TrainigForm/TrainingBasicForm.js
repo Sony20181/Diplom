@@ -5,6 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+import TrainingArrow from './TrainigArrow';
+import ArrowForm from '../../Arrows/ArrowForm';
+import TrainingBow from './TrainingBow';
+import BowForm from '../../Bows/BowForm';
+import TrainingBowForm from './TrainingBowForm';
 
 import  { } from '../../Store/TrainingSlice'
 
@@ -34,7 +39,7 @@ export default function TrainingBasicForm({navigation}) {
          
       }
   };
-  const handleArrowPress = () => {
+  /*const handleArrowPress = () => {
     if (arrows[0]) {
       // Переход на страницу с выбранной стрелой
       navigation.navigate('TrainingArrow', {setSelectedArrow});
@@ -43,11 +48,11 @@ export default function TrainingBasicForm({navigation}) {
       navigation.navigate('ArrowForm',{setSelectedArrow});
       
     }
-  };
+  };*/
   const handleRoundPress = (value) => {
     setRounds(value);
   };
-  const handleBowPress = () => {
+ /* const handleBowPress = () => {
     if (bows[0]) {
       // Переход на страницу с выбранной стрелой
       navigation.navigate('TrainingBow', { setSelectedBow });
@@ -57,11 +62,37 @@ export default function TrainingBasicForm({navigation}) {
       navigation.navigate('BowForm',{setSelectedBow});
       
     }
-  };
+  };*/
   const handleMenuSelect = (menu) => {
     setSelectedMenu(menu);
     setIsModalVisible(false)
   };
+  const [modalArrowVisible, setModalArrowVisible] = useState(false);
+  const [modalBowVisible, setModalBowVisible] = useState(false);
+    
+    const handleArrowPress = (value) => {
+      setSelectedArrow(value)
+      setModalArrowVisible(false)
+    };
+    const renderModalContentArrow = () => {
+      if (selectedArrow != "добавить стрелу") {
+        return <TrainingArrow onSelectArrow={handleArrowPress} />;
+      } else {
+        return <ArrowForm onSelectArrow={handleArrowPress} />;
+      }
+    };
+
+    const handleBowPress = (value) => {
+      setSelectedBow(value)
+      setModalBowVisible(false)
+    };
+    const renderModalContentBow = () => {
+      if (selectedBow != "добавить лук") {
+        return <TrainingBow onSelectBow={handleBowPress} />;
+      } else {
+        return <TrainingBowForm onSelectBow={handleBowPress} />;
+      }
+    };
  
 
   return (
@@ -87,7 +118,12 @@ export default function TrainingBasicForm({navigation}) {
           </View>
         </View >
         <ScrollView style={styles.FormContent}>
-          
+          <Modal visible={modalArrowVisible}>
+            {renderModalContentArrow()}
+          </Modal>
+          <Modal visible={modalBowVisible}>
+            {renderModalContentBow()}
+          </Modal>
           <View style={styles.Target}>
             <Feather name="target" size={28} color="black" />
             <Text  style={styles.labelSelectedMenu} onPress={() => setIsModalVisible(true) }>{selectedMenu}</Text>
@@ -114,8 +150,8 @@ export default function TrainingBasicForm({navigation}) {
             </View>
           </Modal>
 
-          <Text style={styles.label} onPress={handleArrowPress}>{selectedArrow}</Text>
-          <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text>
+          <Text style={styles.label} onPress={() => setModalArrowVisible(true) }>{selectedArrow}</Text>
+            <Text style={styles.label} onPress={() => setModalBowVisible(true) }>{selectedBow}</Text>
 
           <View style={styles.labelRounds}> 
             <Text style={styles.labelRoundsText}>Количество раундов:  {rounds}</Text> 

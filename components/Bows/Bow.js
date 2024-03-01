@@ -13,10 +13,14 @@ export default function  Bow ({ navigation }) {
   const dispatch = useDispatch();
   const bows = useSelector(state => state.bows.bows)
   const [modalVisible, setModalVisible] = useState(false);
+  
+    
   const [animation] = useState(new Animated.Value(0));
   const [openButtonVisible, setOpenButtonVisible] = useState(true);
  
-
+  const handleBowPress = (value) => {
+    setModalBowVisible(false)
+  };
   const handleBowClick = (id) => {
     navigation.navigate('BowInfo', { bowId: id });
   };
@@ -103,6 +107,7 @@ export default function  Bow ({ navigation }) {
           )}
         </View>
        
+
       </Modal>
 
       <FlatList data = {bows} renderItem={({item} )=> (
