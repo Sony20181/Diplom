@@ -22,11 +22,13 @@ import BowForm from './components/Bows/BowForm';
 import BowInfo from './components/Bows/BowInfo';
 import TrainingBasicForm from './components/Training/TrainigForm/TrainingBasicForm';
 import TrainingFreeForm from './components/Training/TrainigForm/TrainingFreeForm';
-import TrainingInfo from './components/Training/TrainingInfo';
+import TrainingInfo from './components/Training/TrainingInformation/TrainingInfo';
 import DistancePickerScreen from './components/Training/TrainigForm/DistancePickerScreen';
 import TrainingArrow from './components/Training/TrainigForm/TrainigArrow';
 import TrainingBow from './components/Training/TrainigForm/TrainingBow';
 import TargetMenu from './components/Target/TragetMenu';
+import TrainingSeriesList from './components/Training/TrainingInformation/TrainingSeriesList';
+import TrainingPointsList from './components/Training/TrainingInformation/TrainingPointsList';
 
 function Feed({ navigation }) {
   return (
@@ -197,6 +199,12 @@ export default function MainNavigation() {
         }} 
         />
          <Stack.Screen name="ArrowForm" component={ArrowForm}
+        options={{ headerShown: false }}
+        />
+        <Stack.Screen name="TrainingSeriesList" component={TrainingSeriesList}
+        options={{ headerShown: false }}
+        />
+        <Stack.Screen name="TrainingPointsList" component={TrainingPointsList}
         options={{ headerShown: false }}
         />
         

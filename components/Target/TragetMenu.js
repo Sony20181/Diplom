@@ -152,6 +152,7 @@ const TargetMenu = ({ route , navigation}) => {
       if (currentRound == rounds){setCurrentRound(rounds); setStopRound(false)}
       else{setCurrentRound(currentRound+1);}
     }
+    console.log(allRounds)
   };
 
   const handlePrev = () => {
@@ -160,7 +161,7 @@ const TargetMenu = ({ route , navigation}) => {
     }
    
   };
-
+  
 
     return (
         <LinearGradient   
@@ -199,8 +200,10 @@ const TargetMenu = ({ route , navigation}) => {
             </View>
             <TouchableOpacity onPress={allPoints.length === countSeries ? handleNextRound : handleNextSeries}>
               <Text style={styles.Button1} >{allPoints.length === countSeries ? 'Следующий раунд' : 'Добавить'}</Text>
-             
+              
+              
             </TouchableOpacity>
+           
             
          {/**   <TouchableOpacity onPress={handlePrev}  >
               <Text  style={styles.Button1} >Предыдущая серия</Text>
