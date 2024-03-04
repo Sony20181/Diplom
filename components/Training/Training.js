@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gStyle } from "../../styles/style";
 
-import { View, Text, Modal, TouchableOpacity, StyleSheet, Animated, FlatList,Button } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, Animated, FlatList,Image } from 'react-native';
 
 
 
@@ -76,12 +76,13 @@ export default function Arrow({navigation}) {
           <Animated.View style={[gStyle.modalContent, { transform: [{ translateY }] }]}>
 
             <TouchableOpacity style={styles.modalButtonTraining} onPress={() => handleAddTrainingStandart()}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              
+              <Image source={require('../../assets/мишень стандартная.png')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Тренировка со стандартным рауном</Text>
              
             </TouchableOpacity>
             <TouchableOpacity style={styles.modalButtonTraining} onPress={() => handleAddTrainingFree()}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+            <Image source={require('../../assets/мишень свободная.png')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Свободная тренировка</Text>
             </TouchableOpacity>
           

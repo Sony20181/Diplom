@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity, Animated,FlatList ,Button} from 'react-native';
+import { View, Text, Modal, TouchableOpacity, Animated,FlatList ,Image} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from "react-redux";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -69,33 +69,33 @@ export default function  Bow ({ navigation }) {
         transparent={true}
         animationType="fade"
         onRequestClose={handleCloseModal}
-      >
+      > 
         <View style={gStyle.modalContainer}>
           <Animated.View style={[gStyle.modalContent, { transform: [{ translateY }] }]}>
 
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Азиатский традиционный лук")}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              <Image source={require('../../assets/азиатский лук.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Азиатский традиционный лук</Text>
              
             </TouchableOpacity>
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Короткий традиционный лук")}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              <Image source={require('../../assets/традиционный лук.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Короткий традиционный лук</Text>
             </TouchableOpacity>
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Длинный английский лук")}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              <Image source={require('../../assets/английский лук.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Длинный английский лук</Text>
             </TouchableOpacity>
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Классический лук без обвесов")}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              <Image source={require('../../assets/классический лук без обвесов.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Классический лук без обвесов</Text>
             </TouchableOpacity>
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Блочный лук")}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              <Image source={require('../../assets/блочный лук.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Блочный лук</Text>
             </TouchableOpacity>
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Спортивный классический лук")}>
-              <Ionicons name="close-circle" size={45} color="white"/>
+              <Image source={require('../../assets/спортивный лук.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Спортивный классический лук</Text>
             </TouchableOpacity>
 

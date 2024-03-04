@@ -17,6 +17,7 @@ const TrainingInfo = ({navigation,route}) => {
   const training = useSelector((state) => selectArrowById(state, trainingId));
   const dispatch = useDispatch();
   const [updatedName, setUpdatedName] = useState(training.trainingName || "");
+  const [showArrow, setShowArrow] = useState(true);
   
   const handleUpdateTraining = () => {
     const updatedTraining = {
@@ -26,7 +27,10 @@ const TrainingInfo = ({navigation,route}) => {
     dispatch(updateTraining(updatedTraining));
     navigation.navigate('Тренировки');
   };
-
+  if (training.selectedArrow == "добавить стрелу"){
+      setShowArrow(false)
+    console.log("jhghjg")
+  }
   /*let componentToRender = null;
     if (training.selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
@@ -39,18 +43,7 @@ const TrainingInfo = ({navigation,route}) => {
     console.log(training.allRounds)*/
     console.log("roundsToAdd", JSON.stringify(training.allRounds));
     console.log(training.allRounds.length)
-    const TotalScore = (round) => {
-      let total = 0;
-    
-      
-      round.allRounds.forEach(data => {
-          data.forEach(item => {
-            total += item.score;
-          });
-        });
-      return total
-    }
-    console.log()
+  
   return (
     <LinearGradient   
       //colors={['#a1ffce', '#ffffff']}
@@ -69,7 +62,7 @@ const TrainingInfo = ({navigation,route}) => {
         </View>
         
           <Text style={styles.Headertext}>Лук: {training.selectedBow}</Text>
-          <Text style={styles.Headertext}>Стрела: {training.selectedArrow}</Text>
+          <Text style={styles.Headertext}>Стрела:{ showArrow ? training.selectedArrow : training.selectedArrow } </Text>
           <Text style={styles.Headertext}>Дистаниция: {training.distance} м</Text>
           <Text style={styles.Headertext}>Вид мишени: {training.selectedMenu}</Text>
         </View>
@@ -80,10 +73,10 @@ const TrainingInfo = ({navigation,route}) => {
       </LinearGradient>
     <View >
       {training.allRounds.map((round, index) => (
-        <TouchableOpacity key={index} onPress={() => navigation.navigate('TrainingSeriesList', { round,trainingId })}>
+        <TouchableOpacity key={index} onPress={() => navigation.navigate('TrainingSeriesList', { round,trainingId, index })}>
           <View style={styles.roundContent}>
           <Text style={styles.roundText}>{`Раунд ${index + 1}`}</Text>
-          <Text >{TotalScore(round)}</Text>;
+         
           </View>
           
         </TouchableOpacity>

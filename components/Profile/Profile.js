@@ -82,9 +82,8 @@ const ProfileForm = () => {
         {profile.imageLoaded ? (
           <Image source={{ uri: profile.photo }} style={styles.image} />
         ) : (
-          <Image source={{
-            uri: 'https://sh-izhevskaya-r62.gosweb.gosuslugi.ru/netcat_files/9/67/Foto_7.jpg',
-          }} style={styles.image} />
+          <Image source={require('../../assets/икнонка человека.webp')} style={styles.image} />
+          
         )}
       </View>
       <View style={styles.containerIcon}>

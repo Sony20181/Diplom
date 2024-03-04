@@ -198,7 +198,7 @@ const TargetMenu = ({ route , navigation}) => {
               <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
               <Text>Очки по точкам: {points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
             </View>
-            <TouchableOpacity onPress={allPoints.length === countSeries ? handleNextRound : handleNextSeries}>
+            <TouchableOpacity onPress={allPoints.length === countSeries ? () =>handleNextRound() : () => handleNextSeries()}>
               <Text style={styles.Button1} >{allPoints.length === countSeries ? 'Следующий раунд' : 'Добавить'}</Text>
               
               
