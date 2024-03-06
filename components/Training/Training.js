@@ -14,7 +14,7 @@ export default function Arrow({navigation}) {
   const dispatch = useDispatch();
   const training = useSelector(state => state.trainings.trainings)
   
-  const handleArrowClick = (id) => {
+  const handleTrainingClick = (id) => {
     navigation.navigate('Информация о тренировке', { trainingId: id });
   };
 
@@ -77,12 +77,12 @@ export default function Arrow({navigation}) {
 
             <TouchableOpacity style={styles.modalButtonTraining} onPress={() => handleAddTrainingStandart()}>
               
-              <Image source={require('../../assets/мишень стандартная.png')} style={{width: 45, height: 45, marginRight:10}} />
+              <Image source={require('../../assets/icon.png')} style={{width: 40, height: 40, marginRight:10, borderRadius:100}} />
               <Text style={gStyle.buttonText}>Тренировка со стандартным рауном</Text>
              
             </TouchableOpacity>
             <TouchableOpacity style={styles.modalButtonTraining} onPress={() => handleAddTrainingFree()}>
-            <Image source={require('../../assets/мишень свободная.png')} style={{width: 45, height: 45, marginRight:10}} />
+            <Image source={require('../../assets/icon.png')} style={{width: 40, height: 40, marginRight:10, borderRadius:100}} />
               <Text style={gStyle.buttonText}>Свободная тренировка</Text>
             </TouchableOpacity>
           
@@ -98,7 +98,7 @@ export default function Arrow({navigation}) {
       </Modal>
      
       <FlatList data = {training} renderItem={({item} )=> (
-      <TouchableOpacity style ={gStyle.item } onPress={() => handleArrowClick(item.id)}>
+      <TouchableOpacity style ={gStyle.item } onPress={() => handleTrainingClick(item.id)}>
           <View style ={gStyle.content }>
             <Text style ={ gStyle.text} >{item.trainingName}</Text>
             <Text style ={gStyle.text} >{item.formattedDate}</Text>

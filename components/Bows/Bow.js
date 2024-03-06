@@ -95,7 +95,7 @@ export default function  Bow ({ navigation }) {
               <Text style={gStyle.buttonText}>Блочный лук</Text>
             </TouchableOpacity>
             <TouchableOpacity style={gStyle.modalButton} onPress={() => handleAddBowClick("Спортивный классический лук")}>
-              <Image source={require('../../assets/спортивный лук.jpg')} style={{width: 45, height: 45, marginRight:10}} />
+              <Image source={require('../../assets/sport bow.jpg')} style={{width: 45, height: 45, marginRight:10}} />
               <Text style={gStyle.buttonText}>Спортивный классический лук</Text>
             </TouchableOpacity>
 
@@ -106,8 +106,6 @@ export default function  Bow ({ navigation }) {
           </TouchableOpacity>
           )}
         </View>
-       
-
       </Modal>
 
       <FlatList data = {bows} renderItem={({item} )=> (

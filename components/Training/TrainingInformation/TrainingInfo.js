@@ -13,11 +13,11 @@ import WAFull from '../../Target/WAFull';
 
 const TrainingInfo = ({navigation,route}) => {
  
-  const { trainingId } = route.params;
+const { trainingId } = route.params;
   const training = useSelector((state) => selectArrowById(state, trainingId));
-  const dispatch = useDispatch();
+   const dispatch = useDispatch();
   const [updatedName, setUpdatedName] = useState(training.trainingName || "");
-  const [showArrow, setShowArrow] = useState(true);
+  
   
   const handleUpdateTraining = () => {
     const updatedTraining = {
@@ -27,10 +27,7 @@ const TrainingInfo = ({navigation,route}) => {
     dispatch(updateTraining(updatedTraining));
     navigation.navigate('Тренировки');
   };
-  if (training.selectedArrow == "добавить стрелу"){
-      setShowArrow(false)
-    console.log("jhghjg")
-  }
+ 
   /*let componentToRender = null;
     if (training.selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
@@ -43,6 +40,7 @@ const TrainingInfo = ({navigation,route}) => {
     console.log(training.allRounds)*/
     console.log("roundsToAdd", JSON.stringify(training.allRounds));
     console.log(training.allRounds.length)
+    
   
   return (
     <LinearGradient   
@@ -50,7 +48,7 @@ const TrainingInfo = ({navigation,route}) => {
       colors={['#0f0c29', '#302b63', '#24243e']}
       style ={styles.main }
     >
-      <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']}  style ={styles.headerTraining }>
+        <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']}  style ={styles.headerTraining }>
       <View style ={styles.Headercontent }>
                 <Ionicons name="close-sharp" size={24} color="white" onPress={() => navigation.navigate('Тренировки')}/>
       <View style={styles.Headercontainer}>        
@@ -62,7 +60,7 @@ const TrainingInfo = ({navigation,route}) => {
         </View>
         
           <Text style={styles.Headertext}>Лук: {training.selectedBow}</Text>
-          <Text style={styles.Headertext}>Стрела:{ showArrow ? training.selectedArrow : training.selectedArrow } </Text>
+          <Text style={styles.Headertext}>Стрела:{training.selectedArrow } </Text>
           <Text style={styles.Headertext}>Дистаниция: {training.distance} м</Text>
           <Text style={styles.Headertext}>Вид мишени: {training.selectedMenu}</Text>
         </View>
@@ -72,7 +70,7 @@ const TrainingInfo = ({navigation,route}) => {
       
       </LinearGradient>
     <View >
-      {training.allRounds.map((round, index) => (
+    {training.allRounds.map((round, index) => (
         <TouchableOpacity key={index} onPress={() => navigation.navigate('TrainingSeriesList', { round,trainingId, index })}>
           <View style={styles.roundContent}>
           <Text style={styles.roundText}>{`Раунд ${index + 1}`}</Text>
@@ -80,49 +78,9 @@ const TrainingInfo = ({navigation,route}) => {
           </View>
           
         </TouchableOpacity>
-      ))}
+      ))} 
     </View>
         
-
-    {/* <View style={styles.container}>
-         <TouchableWithoutFeedback>
-          <View style={styles.canvas}>
-           <Svg height="300" width="300">
-            <Circle cx="150" cy="150" r="150" fill="#08068c" style={{ borderColor: 'white', }} />
-            <Circle cx="150" cy="150" r="128" fill="#2d2b94" />
-            <Circle cx="150" cy="150" r="106" fill="#c22b3c" />
-            <Circle cx="150" cy="150" r="84" fill="#bf2133" />
-            <Circle cx="150" cy="150" r="62" fill="#fbff00" />
-            <Circle cx="150" cy="150" r="40" fill="#ecf013" />
-            <Circle cx="150" cy="150" r="18" fill="#fbff00" />
-            <Circle cx="150" cy="150" r="3" fill="#000" />
-            </Svg>
-            {componentToRender}
-            {training.allPoints.map((item, index) => (
-              <View key={index} >
-                {item.map((point, i) => (
-                  <View key={i} style={[styles.point, { left: point.x, top: point.y }]}/>
-                ))}
-              </View>
-            ))}
-            {training.points.map((point, index) => (
-              <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
-            ))} 
-            
-        
-          </View>
-         
-        </TouchableWithoutFeedback>
-
-       
-
-      </View>
-    
-      
-     <ScrollView style={styles.container}>
-        <Text>Очки: {training.points.reduce((acc, point) => acc + point.score, 0)}</Text>
-        <Text>Очки по точкам: {training.points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
-      </ScrollView> */}
      
       
     </LinearGradient>

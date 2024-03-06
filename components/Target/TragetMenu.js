@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WA6Ring from './WA6Ring';
 import WAFull from './WAFull';
 import { useEffect } from 'react';
-
+import {  getScoreStyle } from '../../hooks';
 
 const TargetMenu = ({ route , navigation}) => {
    
@@ -21,25 +21,6 @@ const TargetMenu = ({ route , navigation}) => {
     const [allPoints, setAllPoints] = useState([]);
     const [allRounds, setAllRounds] = useState([]);
 
-   /* const roundsToAdd = [
-      [
-        [{"score": 1, "x": 136.6666717529297, "y": 218.6666717529297}], 
-        [{"score": 1, "x": 143.3333282470703, "y": 215}]
-      ],
-      [
-        [{"score": 2, "x": 136.6666717529297, "y": 218.6666717529297}], 
-        [{"score": 2, "x": 143.3333282470703, "y": 215}]
-      ]
-    ];
-    
-    console.log("roundsToAdd", JSON.stringify(roundsToAdd));
-    
-    const firstRound = roundsToAdd[0];
-    const secondRound = roundsToAdd[1];
-    
-    console.log("First round:", JSON.stringify(firstRound));
-    console.log("Second round:", JSON.stringify(secondRound));*/
-
     let componentToRender = null;
     if (selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
@@ -48,8 +29,8 @@ const TargetMenu = ({ route , navigation}) => {
     } else if (selectedMenu === 'WA 5 колец') {
       componentToRender = <WAFull />;
     }
+    
     const addTrainigs = () => {
-           
             dispatch(addTraining({trainingName,points, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
               windDirection,weather,rounds,allRounds }))
               navigation.navigate('Тренировки')
@@ -82,8 +63,6 @@ const TargetMenu = ({ route , navigation}) => {
           } else {
             score= 0;
           }
-         // setPoints([...points, { x: locationX, y: locationY, score }]);
-          
         }
         else if (selectedMenu === 'WA Полный') {
           if (distanceFromCenter <= 5) {
@@ -152,27 +131,18 @@ const TargetMenu = ({ route , navigation}) => {
       if (currentRound == rounds){setCurrentRound(rounds); setStopRound(false)}
       else{setCurrentRound(currentRound+1);}
     }
-    console.log(allRounds)
   };
-
-  const handlePrev = () => {
-    if (currentSeria > 0) {
-      setcurrentSeria(currentSeria - 2);
-    }
-   
-  };
-  
 
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
             style ={styles.main }
         >
-          <View style ={styles.content }>
+         <View style ={styles.content }>
             <View style ={styles.contentTitle }>
                 <Ionicons name="close-sharp" size={24} color="black" onPress={() => navigation.navigate('Тренировки')}/>
                 <Text style = {styles.title}>{trainingName}</Text>
-                <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={addTrainigs} />    
+                <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={() => addTrainigs()} />    
             </View>
             <View style ={styles.contentTitle }>
                 <Text style = {styles.title}>Серия {currentSeria}/{countSeries}</Text>
@@ -182,7 +152,7 @@ const TargetMenu = ({ route , navigation}) => {
             
          
           </View>
-          <ScrollView>
+           <ScrollView>
           <MaterialCommunityIcons  style={styles.deleteButton} name="backspace-reverse-outline" size={35} color="black"  onPress={handleClearPoints} />
          
             <View style={styles.container2}>       
@@ -191,37 +161,42 @@ const TargetMenu = ({ route , navigation}) => {
                 {componentToRender}
                   {points.map((point, index) => (
                     <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
-                  ))}
+                  ))} 
                   
                 </View>
               </TouchableWithoutFeedback>
               <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
               <Text>Очки по точкам: {points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
+              {points.map((point, index) => (
+ 
+                <View  key={index} style={getScoreStyle(point.score)}>
+                  <Text style={{ color: '#000' }} >{point.score}</Text>
+                </View>
+                 
+                 
+               
+              ))}
             </View>
             <TouchableOpacity onPress={allPoints.length === countSeries ? () =>handleNextRound() : () => handleNextSeries()}>
               <Text style={styles.Button1} >{allPoints.length === countSeries ? 'Следующий раунд' : 'Добавить'}</Text>
-              
-              
             </TouchableOpacity>
-           
+
             
-         {/**   <TouchableOpacity onPress={handlePrev}  >
-              <Text  style={styles.Button1} >Предыдущая серия</Text>
-            </TouchableOpacity> */}
+           
        
     <View>
              
-      {allPoints[currentSeria-1] && allPoints[currentSeria-1].map((points, index) => (
+   {/**   {allPoints[currentSeria-1] && allPoints[currentSeria-1].map((points, index) => (
         <View key={index}>
           <Text>{`Score: ${points.score}`}</Text>
         </View>
-      ))}
+      ))}*/}
     </View>
     
    
      
             
-             </ScrollView>  
+             </ScrollView>   
        </LinearGradient>
    )
 };

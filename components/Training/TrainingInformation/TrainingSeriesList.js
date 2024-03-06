@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text,TouchableOpacity,StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+
+import { getScoreStyle } from '../../../hooks';
+
 const TrainingSeriesList = ({ route,navigation }) => {
   const { round,trainingId, index } = route.params;
 console.log(round)
@@ -23,7 +26,10 @@ console.log(round)
                     <View style ={styles.ScoreRow }>
                         <Text style ={styles.ScoreRowSeries } >{`Серия ${index + 1}: `}</Text>
                         {sublist.map((item, i) => (
-                            <Text key={i} style ={styles.ScoreRowSeriesItem }>{item.score}</Text>
+                          <View key={i} style={getScoreStyle(item.score)}>
+                            <Text  >{item.score}</Text>
+                          </View>
+                            
                         ))}
                     </View>
                 </TouchableOpacity>
