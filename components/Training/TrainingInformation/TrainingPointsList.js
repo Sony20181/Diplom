@@ -5,18 +5,23 @@ import WAFull from '../../Target/WAFull';
 import { useSelector } from 'react-redux';
 import { selectArrowById } from '../../Store/TrainingSlice';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getScoreStyle } from '../../../hooks';
 
 const TrainingPointsList = ({ route }) => {
     const { sublist,trainingId } = route.params;
     const training = useSelector((state) => selectArrowById(state, trainingId));
     console.log(sublist)
     let componentToRender = null;
+    let scoreStyleTraget = null;
     if (training.selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
+      scoreStyleTraget = 'WA Полный';
     } else if (training.selectedMenu === 'WA 6 колец') {
       componentToRender = <WA6Ring />;
+      scoreStyleTraget = 'WA 6 колец';
     } else if (training.selectedMenu === 'WA 5 колец') {
       componentToRender = <WAFull />;
+      scoreStyleTraget = 'WA 5 колец';
     }
     return (
         <LinearGradient   
@@ -32,9 +37,16 @@ const TrainingPointsList = ({ route }) => {
                         ))}
                     </View>
                 </TouchableWithoutFeedback>
+                <View style= {styles.PointRow}>
+                {sublist.map((point, index) => (
+                  <View  key={index} style={getScoreStyle(point.score, scoreStyleTraget)}>
+                    <Text>{point.score}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
-            <Text>Очки: {sublist.reduce((acc, point) => acc + point.score, 0)}</Text>
-            <Text>Очки по точкам: {sublist.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
+            
+            
         </LinearGradient>
   
     );
@@ -65,7 +77,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       position: 'relative',
     },
- 
+    PointRow:{
+      flexDirection: 'row',
+      alignItems: 'center',
+     
+    },
   
   });
   

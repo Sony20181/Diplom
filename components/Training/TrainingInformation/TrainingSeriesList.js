@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text,TouchableOpacity,StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
 import { getScoreStyle } from '../../../hooks';
 
 const TrainingSeriesList = ({ route,navigation }) => {
@@ -32,6 +31,7 @@ console.log(round)
                             
                         ))}
                     </View>
+                  
                 </TouchableOpacity>
             ))}
   

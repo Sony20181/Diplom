@@ -58,8 +58,15 @@ export default function Arrow({navigation}) {
     inputRange: [0, 1],
     outputRange: [200, 0],
   });
-
-
+  const getTotalScore = (mas) => {
+    return mas.reduce((total, round) => {
+        return total + round.reduce((roundTotal, shots) => {
+            return roundTotal + shots.reduce((shotTotal, shot) => {
+                return shotTotal + shot.score;
+            }, 0);
+        }, 0);
+    }, 0);
+}; 
 
   return (
     <LinearGradient   
@@ -100,8 +107,11 @@ export default function Arrow({navigation}) {
       <FlatList data = {training} renderItem={({item} )=> (
       <TouchableOpacity style ={gStyle.item } onPress={() => handleTrainingClick(item.id)}>
           <View style ={gStyle.content }>
-            <Text style ={ gStyle.text} >{item.trainingName}</Text>
-            <Text style ={gStyle.text} >{item.formattedDate}</Text>
+            <View style ={styles.TrainingInfo}>
+              <Text style ={ gStyle.text} >{item.trainingName}</Text>
+              <Text style ={gStyle.text} >{item.formattedDate}</Text>
+            </View>
+            <Text style ={gStyle.text}>{getTotalScore(item.allRounds)} / {training.rounds * training.countSeries * 30}</Text>
             <MaterialCommunityIcons name="delete-empty-outline" size={24} color="white"  onPress={()=> dispatch(removeTrainig(item.id))} />
           </View>
       </TouchableOpacity>
@@ -136,6 +146,9 @@ const styles = StyleSheet.create({
     alignItems:"center",
    
   },
+  TrainingInfo:{
+    flexDirection: 'column',
+  }
 });
 
  

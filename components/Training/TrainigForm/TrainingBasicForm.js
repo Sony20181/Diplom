@@ -28,6 +28,8 @@ export default function TrainingBasicForm({navigation}) {
   const [windSpeed, setWindSpeed] = useState("Нет");
   const [windDirection, setWindDirection] = useState("Нет");
   const [weather, setWeather] = useState("Солнечно");
+  let hours = new Date().getHours() ; 
+  let minute = new Date().getMinutes() ; 
   const [rounds, setRounds] = useState("1");
   const countSeries = 10;
 
@@ -35,7 +37,7 @@ export default function TrainingBasicForm({navigation}) {
   const addTrainigs = () => {
       if (name.trim().length){
           navigation.navigate('TargetMenu', {trainingName : name, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-            windDirection,weather,rounds,countSeries })
+            windDirection,weather,hours, minute, rounds,countSeries })
          
       }
   };
@@ -164,7 +166,7 @@ export default function TrainingBasicForm({navigation}) {
               </TouchableOpacity> 
             </View>
           </View>
-
+          <Text style={styles.label} >Время: {hours}:{minute}</Text>
           <View style={styles.label}>
             <Text  style={styles.labelEnvironment}>Окружение</Text>
             <Text  style={styles.labelText}>Погода</Text>

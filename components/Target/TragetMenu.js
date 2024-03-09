@@ -14,25 +14,31 @@ import {  getScoreStyle } from '../../hooks';
 const TargetMenu = ({ route , navigation}) => {
    
     const { trainingName, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-      windDirection,weather,rounds,countSeries  } = route.params;
+      windDirection,weather,hours, minute,rounds,countSeries  } = route.params;
 
     const dispatch = useDispatch();
     const [points, setPoints] = useState([]);
     const [allPoints, setAllPoints] = useState([]);
     const [allRounds, setAllRounds] = useState([]);
-
+    useEffect(() => {
+      console.log(allPoints)
+    }, [allPoints])
     let componentToRender = null;
+    let scoreStyleTraget = null;
     if (selectedMenu === 'WA Полный') {
       componentToRender = <WAFull />;
+      scoreStyleTraget = 'WA Полный';
     } else if (selectedMenu === 'WA 6 колец') {
       componentToRender = <WA6Ring />;
+      scoreStyleTraget = 'WA 6 колец';
     } else if (selectedMenu === 'WA 5 колец') {
       componentToRender = <WAFull />;
+      scoreStyleTraget = 'WA 5 колец';
     }
-    
+     
     const addTrainigs = () => {
             dispatch(addTraining({trainingName,points, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather,rounds,allRounds }))
+              windDirection,weather,hours, minute,rounds,allRounds,countSeries }))
               navigation.navigate('Тренировки')
             
     };
@@ -145,9 +151,26 @@ const TargetMenu = ({ route , navigation}) => {
                 <Ionicons name="checkmark-done-sharp" size={24} color="black" onPress={() => addTrainigs()} />    
             </View>
             <View style ={styles.contentTitle }>
+              <View style ={styles.AllScore}>
                 <Text style = {styles.title}>Серия {currentSeria}/{countSeries}</Text>
+                <Text style = {styles.title}>{points.reduce((acc, point) => acc + point.score, 0)} / 30 </Text>
+              </View>
+              <View style ={styles.AllScore}>
                 <Text style = {styles.title}>Раунд {currentRound} / {rounds} </Text>
+                <Text style = {styles.title}>
+                  {allPoints.reduce((acc, current) => {
+                        current.forEach((point) => {
+                          acc += point.score;
+                        });
+                    return acc; }, 0)}/ {30 * countSeries} </Text>
+                                 
+              </View>
+              <View style ={styles.AllScore}>
                 <Text style = {styles.title}>Среднее</Text>  
+                
+              </View>
+                
+              
             </View>
             
          
@@ -166,16 +189,15 @@ const TargetMenu = ({ route , navigation}) => {
                 </View>
               </TouchableWithoutFeedback>
               <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
-              <Text>Очки по точкам: {points.map((point, index) => (index === 0 ? '' : ', ') + point.score)}</Text>
-              {points.map((point, index) => (
- 
-                <View  key={index} style={getScoreStyle(point.score)}>
-                  <Text style={{ color: '#000' }} >{point.score}</Text>
-                </View>
-                 
-                 
-               
-              ))}
+             
+              <View style= {styles.PointRow}>
+                {points.map((point, index) => (
+                  <View  key={index} style={getScoreStyle(point.score, scoreStyleTraget)}>
+                    <Text>{point.score}</Text>
+                  </View>
+                ))}
+              </View>
+              
             </View>
             <TouchableOpacity onPress={allPoints.length === countSeries ? () =>handleNextRound() : () => handleNextSeries()}>
               <Text style={styles.Button1} >{allPoints.length === countSeries ? 'Следующий раунд' : 'Добавить'}</Text>
@@ -218,6 +240,7 @@ const styles = StyleSheet.create({
      },
      contentTitle:{
        paddingTop:10,
+       paddingHorizontal:5,
        flexDirection: "row",
        justifyContent:"space-between",
      },
@@ -253,44 +276,51 @@ const styles = StyleSheet.create({
        color:"#0c5733",
        fontSize:20,
    },
+   AllScore:{
+    flexDirection: 'column',
+    
+   },
 
 
 ////// new
-container2: {
- flex: 1,
- justifyContent: 'center',
- alignItems: 'center',
- 
-},
-canvas: {
- width: 300,
- height: 300,
-// backgroundColor: 'lightgray',
-//borderRadius: 150,
- alignItems: 'center',
+  container2: {
+  flex: 1,
   justifyContent: 'center',
-  position: 'relative',
-
-},
-point: {
- position: 'absolute',
- width: 4,
- height: 4,
- backgroundColor: 'pink',
- borderRadius: 2,
- 
-},
-deleteButton: {
-  padding: 10,
-  marginTop: 10,
+  alignItems: 'center',
   
-},
-Button1:{
-  fontSize:20,
-  color:"black",
-  padding: 10,
-  marginTop: 10,
-},
+  },
+  canvas: {
+    width: 300,
+    height: 300,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+
+  },
+  PointRow:{
+    flexDirection: 'row',
+    alignItems: 'center',
+   
+  },
+  point: {
+  position: 'absolute',
+  width: 4,
+  height: 4,
+  backgroundColor: 'pink',
+  borderRadius: 2,
+  
+  },
+  deleteButton: {
+    padding: 10,
+    marginTop: 10,
+    
+  },
+  Button1:{
+    fontSize:20,
+    color:"black",
+    padding: 10,
+    marginTop: 10,
+  },
 
  });
  

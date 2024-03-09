@@ -28,6 +28,8 @@ const TrainingFreeForm = ({navigation}) => {
     const [windSpeed, setWindSpeed] = useState("Нет");
     const [windDirection, setWindDirection] = useState("Нет");
     const [weather, setWeather] = useState("Солнечно");
+    let hours = new Date().getHours() ; 
+    let minute = new Date().getMinutes() ; 
     const [rounds, setRounds] = useState("1");
     const [countSeries, setcountSeries] = useState(1);
 
@@ -35,32 +37,11 @@ const TrainingFreeForm = ({navigation}) => {
     const addTrainigs = () => {
         if (name.trim().length){
             navigation.navigate('TargetMenu', {trainingName : name, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
-              windDirection,weather,rounds,countSeries })
+              windDirection,weather,hours, minute, rounds,countSeries })
            
         }
     };
  
-   /* const handleArrowPress = () => {
-      if (arrows[0]) {
-        // Переход на страницу с выбранной стрелой
-        navigation.navigate('TrainingArrow', {setSelectedArrow});
-      } else {
-        // Переход на форму для заполнения стрелы
-        navigation.navigate('ArrowForm',{setSelectedArrow});
-        
-      }
-    };
-    const handleBowPress = () => {
-      if (bows[0]) {
-        // Переход на страницу с выбранной стрелой
-        navigation.navigate('TrainingBow', { setSelectedBow });
-        setSelectedBow(selectedBow)
-      } else {
-        // Переход на форму для заполнения стрелы
-        navigation.navigate('BowForm',{setSelectedBow});
-        
-      }
-    };*/
     const handleMenuSelect = (menu) => {
       setSelectedMenu(menu);
       setIsModalVisible(false)
@@ -94,7 +75,6 @@ const TrainingFreeForm = ({navigation}) => {
       if (selectedBow != "добавить лук") {
         return <TrainingBow onSelectBow={handleBowPress} />;
       } else {
-        console.log("in")
         return <TrainingBowForm onSelectBow={handleBowPress} />;
         
       }
@@ -181,6 +161,7 @@ const TrainingFreeForm = ({navigation}) => {
             </View>
             <Text style={styles.label} onPress={() => setModalArrowVisible(true) }>{selectedArrow}</Text>
             <Text style={styles.label} onPress={() => setModalBowVisible(true) }>{selectedBow}</Text>
+            <Text style={styles.label} >Время: {hours}:{minute}</Text>
            
            {/** <Text style={styles.label} onPress={handleBowPress}>{selectedBow}</Text> */}
             

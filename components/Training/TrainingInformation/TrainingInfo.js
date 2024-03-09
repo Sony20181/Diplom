@@ -15,7 +15,7 @@ const TrainingInfo = ({navigation,route}) => {
  
 const { trainingId } = route.params;
   const training = useSelector((state) => selectArrowById(state, trainingId));
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [updatedName, setUpdatedName] = useState(training.trainingName || "");
   
   
@@ -40,8 +40,17 @@ const { trainingId } = route.params;
     console.log(training.allRounds)*/
     console.log("roundsToAdd", JSON.stringify(training.allRounds));
     console.log(training.allRounds.length)
-    
-  
+    const getTotalScore = (mas) => {
+      return mas.reduce((total, round) => {
+          return total + round.reduce((roundTotal, shots) => {
+              return roundTotal + shots.reduce((shotTotal, shot) => {
+                  return shotTotal + shot.score;
+              }, 0);
+          }, 0);
+      }, 0);
+  }; 
+  console.log(getTotalScore(training.allRounds));
+ 
   return (
     <LinearGradient   
       //colors={['#a1ffce', '#ffffff']}
@@ -51,14 +60,15 @@ const { trainingId } = route.params;
         <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']}  style ={styles.headerTraining }>
       <View style ={styles.Headercontent }>
                 <Ionicons name="close-sharp" size={24} color="white" onPress={() => navigation.navigate('Тренировки')}/>
-      <View style={styles.Headercontainer}>        
+      <View style={styles.Headercontainer}> 
+        <Text style={styles.HeaderTime}>{training.hours}: {training.minute}</Text>       
         <TextInput style={styles.HeaderinputText}  value={updatedName} onChangeText={setUpdatedName} />
+        <Text style={styles.HeaderWind}>Ветер</Text>
         <View style={styles.Headerrow}>
-          <Text style={styles.Headertext}>{training.windSpeed}</Text>
-          <Text style={styles.Headertext}>{training.windDirection}</Text>
-          <Text style={styles.Headertext}>{training.weather}</Text>
+          <Text style={styles.Headertext}>Скорость: {training.windSpeed} </Text>
+          <Text style={styles.Headertext}>Напрвление: {training.windDirection} </Text>
         </View>
-        
+          <Text style={styles.Headertext}>Погода: {training.weather}</Text>
           <Text style={styles.Headertext}>Лук: {training.selectedBow}</Text>
           <Text style={styles.Headertext}>Стрела:{training.selectedArrow } </Text>
           <Text style={styles.Headertext}>Дистаниция: {training.distance} м</Text>
@@ -74,7 +84,7 @@ const { trainingId } = route.params;
         <TouchableOpacity key={index} onPress={() => navigation.navigate('TrainingSeriesList', { round,trainingId, index })}>
           <View style={styles.roundContent}>
           <Text style={styles.roundText}>{`Раунд ${index + 1}`}</Text>
-         
+          <Text style={styles.roundText}>{round.flat().reduce((acc, item) => acc + item.score, 0)}/{training.countSeries * 30}</Text>
           </View>
           
         </TouchableOpacity>
@@ -123,7 +133,18 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     color:"white",
   },
-  
+  HeaderTime:{
+    fontSize: 16,
+    marginBottom: 5,
+    color:"white",
+    textAlign:"center",
+  },
+  HeaderWind:{
+    fontSize: 16,
+    marginBottom: 5,
+    color:"white",
+    textAlign:"center",
+  },
   Headercontent:{
     marginTop:30,
     paddingHorizontal:5,
