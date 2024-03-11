@@ -199,9 +199,11 @@ const TargetMenu = ({ route , navigation}) => {
               </View>
               
             </View>
-            <TouchableOpacity onPress={allPoints.length === countSeries ? () =>handleNextRound() : () => handleNextSeries()}>
-              <Text style={styles.Button1} >{allPoints.length === countSeries ? 'Следующий раунд' : 'Добавить'}</Text>
-            </TouchableOpacity>
+            <TouchableOpacity onPress={allPoints.length === currentSeria ? () => handleNextRound() : allRounds.length == currentRound ? () => addTrainigs() : () => handleNextSeries()}> 
+   <Text style={styles.Button1}>
+      {allPoints.length == currentSeria ? 'Следующий раунд' : allRounds.length == currentRound ? 'Завершить' : 'Добавить'}
+   </Text> 
+</TouchableOpacity>
 
             
            

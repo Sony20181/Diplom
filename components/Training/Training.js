@@ -10,7 +10,7 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet, Animated, FlatList,Ima
 
 
 
-export default function Arrow({navigation}) {
+export default function Training({navigation}) {
   const dispatch = useDispatch();
   const training = useSelector(state => state.trainings.trainings)
   
@@ -111,7 +111,7 @@ export default function Arrow({navigation}) {
               <Text style ={ gStyle.text} >{item.trainingName}</Text>
               <Text style ={gStyle.text} >{item.formattedDate}</Text>
             </View>
-            <Text style ={gStyle.text}>{getTotalScore(item.allRounds)} / {training.rounds * training.countSeries * 30}</Text>
+            <Text style ={gStyle.text}>{getTotalScore(item.allRounds)} / {item.rounds * item.countSeries * 30}</Text>
             <MaterialCommunityIcons name="delete-empty-outline" size={24} color="white"  onPress={()=> dispatch(removeTrainig(item.id))} />
           </View>
       </TouchableOpacity>

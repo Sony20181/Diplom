@@ -7,9 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { selectArrowById } from '../../Store/TrainingSlice';
 import { updateTraining } from '../../Store/TrainingSlice';
-import Svg, { Circle } from 'react-native-svg';
-import WA6Ring from '../../Target/WA6Ring';
-import WAFull from '../../Target/WAFull';
+import { AntDesign } from '@expo/vector-icons';
 
 const TrainingInfo = ({navigation,route}) => {
  
@@ -59,7 +57,14 @@ const { trainingId } = route.params;
     >
         <LinearGradient colors={['#0f0c29', '#302b63', '#24243e']}  style ={styles.headerTraining }>
       <View style ={styles.Headercontent }>
+               
                 <Ionicons name="close-sharp" size={24} color="white" onPress={() => navigation.navigate('Тренировки')}/>
+                <AntDesign name="filetext1" size={24} color="white" onPress={() => navigation.navigate('TrainingResult',{ trainingId })} />
+                <AntDesign name="linechart" size={24} color="white" />
+
+      
+        <Ionicons name="checkmark-done-sharp" size={24} color="white" onPress={handleUpdateTraining} />
+      </View>
       <View style={styles.Headercontainer}> 
         <Text style={styles.HeaderTime}>{training.hours}: {training.minute}</Text>       
         <TextInput style={styles.HeaderinputText}  value={updatedName} onChangeText={setUpdatedName} />
@@ -74,8 +79,6 @@ const { trainingId } = route.params;
           <Text style={styles.Headertext}>Дистаниция: {training.distance} м</Text>
           <Text style={styles.Headertext}>Вид мишени: {training.selectedMenu}</Text>
         </View>
-        <Ionicons name="checkmark-done-sharp" size={24} color="white" onPress={handleUpdateTraining} />
-      </View>
      
       
       </LinearGradient>
