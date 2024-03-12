@@ -60,7 +60,7 @@ const { trainingId } = route.params;
                
                 <Ionicons name="close-sharp" size={24} color="white" onPress={() => navigation.navigate('Тренировки')}/>
                 <AntDesign name="filetext1" size={24} color="white" onPress={() => navigation.navigate('TrainingResult',{ trainingId })} />
-                <AntDesign name="linechart" size={24} color="white" />
+                <AntDesign name="linechart" size={24} color="white" onPress={() => navigation.navigate('TrainingStatistic',{ trainingId })}/>
 
       
         <Ionicons name="checkmark-done-sharp" size={24} color="white" onPress={handleUpdateTraining} />

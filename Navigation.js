@@ -30,6 +30,7 @@ import TargetMenu from './components/Target/TragetMenu';
 import TrainingSeriesList from './components/Training/TrainingInformation/TrainingSeriesList';
 import TrainingPointsList from './components/Training/TrainingInformation/TrainingPointsList';
 import TrainingResult from './components/Training/TrainigResult';
+import TrainingStatistic from './components/Training/TrainigForm/TrainingStatistic';
 function Feed({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -212,6 +213,15 @@ export default function MainNavigation() {
           title: "TrainingArrow",
           headerStyle: { backgroundColor: "black", height: 80 },
           headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
+          headerTitleAlign: 'center',
+          headerTintColor: '#ffffff',
+        }} 
+        />
+        <Stack.Screen name="TrainingStatistic" component={TrainingStatistic}
+        options={{
+          title: "Статистика по тренировке",
+          headerStyle: { backgroundColor: "black", height: 80 },
+          headerTitleStyle: { fontWeight: "500", color: "white", fontSize:18  },
           headerTitleAlign: 'center',
           headerTintColor: '#ffffff',
         }} 

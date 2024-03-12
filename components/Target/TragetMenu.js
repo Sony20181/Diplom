@@ -166,7 +166,14 @@ const TargetMenu = ({ route , navigation}) => {
                                  
               </View>
               <View style ={styles.AllScore}>
-                <Text style = {styles.title}>Среднее</Text>  
+                <Text style = {styles.title}>Среднее </Text>  
+                <Text style = {styles.title}>
+                  {allPoints.reduce((acc, current) => {
+                        current.forEach((point) => {
+                          acc = (acc + point.score) / (30 * countSeries);
+                          //acc = Number(((acc + point.score) / (30 * countSeries)).toFixed(2));
+                        });
+                    return acc; }, 0)}</Text> 
                 
               </View>
                 
