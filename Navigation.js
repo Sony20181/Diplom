@@ -30,7 +30,7 @@ import TargetMenu from './components/Target/TragetMenu';
 import TrainingSeriesList from './components/Training/TrainingInformation/TrainingSeriesList';
 import TrainingPointsList from './components/Training/TrainingInformation/TrainingPointsList';
 import TrainingResult from './components/Training/TrainigResult';
-import TrainingStatistic from './components/Training/TrainigForm/TrainingStatistic';
+import TrainingStatistic from './components/Training/TrainingStatistic';
 function Feed({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

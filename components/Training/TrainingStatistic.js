@@ -2,23 +2,26 @@ import React from 'react';
 //import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, ScrollView,  TextInput,StyleSheet,TouchableOpacity,Image,TouchableWithoutFeedback } from 'react-native';
-import { selectArrowById } from '../../Store/TrainingSlice';
+import { selectArrowById } from '../Store/TrainingSlice';
 import { useSelector } from 'react-redux';
-import WA6Ring from '../../Target/WA6Ring';
-import WAFull from '../../Target/WAFull';
-import Svg, { G, Path, Text as SvgText } from 'react-native-svg';
-
+import WA6Ring from '../Target/WA6Ring';
+import WAFull from '../Target/WAFull';
+//import Svg, { G, Path, Text as SvgText } from 'react-native-svg';
+import PieChart from 'react-native-pie-chart'
+import { Circle, G, Text as SVGText } from 'react-native-svg';
+/*
 const data = [
-    { value: 30, color: '#FF6347' },
-    { value: 20, color: '#4682B4' },
-    { value: 50, color: '#7FFF00' },
+    { value: 30, color: 'red' },
+    { value: 20, color: 'green' },
+    { value: 50, color: 'blue' },
   ];
   
   const radius = 100;
   const strokeWidth = 30;
   const centerX = 150;
   const centerY = 150;
-
+*/
+import TrainingDiagramma from './TrainingDiagramma';
 const TrainingStatistic = ({ route }) => {
     const { trainingId } = route.params;
     const training = useSelector((state) => selectArrowById(state, trainingId));
@@ -37,15 +40,24 @@ const TrainingStatistic = ({ route }) => {
       componentToRender = <WAFull />;
       scoreStyleTraget = 'WA 5 колец';
     }
-/*
-    const scores = training.allRounds.flat().map(round => round.map(point => point.score));
-    const scoreCounts = scores.flat().reduce((acc, score) => {
-      acc[score] = (acc[score] || 0) + 1;
-      return acc;
-    }, {});
-  
-    const totalScores = Object.values(scoreCounts).reduce((acc, count) => acc + count, 0);*/
-    let cumulativePercent = 0;
+   // let cumulativePercent = 0;
+   const data = [
+    { color: 'red', count: 2, score: 7 },
+    { color: 'red', count: 1, score: 8 },
+    { color: 'yellow', count: 1, score: 9 },
+    { color: 'green', count: 2, score: 10 }
+  ];
+  const pieData = data.map(item => ({
+    value: item.count,
+    svg: { fill: item.color },
+    key: item.score
+  }));
+console.log(pieData)
+const chartData = data.map(item => ({ value: item.count, svg: { fill: item.color } }));
+console.log(chartData)
+const widthAndHeight = 250
+    const series = [123, 321, 123, 789, 537]
+    const sliceColor = ['#fbd203', '#ffb300', '#ff9100', '#ff6c00', '#ff3c00']
 
     return (
     <LinearGradient   
@@ -71,31 +83,10 @@ const TrainingStatistic = ({ route }) => {
                         
                         </View>
                     </TouchableWithoutFeedback>    
+            
             </View> 
-       {/**     <View style={{ alignItems: 'center', padding: 10 }}>
-                <Svg height="200" width="200">
-                        {Object.entries(scoreCounts).map(([score, count], index) => {
-                        const angle = (count / totalScores) * 360;
-                        const prevAngles = Object.values(scoreCounts).slice(0, index).reduce((acc, c) => acc + (c / totalScores) * 360, 0);
-                        return (
-                            <Circle
-                            key={score}
-                            cx="100"
-                            cy="100"
-                            r="80"
-                            fill="transparent"
-                            stroke="blue"
-                            strokeWidth="20"
-                            strokeDasharray={`${angle} ${360 - angle}`}
-                            strokeDashoffset={prevAngles}
-                            />
-                        );
-                        })}
-                        {Object.entries(scoreCounts).map(([score, count]) => (
-                        <Text key={score} style={styles.DiagramaScore} >{`${score}: ${count}`}</Text>
-                        ))}
-                </Svg>
-            </View> */}
+           
+ {/**
        <Svg height="300" width="300">
       {data.map((item, index) => {
         const { value, color } = item;
@@ -126,7 +117,38 @@ const TrainingStatistic = ({ route }) => {
           </G>
         );
       })}
-    </Svg>
+      </Svg> */}
+
+<View style={{ flex: 1 }}>
+       <PieChart
+        widthAndHeight={widthAndHeight}
+        series={series}
+        sliceColor={sliceColor}
+        coverRadius={0.45}
+        coverFill={'#FFF'}
+      >
+      {/**  <G>
+          {pieData.map((item, index) => (
+            <Circle
+              key={index}
+              cx={150}
+              cy={150}
+              r={80}
+            //  fill={item.svg.fill}
+            />
+          ))}
+        </G> */}
+      </PieChart>
+     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        {data.map((item, index) => (
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+            <View style={{ width: 10, height: 10, backgroundColor: item.color, marginRight: 5 }} />
+            <Text>{item.score}</Text>
+          </View>
+        ))}
+      </View> 
+    </View>
+  <TrainingDiagramma/>
 
         </ScrollView>
         

@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+//import { StyleSheet } from "react-native";
 import MainNavigation from "./Navigation";
 import store from "./components/Store/store";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import {persistor} from "./components/Store/store";
-
+import { StyleSheet, ScrollView, Text, View } from 'react-native'
+import PieChart from 'react-native-pie-chart'
 
 export default function App() {
   return (
@@ -16,6 +17,8 @@ export default function App() {
     </Provider>
       
   );
+  
+    
 }
 
 const styles = StyleSheet.create({
