@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text,StyleSheet,TouchableWithoutFeedback,TextInput, TouchableOpacity } from 'react-native';
 import WA6Ring from '../../Target/WA6Ring';
 import WAFull from '../../Target/WAFull';
+import WAVertival3_X from '../../Target/WAVertical3_X';
 import { useSelector } from 'react-redux';
 import { selectArrowById } from '../../Store/TrainingSlice';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,6 +15,9 @@ const TrainingPointsList = ({ navigation, route }) => {
     const { sublist,trainingId } = route.params;
     const training = useSelector((state) => selectArrowById(state, trainingId));
     console.log(sublist)
+    const canvasStyle = training.selectedMenu === 'WA вертикальный 3-х' 
+    ? { width: 400, height: 400 }
+    : { width: 300, height: 300 };
     let componentToRender = null;
     let scoreStyleTraget = null;
     if (training.selectedMenu === 'WA Полный') {
@@ -22,9 +26,9 @@ const TrainingPointsList = ({ navigation, route }) => {
     } else if (training.selectedMenu === 'WA 6 колец') {
       componentToRender = <WA6Ring />;
       scoreStyleTraget = 'WA 6 колец';
-    } else if (training.selectedMenu === 'WA 5 колец') {
-      componentToRender = <WAFull />;
-      scoreStyleTraget = 'WA 5 колец';
+    } else if (training.selectedMenu === 'WA вертикальный 3-х') {
+      componentToRender = <WAVertival3_X />;
+      scoreStyleTraget = 'WA вертикальный 3-х';
     }
  
     return (
@@ -39,7 +43,7 @@ const TrainingPointsList = ({ navigation, route }) => {
             
             <View style={styles.Target}>
                 <TouchableWithoutFeedback>
-                    <View style={styles.canvas}>
+                    <View style= {[styles.canvas, canvasStyle]}>
                         {componentToRender}
                         {sublist.map((point, index) => (
                             <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>

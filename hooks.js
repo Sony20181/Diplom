@@ -18,7 +18,7 @@
             return getScoreColorWAFull(score);
         case 'WA 6 колец':
             return getScoreColorWA6Ring(score);
-        case 'WA 5 колец':
+        case 'WA вертикальный 3-х':
             return getScoreColorWAFull(score);
         default:
             return getScoreColorWAFull(score);

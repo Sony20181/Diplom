@@ -20,7 +20,10 @@ class TrainingDiagramma extends Component {
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-       
+        <PieChart
+          style={{ height: 200, width: 200 }}
+          data={chartData}
+        />
         <Text x={100} y={100} textAnchor="middle">{data.reduce((acc, item) => acc + item.count, 0)}</Text>
       </View>
     );

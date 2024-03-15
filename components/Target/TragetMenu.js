@@ -8,6 +8,7 @@ import { addTraining} from '../Store/TrainingSlice';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WA6Ring from './WA6Ring';
 import WAFull from './WAFull';
+import WAVertival3_X from './WAVertical3_X';
 import { useEffect } from 'react';
 import {  getScoreStyle } from '../../hooks';
 
@@ -23,6 +24,10 @@ const TargetMenu = ({ route , navigation}) => {
     useEffect(() => {
       console.log(allPoints)
     }, [allPoints])
+    const canvasStyle = selectedMenu === 'WA вертикальный 3-х' 
+    ? { width: 400, height: 640 }
+    : { width: 300, height: 300 };
+
     let componentToRender = null;
     let scoreStyleTraget = null;
     if (selectedMenu === 'WA Полный') {
@@ -31,9 +36,9 @@ const TargetMenu = ({ route , navigation}) => {
     } else if (selectedMenu === 'WA 6 колец') {
       componentToRender = <WA6Ring />;
       scoreStyleTraget = 'WA 6 колец';
-    } else if (selectedMenu === 'WA 5 колец') {
-      componentToRender = <WAFull />;
-      scoreStyleTraget = 'WA 5 колец';
+    } else if (selectedMenu === 'WA вертикальный 3-х') {
+      componentToRender = <WAVertival3_X />;
+      scoreStyleTraget = 'WA вертикальный 3-х';
     }
      
     const addTrainigs = () => {
@@ -48,8 +53,9 @@ const TargetMenu = ({ route , navigation}) => {
       if (points.length < 3 && allPoints.length < countSeries && allRounds.length < rounds  ){
     
         let score = 0;
-        const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
+        //const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
         if (selectedMenu === 'WA 6 колец') {
+          const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
           if (distanceFromCenter <= 5) { // всмето 11 и 11 нужен крестик
             score= 11;
           } else if (distanceFromCenter > 5 && distanceFromCenter <= 18) {
@@ -71,6 +77,7 @@ const TargetMenu = ({ route , navigation}) => {
           }
         }
         else if (selectedMenu === 'WA Полный') {
+          const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
           if (distanceFromCenter <= 5) {
             score= 12;
           } else if (distanceFromCenter > 5 && distanceFromCenter <= 10) {
@@ -98,9 +105,30 @@ const TargetMenu = ({ route , navigation}) => {
           } else {
             score= 0;
           }
+        }
+          else if (selectedMenu === 'WA вертикальный 3-х') {
+          const distanceFromCenter = Math.sqrt(Math.pow(locationX - 200, 2) + Math.pow(locationY - 320, 2));
+          if (distanceFromCenter <= 5) {
+            score= 12;
+          } else if ( distanceFromCenter > 5 && distanceFromCenter <= 10) {
+            score= 10;
+          } else if ( distanceFromCenter > 10 && distanceFromCenter <= 25) {
+            score= 9;
+          } else if ( distanceFromCenter > 25 && distanceFromCenter <= 40) {
+            score= 8;
+          } else if ( distanceFromCenter > 55 && distanceFromCenter <= 70) {
+            score= 7;
+          } else if ( distanceFromCenter > 70 && distanceFromCenter <= 85) {
+            score= 6;
+          } else if ( distanceFromCenter > 85 && distanceFromCenter <= 100) {
+            score= 5;
+          } else {
+            score= 0;
+          }
 
          // setPoints([...points, { x: locationX, y: locationY, score }]);
         }
+        
     
         setPoints([...points, { x: locationX, y: locationY, score }]);
       }
@@ -187,7 +215,7 @@ const TargetMenu = ({ route , navigation}) => {
          
             <View style={styles.container2}>       
               <TouchableWithoutFeedback onPress={handlePress}>           
-                <View style={styles.canvas}>     
+                <View  style= {[styles.canvas, canvasStyle]}>     
                 {componentToRender}
                   {points.map((point, index) => (
                     <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
@@ -299,8 +327,9 @@ const styles = StyleSheet.create({
   
   },
   canvas: {
-    width: 300,
-    height: 300,
+   // width: 300,
+   // height: 300,
+  
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
