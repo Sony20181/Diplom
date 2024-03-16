@@ -1,70 +1,48 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity,StyleSheet,FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
-import { selectArrowById } from '../Store/TrainingSlice';
+import { selectTrainingById } from '../Store/TrainingSlice';
 import { PDFDocument, rgb } from 'react-native-pdf-lib';
-/*
+import { LinearGradient } from 'expo-linear-gradient';
+
+const data = [
+  { name: 'Мишень 1', type: 'Круглая', distance: '100 м' },
+  { name: 'Мишень 2', type: 'Прямоугольная', distance: '50 м' },
+  { name: 'Мишень 3', type: 'Звезда', distance: '200 м' },
+];
+
 const TrainingResult = ({ route }) => {
   const { trainingId } = route.params;
-  const trainingData = useSelector((state) => selectArrowById(state, trainingId));
- console.log(trainingData)
- const saveToPDF = async () => {
-    try {
-      const pdfDoc = await PDFDocument.create();
-  
-      const page = pdfDoc.addPages([400, 600]);
-      const { width, height } = page.getSize();
-  
-      page.drawText('Training Results', {
-        x: 50,
-        y: height - 50,
-        color: rgb(0, 0, 0),
-      });
-  
-      // Добавьте данные тренировки в PDF
-      page.drawText(`Score: ${trainingData.score}`, {
-        x: 50,
-        y: height - 100,
-        color: rgb(0, 0, 0),
-      });
-      page.drawText(`Date: ${trainingData.date}`, {
-        x: 50,
-        y: height - 150,
-        color: rgb(0, 0, 0),
-      });
-      // Добавьте остальные данные тренировки
-  
-      const pdfBytes = await pdfDoc.save();
-      
-      // Сохраните PDF на устройство
-      const pdfFilePath = `${FileSystem.cacheDirectory}/training_results.pdf`;
-      await FileSystem.writeAsStringAsync(pdfFilePath, pdfBytes, { encoding: FileSystem.EncodingType.Base64 });
-  
-      console.log('PDF saved to:', pdfFilePath);
-    } catch (error) {
-      console.error('Error saving PDF:', error);
-    }
-  };
-  return (
-    <View>
-      
-      <Text>Очки: {trainingData.trainingName}</Text>
-      <Text>Дата: {trainingData.formattedDate}</Text>
-      <Text>Лук: {trainingData.selectedBow}</Text>
-    
-      <Text>Раунд: {trainingData.rounds}</Text>
-      <Text>Вид мишени: {trainingData.selectedMenu}</Text>
-
-      
-      <TouchableOpacity onPress={saveToPDF}>
-        <Text>Сохранить в PDF</Text>
-      </TouchableOpacity>
+  const training = useSelector((state) => selectTrainingById(state, trainingId));
+  console.log(training.allRounds)
+  return(
+    <LinearGradient   
+      //colors={['#a1ffce', '#ffffff']}
+      colors={['#0f0c29', '#302b63', '#24243e']}
+      style ={styles.main }
+    >
+       <View>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ flex: 1 }}>{item.name}</Text>
+            <Text style={{ flex: 1 }}>{item.type}</Text>
+            <Text style={{ flex: 1 }}>{item.distance}</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
-  );
-};
 
-export default TrainingResult;*/
-const TrainingResult = ({ route }) => {
+    </LinearGradient>
+  );
     
 };
     export default TrainingResult;
+    
+const styles = StyleSheet.create({
+  main: {
+    flex: 1, 
+  },
+  })

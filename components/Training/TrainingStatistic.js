@@ -2,7 +2,7 @@ import React from 'react';
 //import { VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, ScrollView,  TextInput,StyleSheet,TouchableOpacity,Image,TouchableWithoutFeedback } from 'react-native';
-import { selectArrowById } from '../Store/TrainingSlice';
+import { selectTrainingById } from '../Store/TrainingSlice';
 import { useSelector } from 'react-redux';
 import WA6Ring from '../Target/WA6Ring';
 import WAFull from '../Target/WAFull';
@@ -24,7 +24,7 @@ const data = [
 import TrainingDiagramma from './TrainingDiagramma';
 const TrainingStatistic = ({ route }) => {
     const { trainingId } = route.params;
-    const training = useSelector((state) => selectArrowById(state, trainingId));
+    const training = useSelector((state) => selectTrainingById(state, trainingId));
     
     console.log("allRounds", JSON.stringify(training.allRounds));
 

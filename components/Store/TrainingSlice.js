@@ -28,7 +28,7 @@ const trainingSlice = createSlice({
 });
 
 export const { addTraining, updateTraining,removeTrainig } = trainingSlice.actions;
-export const selectArrowById = (state, id) => state.trainings.trainings.find((elem) => elem.id === id);
+export const selectTrainingById = (state, id) => state.trainings.trainings.find((elem) => elem.id === id);
 
 
 export default trainingSlice.reducer;

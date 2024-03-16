@@ -5,14 +5,15 @@ import { View, Text, ScrollView,  TextInput,StyleSheet,TouchableOpacity,Image,To
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { selectArrowById } from '../../Store/TrainingSlice';
+
+import { selectTrainingById } from '../../Store/TrainingSlice';
 import { updateTraining } from '../../Store/TrainingSlice';
 import { AntDesign } from '@expo/vector-icons';
 
 const TrainingInfo = ({navigation,route}) => {
  
 const { trainingId } = route.params;
-  const training = useSelector((state) => selectArrowById(state, trainingId));
+  const training = useSelector((state) => selectTrainingById(state, trainingId));
   const dispatch = useDispatch();
   const [updatedName, setUpdatedName] = useState(training.trainingName || "");
   

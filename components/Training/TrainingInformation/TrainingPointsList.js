@@ -4,7 +4,7 @@ import WA6Ring from '../../Target/WA6Ring';
 import WAFull from '../../Target/WAFull';
 import WAVertival3_X from '../../Target/WAVertical3_X';
 import { useSelector } from 'react-redux';
-import { selectArrowById } from '../../Store/TrainingSlice';
+import { selectTrainingById } from '../../Store/TrainingSlice';
 import { LinearGradient } from 'expo-linear-gradient';
 import { getScoreStyle } from '../../../hooks';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 
 const TrainingPointsList = ({ navigation, route }) => {
     const { sublist,trainingId } = route.params;
-    const training = useSelector((state) => selectArrowById(state, trainingId));
+    const training = useSelector((state) => selectTrainingById(state, trainingId));
     console.log(sublist)
     const canvasStyle = training.selectedMenu === 'WA вертикальный 3-х' 
     ? { width: 400, height: 400 }
