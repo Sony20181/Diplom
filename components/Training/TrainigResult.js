@@ -4,36 +4,65 @@ import { useSelector } from 'react-redux';
 import { selectTrainingById } from '../Store/TrainingSlice';
 import { PDFDocument, rgb } from 'react-native-pdf-lib';
 import { LinearGradient } from 'expo-linear-gradient';
+import { getTotalScore } from '../../hooks';
+import { getScoreStyle } from '../../hooks';
 
-const data = [
-  { name: 'Мишень 1', type: 'Круглая', distance: '100 м' },
-  { name: 'Мишень 2', type: 'Прямоугольная', distance: '50 м' },
-  { name: 'Мишень 3', type: 'Звезда', distance: '200 м' },
-];
+const calculateRoundScore = (round) => {
+  let roundScore = 0;
+  for (let series of round) {
+    for (let data of series) {
+      roundScore += data.score;
+    }
+  }
+  return roundScore;
+};
+
+
 
 const TrainingResult = ({ route }) => {
   const { trainingId } = route.params;
   const training = useSelector((state) => selectTrainingById(state, trainingId));
-  console.log(training.allRounds)
+  console.log("roundsToAdd", JSON.stringify(training.allRounds));
+ 
   return(
     <LinearGradient   
-      //colors={['#a1ffce', '#ffffff']}
       colors={['#0f0c29', '#302b63', '#24243e']}
       style ={styles.main }
     >
-       <View>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{ flex: 1 }}>{item.name}</Text>
-            <Text style={{ flex: 1 }}>{item.type}</Text>
-            <Text style={{ flex: 1 }}>{item.distance}</Text>
+      <Text style={styles.HeaderTrainingName}> {training.trainingName} {training.formattedDate} </Text>
+      <View style={styles.column}>
+      
+        <Text style={styles.HeaderTraininOption}> Лук: {training.selectedBow} </Text>
+        <Text style={styles.HeaderTraininOption}> Вид мишени: {training.selectedMenu} </Text>
+        <Text style={styles.HeaderTraininOption}> Очки: {getTotalScore(training.allRounds)} / {training.rounds * training.countSeries * 30}({getTotalScore(training.allRounds)/ (training.rounds * training.countSeries * 30) * 100 }%) </Text>
+        <Text style={styles.HeaderTraininOption}> Среднее: {getTotalScore(training.allRounds)/ (training.rounds * training.countSeries * 30) * 10 } </Text>
+      
+      </View>
+
+      <View style ={styles.Table }>
+      {training.allRounds.map((round, roundIndex) => (
+        <View key={roundIndex}>
+        
+         <Text style ={styles.TableRounds }>{`Раунд ${roundIndex + 1} ${calculateRoundScore(round)}`}</Text>
+          <Text style ={styles.TableSeriesName }>Серии</Text> 
+          <View style ={styles.TableSeries }>
+            {round.map((series, seriesIndex) => (
+              <View key={seriesIndex}   >
+                 <Text style ={styles.TableSeriesText } >{`${seriesIndex + 1} ( ${series.reduce((sum, data) => sum + data.score, 0)})`}</Text>
+                {series.map((data, dataIndex) => (
+                  <View style ={styles.TableSeriesPoint }>
+                    <Text key={dataIndex} style={getScoreStyle(data.score)}>{data.score}</Text>
+                  </View> 
+                  
+                ))}
+              
+              </View>
+            ))}
           </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </View>
+          
+        </View>
+      ))}
+  </View> 
 
     </LinearGradient>
   );
@@ -44,5 +73,55 @@ const TrainingResult = ({ route }) => {
 const styles = StyleSheet.create({
   main: {
     flex: 1, 
+    
+  },
+  column: {
+    alignItems: 'left',
+    marginHorizontal: 10,
+  
+  },
+  HeaderTrainingName:{
+    fontSize:20,
+    textAlign:"center",
+    color:"white",
+    paddingVertical:5,
+  },
+  HeaderTraininOption:{
+    fontSize:18,
+    color:"white",
+    paddingBottom:5,
+  },
+  Table:{
+    borderWidth: 1,
+    borderColor:"white",
+  },
+  TableRounds:{
+    color:"white",
+    borderWidth: 1,
+    borderColor:"white",
+  },
+  
+  
+  TableSeriesName:{
+    color:"white",
+    borderWidth: 1,
+    borderColor:"white",
+    textAlign:"center"
+  },
+  TableSeries:{
+    flexDirection:"row",
+    justifyContent:"left",
+    borderColor:"white",
+    textAlign:"center"
+  },
+  TableSeriesText:{
+    color:"white",
+    borderWidth: 1,
+    borderColor:"white",
+  },
+  TableSeriesPoint:{
+    borderWidth: 1,
+    borderColor:"white",
+  
   },
   })

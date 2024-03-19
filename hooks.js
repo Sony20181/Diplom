@@ -1,5 +1,14 @@
 
-  
+  // функция подсчета очков за тренировку
+export const getTotalScore = (mas) => {
+  return mas.reduce((total, round) => {
+      return total + round.reduce((roundTotal, shots) => {
+          return roundTotal + shots.reduce((shotTotal, shot) => {
+              return shotTotal + shot.score;
+          }, 0);
+      }, 0);
+  }, 0);
+};
   // Возвращаем стиль для круглого фона в зависимости от балла 
   export const getScoreStyle = (score, selectmenu) => ({ 
     backgroundColor: getScoreColor(score, selectmenu), 

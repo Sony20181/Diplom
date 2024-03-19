@@ -8,7 +8,7 @@ import { gStyle } from "../../styles/style";
 
 import { View, Text, Modal, TouchableOpacity, StyleSheet, Animated, FlatList,Image } from 'react-native';
 
-
+import { getTotalScore } from '../../hooks';
 
 export default function Training({navigation}) {
   const dispatch = useDispatch();
@@ -58,6 +58,7 @@ export default function Training({navigation}) {
     inputRange: [0, 1],
     outputRange: [200, 0],
   });
+  /*
   const getTotalScore = (mas) => {
     return mas.reduce((total, round) => {
         return total + round.reduce((roundTotal, shots) => {
@@ -66,7 +67,7 @@ export default function Training({navigation}) {
             }, 0);
         }, 0);
     }, 0);
-}; 
+}; */
 
   return (
     <LinearGradient   

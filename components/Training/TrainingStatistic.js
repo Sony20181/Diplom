@@ -120,14 +120,14 @@ const widthAndHeight = 250
       </Svg> */}
 
 <View style={{ flex: 1 }}>
-       <PieChart
+      {/**   <PieChart
         widthAndHeight={widthAndHeight}
         series={series}
         sliceColor={sliceColor}
         coverRadius={0.45}
         coverFill={'#FFF'}
       >
-      {/**  <G>
+      <G>
           {pieData.map((item, index) => (
             <Circle
               key={index}
@@ -137,8 +137,8 @@ const widthAndHeight = 250
             //  fill={item.svg.fill}
             />
           ))}
-        </G> */}
-      </PieChart>
+        </G> 
+      </PieChart>*/}
      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         {data.map((item, index) => (
           <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
@@ -148,7 +148,7 @@ const widthAndHeight = 250
         ))}
       </View> 
     </View>
-  <TrainingDiagramma/>
+  
 
         </ScrollView>
         
