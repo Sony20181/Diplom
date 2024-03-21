@@ -4,11 +4,12 @@ export const getTotalScore = (mas) => {
   return mas.reduce((total, round) => {
       return total + round.reduce((roundTotal, shots) => {
           return roundTotal + shots.reduce((shotTotal, shot) => {
-              return shotTotal + shot.score;
+              return shotTotal + (shot.score === "X" ? 10 : parseInt(shot.score, 10));
           }, 0);
       }, 0);
   }, 0);
 };
+
   // Возвращаем стиль для круглого фона в зависимости от балла 
   export const getScoreStyle = (score, selectmenu) => ({ 
     backgroundColor: getScoreColor(score, selectmenu), 
@@ -37,8 +38,7 @@ export const getTotalScore = (mas) => {
 
 export const getScoreColorWAFull = (score) => { 
   switch(score) { 
-    case 12: return '#2b2b2e';  
-    case 11: return '#2b2b2e';  
+    case "X": return '#FFFF00';  
     case 10: return '#FFFF00'; 
     case 9: return '#FFFF00';  
     case 8: return '#f00520';  
@@ -55,7 +55,7 @@ export const getScoreColorWAFull = (score) => {
 
 export const getScoreColorWA6Ring = (score) => {  
   switch(score) {  
-    case 11: return '#fbff00';   
+    case "X": return '#fbff00';   
     case 10: return '#ecf013';  
     case 9: return '#fbff00';   
     case 8: return '#bf2133';   

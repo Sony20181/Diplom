@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity,StyleSheet,FlatList } from 'react-native';
+import { View, Text, TouchableOpacity,StyleSheet,FlatList,ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { selectTrainingById } from '../Store/TrainingSlice';
 import { PDFDocument, rgb } from 'react-native-pdf-lib';
@@ -11,7 +11,7 @@ const calculateRoundScore = (round) => {
   let roundScore = 0;
   for (let series of round) {
     for (let data of series) {
-      roundScore += data.score;
+      roundScore += (data.score === "X" ? 10 : parseInt(data.score, 10));
     }
   }
   return roundScore;
@@ -34,35 +34,42 @@ const TrainingResult = ({ route }) => {
       
         <Text style={styles.HeaderTraininOption}> Лук: {training.selectedBow} </Text>
         <Text style={styles.HeaderTraininOption}> Вид мишени: {training.selectedMenu} </Text>
-        <Text style={styles.HeaderTraininOption}> Очки: {getTotalScore(training.allRounds)} / {training.rounds * training.countSeries * 30}({getTotalScore(training.allRounds)/ (training.rounds * training.countSeries * 30) * 100 }%) </Text>
-        <Text style={styles.HeaderTraininOption}> Среднее: {getTotalScore(training.allRounds)/ (training.rounds * training.countSeries * 30) * 10 } </Text>
+        <Text style={styles.HeaderTraininOption}> Очки: {getTotalScore(training.allRounds)} / {training.rounds * training.countSeries * 30}  ({(getTotalScore(training.allRounds)/ (training.rounds * training.countSeries * 30) * 100).toFixed(2) }%) </Text>
+        <Text style={styles.HeaderTraininOption}> Среднее: {(getTotalScore(training.allRounds)/ (training.rounds * training.countSeries * 30) * 10 ).toFixed(2)} </Text>
       
       </View>
 
-      <View style ={styles.Table }>
+      <ScrollView >
+        <View style ={styles.Table }>
+
+       
       {training.allRounds.map((round, roundIndex) => (
         <View key={roundIndex}>
-        
-         <Text style ={styles.TableRounds }>{`Раунд ${roundIndex + 1} ${calculateRoundScore(round)}`}</Text>
+          <View style ={styles.TableRoundsView }>
+          <Text style ={styles.TableRounds } >{`Раунд ${roundIndex + 1}`}</Text>
+          <Text style ={styles.TableRounds } >{`Итог: ${calculateRoundScore(round)}`}</Text>
+          </View>
+         
           <Text style ={styles.TableSeriesName }>Серии</Text> 
           <View style ={styles.TableSeries }>
             {round.map((series, seriesIndex) => (
-              <View key={seriesIndex}   >
-                 <Text style ={styles.TableSeriesText } >{`${seriesIndex + 1} ( ${series.reduce((sum, data) => sum + data.score, 0)})`}</Text>
+              <View key={seriesIndex} style ={styles.TableSeriesRow }   >
+                 <Text style ={styles.TableSeriesText } >{`${seriesIndex + 1}`}</Text>
                 {series.map((data, dataIndex) => (
-                  <View style ={styles.TableSeriesPoint }>
-                    <Text key={dataIndex} style={getScoreStyle(data.score)}>{data.score}</Text>
+                  <View  key={dataIndex} style ={styles.TableSeriesPoint }>
+                    <Text  style={[getScoreStyle(data.score),styles.TableSeriesPointText ]}>{data.score}</Text>
                   </View> 
                   
                 ))}
-              
+              <Text style ={styles.TableSeriesText } >{`Итог: ${series.reduce((sum, data) => sum + (data.score === "X" ? 10 : parseInt(data.score, 10)), 0)}`}</Text>
               </View>
             ))}
           </View>
           
         </View>
       ))}
-  </View> 
+       </View>
+  </ScrollView> 
 
     </LinearGradient>
   );
@@ -94,11 +101,20 @@ const styles = StyleSheet.create({
   Table:{
     borderWidth: 1,
     borderColor:"white",
+    margin:10,
+    
+  },
+  TableRoundsView:{
+    flexDirection:"row",
+    justifyContent:"space-between", 
+    borderWidth: 1,
+    borderColor:"white",
+    padding:10,
   },
   TableRounds:{
     color:"white",
-    borderWidth: 1,
-    borderColor:"white",
+    fontSize:19,
+   
   },
   
   
@@ -106,22 +122,35 @@ const styles = StyleSheet.create({
     color:"white",
     borderWidth: 1,
     borderColor:"white",
-    textAlign:"center"
+    textAlign:"center",
+    fontSize:18,
+    paddingVertical:5,
   },
   TableSeries:{
-    flexDirection:"row",
-    justifyContent:"left",
     borderColor:"white",
     textAlign:"center"
   },
+  TableSeriesRow:{
+    justifyContent:"space-between",
+    flexDirection:"row",
+    
+  },
   TableSeriesText:{
+    padding:10,
+    fontSize:18,
     color:"white",
     borderWidth: 1,
     borderColor:"white",
+    
   },
   TableSeriesPoint:{
     borderWidth: 1,
     borderColor:"white",
-  
+    textAlign:"center",
+    width:"21%",
+  },
+  TableSeriesPointText:{
+   
+    textAlign:"center"
   },
   })

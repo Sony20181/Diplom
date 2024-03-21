@@ -56,10 +56,10 @@ const TargetMenu = ({ route , navigation}) => {
         //const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
         if (selectedMenu === 'WA 6 колец') {
           const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
-          if (distanceFromCenter <= 5) { // всмето 11 и 11 нужен крестик
-            score= 11;
+          if (distanceFromCenter <= 5) {
+            score= "X";
           } else if (distanceFromCenter > 5 && distanceFromCenter <= 18) {
-            score= 11;
+            score= "X";
           } else if ( distanceFromCenter > 18 && distanceFromCenter <= 40) {
             score= 10;
           } else if ( distanceFromCenter > 40 && distanceFromCenter <= 62) {
@@ -79,9 +79,9 @@ const TargetMenu = ({ route , navigation}) => {
         else if (selectedMenu === 'WA Полный') {
           const distanceFromCenter = Math.sqrt(Math.pow(locationX - 150, 2) + Math.pow(locationY - 150, 2));
           if (distanceFromCenter <= 5) {
-            score= 12;
+            score= "X";
           } else if (distanceFromCenter > 5 && distanceFromCenter <= 10) {
-            score= 11;
+            score= "X";
           } else if ( distanceFromCenter > 10 && distanceFromCenter <= 24) {
             score= 10;
           } else if ( distanceFromCenter > 24 && distanceFromCenter <= 38) {
@@ -181,16 +181,27 @@ const TargetMenu = ({ route , navigation}) => {
             <View style ={styles.contentTitle }>
               <View style ={styles.AllScore}>
                 <Text style = {styles.title}>Серия {currentSeria}/{countSeries}</Text>
-                <Text style = {styles.title}>{points.reduce((acc, point) => acc + point.score, 0)} / 30 </Text>
+               
+                <Text  style = {styles.title}>
+                  {points.reduce((acc, point) => {
+                    if (point.score === "X") {
+                      return acc + 10;
+                    } else {
+                      return acc + parseInt(point.score, 10);
+                    }
+                  }, 0)} / 30
+                </Text>
               </View>
               <View style ={styles.AllScore}>
                 <Text style = {styles.title}>Раунд {currentRound} / {rounds} </Text>
-                <Text style = {styles.title}>
+                <Text style={styles.title}>
                   {allPoints.reduce((acc, current) => {
-                        current.forEach((point) => {
-                          acc += point.score;
-                        });
-                    return acc; }, 0)}/ {30 * countSeries} </Text>
+                    current.forEach((point) => {
+                      acc += point.score === "X" ? 10 : parseInt(point.score, 10);
+                    });
+                    return acc;
+                  }, 0)} / {30 * countSeries}
+                </Text>
                                  
               </View>
               <View style ={styles.AllScore}>
@@ -198,7 +209,7 @@ const TargetMenu = ({ route , navigation}) => {
                 <Text style = {styles.title}>
                   {allPoints.reduce((acc, current) => {
                         current.forEach((point) => {
-                          acc = (acc + point.score) / (30 * countSeries);
+                          acc = (acc + point.score === "X" ? 10 : parseInt(point.score, 10)) / (30 * countSeries);
                           //acc = Number(((acc + point.score) / (30 * countSeries)).toFixed(2));
                         });
                     return acc; }, 0)}</Text> 
@@ -223,7 +234,16 @@ const TargetMenu = ({ route , navigation}) => {
                   
                 </View>
               </TouchableWithoutFeedback>
-              <Text>Очки: {points.reduce((acc, point) => acc + point.score, 0)}</Text>
+              <Text>
+              Очки:{" "}
+              {points.reduce((acc, point) => {
+                if (point.score === "X") {
+                  return acc + 10;
+                } else {
+                  return acc + parseInt(point.score, 10);
+                }
+              }, 0)}
+            </Text>
              
               <View style= {styles.PointRow}>
                 {points.map((point, index) => (

@@ -88,7 +88,7 @@ const { trainingId } = route.params;
         <TouchableOpacity key={index} onPress={() => navigation.navigate('TrainingSeriesList', { round,trainingId, index })}>
           <View style={styles.roundContent}>
           <Text style={styles.roundText}>{`Раунд ${index + 1}`}</Text>
-          <Text style={styles.roundText}>{round.flat().reduce((acc, item) => acc + item.score, 0)}/{training.countSeries * 30}</Text>
+          <Text style={styles.roundText}>{round.flat().reduce((acc, item) => acc + (item.score === "X" ? 10 : parseInt(item.score, 10)), 0)}/{training.countSeries * 30}</Text>
           </View>
           
         </TouchableOpacity>

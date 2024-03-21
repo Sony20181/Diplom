@@ -68,6 +68,19 @@ export default function Training({navigation}) {
         }, 0);
     }, 0);
 }; */
+const allPoints1 = [
+  [{"score": 10, "x": 132.3333282470703, "y": 151.6666717529297}, {"score": 0, "x": 3.3333332538604736, "y": 1.3333333730697632}, {"score": 10, "x": 137.6666717529297, "y": 150}],
+  [{"score": "X", "x": 147.6666717529297, "y": 141.6666717529297}, {"score": 10, "x": 137, "y": 146.3333282470703}, {"score": "X", "x": 146, "y": 158}],
+  [{"score": "X", "x": 151.6666717529297, "y": 141.3333282470703}, {"score": 10, "x": 165, "y": 137.3333282470703}, {"score": 10, "x": 166, "y": 143}]
+];
+
+let totalScore = allPoints1.reduce((acc, series) => {
+  return acc + series.reduce((seriesTotal, point) => {
+    return seriesTotal + (point.score === "X" ? 10 : parseInt(point.score, 10));
+  }, 0);
+}, 0);
+
+console.log(totalScore);
 
   return (
     <LinearGradient   

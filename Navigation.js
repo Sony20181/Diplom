@@ -87,7 +87,7 @@ export default function MainNavigation() {
             name="Shooter" 
             component={Root}
             options={{
-              title: "Shooter",
+              title: "SHOOTER",
               headerStyle: { backgroundColor: "black", height:80 },
               headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
               headerTitleAlign: 'center',
