@@ -50,7 +50,7 @@ export default function Main({ navigation }) {
       style={gStyle.main} 
       
      >
-      <TouchableOpacity style={styles.MainOption}  onPress={() => navigation.navigate('Feed')}>
+      <TouchableOpacity style={styles.MainOption}  onPress={() => navigation.navigate('Статистика')}>
             <View style={styles.MainOptionBackIcon}>
             <Ionicons name="stats-chart-sharp" size={33} color="white" />
             </View>

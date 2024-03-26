@@ -31,18 +31,7 @@ import TrainingSeriesList from './components/Training/TrainingInformation/Traini
 import TrainingPointsList from './components/Training/TrainingInformation/TrainingPointsList';
 import TrainingResult from './components/Training/TrainigResult';
 import TrainingStatistic from './components/Training/TrainingStatistic';
-function Feed({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Feed Screen</Text>
-      <Button title="Go to Root" onPress={() => navigation.navigate('Shooter')} />
-      <Button
-        title="Go to Root, Profile"
-        onPress={() => navigation.navigate('Shooter', { screen: 'Тренировки' })}
-      />
-    </View>
-  );
-}
+
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -93,14 +82,6 @@ export default function MainNavigation() {
               headerTitleAlign: 'center',
             }} 
           />
-        <Stack.Screen name="Feed" component={Feed} 
-            options={{
-              title: "Feed",
-              headerStyle: { backgroundColor: "black", height: 80 },
-              headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
-              headerTitleAlign: 'center',
-              headerTintColor: '#ffffff',
-            }} />
         <Stack.Screen name="Главная" component={Main}
         options={{
           title: "Главная",
