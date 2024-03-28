@@ -66,3 +66,24 @@ export const getScoreColorWA6Ring = (score) => {
     default: return '#2b2b2e';   
   }  
 }; 
+
+
+export const calculateAveragePoints = (allRounds) => {
+  const countpoint = [];
+
+  allRounds.forEach((round) => {
+    count = 0
+    round.forEach((points) => {
+
+      points.forEach((point, index) => { 
+        
+         count  += (point.score === "X" ? 10 : parseInt(point.score, 10));
+        
+      }); 
+      countpoint.push((count / points.length).toFixed(2));
+      count = 0
+    });   
+  });
+
+  return countpoint;
+}

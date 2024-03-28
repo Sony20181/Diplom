@@ -54,7 +54,7 @@ export default function Main({ navigation }) {
             <View style={styles.MainOptionBackIcon}>
             <Ionicons name="stats-chart-sharp" size={33} color="white" />
             </View>
-            <Text style={styles.MainOptionText}>Статистика(feed)</Text>
+            <Text style={styles.MainOptionText}>Статистика</Text>
          </TouchableOpacity>
          <TouchableOpacity style={styles.MainOption}  onPress={() => navigation.navigate('Лук')}>
             <View style={styles.MainOptionBackIcon}>

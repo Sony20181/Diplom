@@ -12,6 +12,7 @@ import { Circle, G, Text as SVGText } from 'react-native-svg';
 
 import TrainingDiagramma from './TrainingDiagramma';
 import { TrainingGrafic } from './TrainingGrafic';
+import { calculateAveragePoints } from '../../hooks';
 
 const TrainingStatistic = ({ route }) => {
     const { trainingId } = route.params;
@@ -32,7 +33,7 @@ const TrainingStatistic = ({ route }) => {
       scoreStyleTraget = 'WA 5 колец';
     }
 
-    const calculateAveragePoints = (allRounds) => {
+   /* const calculateAveragePoints = (allRounds) => {
       const countpoint = [];
   
       allRounds.forEach((round) => {
@@ -44,15 +45,14 @@ const TrainingStatistic = ({ route }) => {
              count  += (point.score === "X" ? 10 : parseInt(point.score, 10));
             
           }); 
-         
-          console.log(count)
           countpoint.push((count / points.length).toFixed(2));
           count = 0
         });   
       });
   
       return countpoint;
-  }
+  }*/
+  console.log(training.allRounds)
    console.log(calculateAveragePoints(training.allRounds))
   data = calculateAveragePoints(training.allRounds)
     return (

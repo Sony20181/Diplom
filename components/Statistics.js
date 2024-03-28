@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import WA6Ring from "./Target/WA6Ring";
 import WAFull from "./Target/WAFull";
 import WAVertival3_X from "./Target/WAVertical3_X";
-
+import { calculateAveragePoints } from "../hooks";
+import { TrainingGrafic } from "./Training/TrainingGrafic";
 
 const getUniqueSelectedMenus = (trainings) => {
   const uniqueSelectedMenus = new Set();
@@ -26,18 +27,78 @@ const getUniquetime = (trainings) => {
   return Array.from(uniqueSelectedtime);
 }
 const getTimeInterval = (time) => {
-  console.log(time)
-  if (time = "Утро"){
-    return [5, 11]
-  }
-  else if (time = "День"){
-    return [12, 16]
-  }
- else if (time = " Вечер"){
-    return [17,23]
+  let numbers = [];
+
+  if (time === 'Утро') {
+    numbers = [5, 11];
+  } else if (time === 'День') {
+    numbers = [12, 16];
+  } else if (time === 'Вечер') {
+    numbers = [17, 23];
   }
 
+  return numbers;
+
 }
+
+const calculateAveragePoint = (allRounds) => {
+  const countpoint = []
+  allRounds.forEach(item => {
+    if (item.allRounds && item.allRounds.length > 0) {
+      countpoint.push(calculateAveragePoints(item.allRounds))
+    }
+  });
+
+ 
+  return countpoint.flat();
+}
+
+const filterDataByHours = (data, fromTime, toTime) => {
+  const filteredRounds = [];
+  data.forEach(item => {
+    if (item.hours >= fromTime && item.hours <= toTime) {
+      item.allRounds.forEach(round => {
+        filteredRounds.push(round);
+      });
+    }
+  });
+  
+  return filteredRounds;
+};
+const filterDataByHoursGrafic = (filteredRounds) => {
+ 
+  const countpoint = [];
+  
+  filteredRounds.forEach(object => {
+
+    object.forEach(round => {
+      count = 0; 
+      round.forEach((points) => {
+       count  += (points.score === "X" ? 10 : parseInt(points.score, 10));
+      }); 
+      countpoint.push((count / round.length).toFixed(2));
+      count = 0
+    });
+  });
+  return countpoint;
+};
+const filterDataByHoursTarget = (filteredRounds) => {
+ 
+  const countpoint = [];
+  
+  filteredRounds.forEach(object => {
+
+    object.forEach(round => {
+      count = 0; 
+      round.forEach((points) => {
+        countpoint.push(points)
+      }); 
+     
+    });
+  });
+  return countpoint;
+};
+
 
 export default function Statistics({navigation}) {
 
@@ -71,6 +132,7 @@ export default function Statistics({navigation}) {
     scoreStyleTraget = 'WA вертикальный 3-х';
   }
 
+
   const trainingTargetInfo = training.filter(item => item.selectedMenu === selectedTargetItem);
   const Uniquetime = getUniquetime(trainingTargetInfo);
   let allValues = [];
@@ -85,13 +147,13 @@ export default function Statistics({navigation}) {
       });
     }
   });
+  fromTime = getTimeInterval(selectedTimeItem)[0]
+  toTime = getTimeInterval(selectedTimeItem)[1]
+  const filterDataByHour = (filterDataByHours(trainingTargetInfo,fromTime,toTime))
+  const filterDataGrafic  = filterDataByHoursGrafic(filterDataByHour)
+  const filterDataTraget  = filterDataByHoursTarget(filterDataByHour)
   
- 
 
-console.log(Uniquetime)
-fromTime = getTimeInterval(selectedTimeItem)[0]
-toTime = getTimeInterval(selectedTimeItem)[1]
-console.log(fromTime,toTime)
   return (
    <LinearGradient
       colors={['#0f0c29', '#302b63', '#24243e']}
@@ -100,10 +162,13 @@ console.log(fromTime,toTime)
 
       <FlatList
         data={UniqueSelectedMenus}
+      
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleItemTargetPress(item)}>
+          <View style={styles.ContainerSelectedTimeItem}>
+          <TouchableOpacity onPress={() => handleItemTargetPress(item)} style={styles.SelectedTimeItem} >
             <Text>{item}</Text>
            </TouchableOpacity>
+           </View>
         )}
          keyExtractor={(item, index) => index.toString()}
       />
@@ -120,18 +185,35 @@ console.log(fromTime,toTime)
                         ))}
                     </View>
                 </TouchableWithoutFeedback>        
-      </View> 
+      </View>
+      <Text style={styles.NameTarget}>Средний результат одного выстрела за серию</Text> 
+      <TrainingGrafic data = {calculateAveragePoint(trainingTargetInfo)} />
       <Text style={styles.NameTarget}>{selectedTimeItem}</Text>
-      <TouchableOpacity onPress={() => handleItemTimePress("Утро")}>
+      
+      <View style={styles.ContainerSelectedTimeItem}>
+      <TouchableOpacity style={styles.SelectedTimeItem} onPress={() => handleItemTimePress("Утро")}>
         <Text>Утро</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleItemTimePress("День")}>
+      <TouchableOpacity style={styles.SelectedTimeItem} onPress={() => handleItemTimePress("День")}>
         <Text>День</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleItemTimePress("Вечер")}>
+      <TouchableOpacity style={styles.SelectedTimeItem} onPress={() => handleItemTimePress("Вечер")}>
         <Text>Вечер</Text>
       </TouchableOpacity>
       
+    </View>
+    <View style={styles.Target}>
+                <TouchableWithoutFeedback>
+                    <View style= {[styles.canvas, canvasStyle]}>
+                   
+                    {componentToRender}
+                        {filterDataTraget.map((point, index) => (
+                            <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
+                        ))}
+                    </View>
+                </TouchableWithoutFeedback>        
+      </View>
+    <TrainingGrafic data = {filterDataGrafic} />
       
     </ScrollView>
      
@@ -150,7 +232,7 @@ const styles = StyleSheet.create({
     fontSize:18,
     paddingTop:10,
     paddingBottom:10,
-    marginBottom:15,
+    marginVertical:15,
     backgroundColor:"#a1ffce",
 },
   Target: {
@@ -172,5 +254,16 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     position: 'absolute',
   },  
+  ContainerSelectedTimeItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  SelectedTimeItem: {
+    padding: 10 ,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+  },
  
 });
