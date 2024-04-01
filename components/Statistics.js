@@ -154,23 +154,16 @@ export default function Statistics({navigation}) {
   const filterDataGrafic  = filterDataByHoursGrafic(filterDataByHour)
   const filterDataTraget  = filterDataByHoursTarget(filterDataByHour)
   
- 
+  // для общей диаграммы
   const data = [] 
   trainingTargetInfo.forEach(item => {
     if (item.allRounds && item.allRounds.length > 0) {
-     
-      //console.log(item.allRounds)
       item.allRounds.forEach(round => {
         data.push(round)
-       /* round.forEach(series => {
-          series.forEach(point => {
-           allValues.push(point)
-          });
-        });*/
       });
     }
   });
-  console.log(data)
+
   return (
    <LinearGradient
       colors={['#0f0c29', '#302b63', '#24243e']}
