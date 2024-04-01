@@ -2,32 +2,44 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import PieChart from 'react-native-pie-chart'
 import { Text } from 'react-native-svg';
+import { Svg, Rect } from 'react-native-svg';
+import { getScoreColor, functionScoreCounts } from '../../hooks';
 
-const data = [
-  { color: 'red', count: 2, score: 7 },
-  { color: 'red', count: 1, score: 8 },
-  { color: 'yellow', count: 1, score: 9 },
-  { color: 'green', count: 2, score: 10 },
-];
 
-class TrainingDiagramma extends Component {
-  render() {
-    if (!data || data.length === 0) {
-      return null;
-    }
+const TrainingDiagramma = ({data, selectedMenu}) => {
 
-    const chartData = data.map(item => ({ value: item.count, svg: { fill: item.color } }));
-
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <PieChart
-          style={{ height: 200, width: 200 }}
-          data={chartData}
-        />
-        <Text x={100} y={100} textAnchor="middle">{data.reduce((acc, item) => acc + item.count, 0)}</Text>
-      </View>
-    );
-  }
-}
+ 
+  const  scoreCounts = functionScoreCounts(data,selectedMenu)
+  const barWidth = 30;
+  const chartHeight = 150;
+  
+  return (
+    <View style={{ flex: 1, padding: 10, justifyContent:"center", alignItems:"center" }}> 
+    <Svg height={chartHeight} width="100%" > 
+        {scoreCounts.map((item, index) => ( 
+            <React.Fragment key={index}>
+                <Rect 
+                    x={index * (barWidth + 5)} 
+                    y={chartHeight - item.value * 5} 
+                    width={barWidth} 
+                    height={item.value * 5} 
+                    fill={item.color} 
+                /> 
+                <Text 
+                    x={index * (barWidth + 5) + barWidth / 2} 
+                    y={chartHeight - item.value * 5 - 10} 
+                    fill="white" 
+                    fontSize="12" 
+                    textAnchor="middle"
+                >
+                    {item.label}
+                </Text>
+            </React.Fragment>
+        ))} 
+    </Svg> 
+</View> 
+  );
+    
+};
 
 export default TrainingDiagramma;

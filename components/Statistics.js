@@ -7,6 +7,7 @@ import WAFull from "./Target/WAFull";
 import WAVertival3_X from "./Target/WAVertical3_X";
 import { calculateAveragePoints } from "../hooks";
 import { TrainingGrafic } from "./Training/TrainingGrafic";
+import TrainingDiagramma from "./Training/TrainingDiagramma";
 
 const getUniqueSelectedMenus = (trainings) => {
   const uniqueSelectedMenus = new Set();
@@ -153,16 +154,33 @@ export default function Statistics({navigation}) {
   const filterDataGrafic  = filterDataByHoursGrafic(filterDataByHour)
   const filterDataTraget  = filterDataByHoursTarget(filterDataByHour)
   
-
+ 
+  const data = [] 
+  trainingTargetInfo.forEach(item => {
+    if (item.allRounds && item.allRounds.length > 0) {
+     
+      //console.log(item.allRounds)
+      item.allRounds.forEach(round => {
+        data.push(round)
+       /* round.forEach(series => {
+          series.forEach(point => {
+           allValues.push(point)
+          });
+        });*/
+      });
+    }
+  });
+  console.log(data)
   return (
    <LinearGradient
       colors={['#0f0c29', '#302b63', '#24243e']}
       style ={styles.main }
    >
 
-      <FlatList
-        data={UniqueSelectedMenus}
       
+    <ScrollView>
+    <FlatList
+        data={UniqueSelectedMenus}
         renderItem={({ item }) => (
           <View style={styles.ContainerSelectedTimeItem}>
           <TouchableOpacity onPress={() => handleItemTargetPress(item)} style={styles.SelectedTimeItem} >
@@ -172,8 +190,6 @@ export default function Statistics({navigation}) {
         )}
          keyExtractor={(item, index) => index.toString()}
       />
-    <ScrollView>
-    
       <Text style={styles.NameTarget}>{selectedTargetItem}</Text>
       <View style={styles.Target}>
                 <TouchableWithoutFeedback>
@@ -186,6 +202,8 @@ export default function Statistics({navigation}) {
                     </View>
                 </TouchableWithoutFeedback>        
       </View>
+      <Text style={styles.NameTarget}></Text> 
+      <TrainingDiagramma data = {data} selectedMenu = {UniqueSelectedMenus} />
       <Text style={styles.NameTarget}>Средний результат одного выстрела за серию</Text> 
       <TrainingGrafic data = {calculateAveragePoint(trainingTargetInfo)} />
       <Text style={styles.NameTarget}>{selectedTimeItem}</Text>

@@ -87,3 +87,28 @@ export const calculateAveragePoints = (allRounds) => {
 
   return countpoint;
 }
+
+export const functionScoreCounts = (mas,selectedMenu) => {
+  const scoreCounts = {};
+  mas.forEach(rounds => {
+    rounds.forEach(round => {
+      round.forEach(point => {
+        const score = point.score;
+        if (scoreCounts[score]) {
+          scoreCounts[score] += 1;
+        } else {
+          scoreCounts[score] = 1;
+        }
+      });
+    });
+  });
+  const result = Object.keys(scoreCounts).map(key => {
+  
+    return {
+      value: scoreCounts[key],
+      label: key,
+      color: getScoreColor(Number(key),selectedMenu)
+    };
+  });
+  return result;
+};

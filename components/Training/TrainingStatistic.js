@@ -6,9 +6,6 @@ import { selectTrainingById } from '../Store/TrainingSlice';
 import { useSelector } from 'react-redux';
 import WA6Ring from '../Target/WA6Ring';
 import WAFull from '../Target/WAFull';
-//import Svg, { G, Path, Text as SvgText } from 'react-native-svg';
-import PieChart from 'react-native-pie-chart'
-import { Circle, G, Text as SVGText } from 'react-native-svg';
 
 import TrainingDiagramma from './TrainingDiagramma';
 import { TrainingGrafic } from './TrainingGrafic';
@@ -18,7 +15,7 @@ const TrainingStatistic = ({ route }) => {
     const { trainingId } = route.params;
     const training = useSelector((state) => selectTrainingById(state, trainingId));
     
-    console.log("allRounds", JSON.stringify(training.allRounds));
+    console.log("allRoundssss", JSON.stringify(training.allRounds));
 
     let componentToRender = null;
     let scoreStyleTraget = null;
@@ -33,27 +30,8 @@ const TrainingStatistic = ({ route }) => {
       scoreStyleTraget = 'WA 5 колец';
     }
 
-   /* const calculateAveragePoints = (allRounds) => {
-      const countpoint = [];
-  
-      allRounds.forEach((round) => {
-        count = 0
-        round.forEach((points) => {
 
-          points.forEach((point, index) => { 
-            
-             count  += (point.score === "X" ? 10 : parseInt(point.score, 10));
-            
-          }); 
-          countpoint.push((count / points.length).toFixed(2));
-          count = 0
-        });   
-      });
-  
-      return countpoint;
-  }*/
-  console.log(training.allRounds)
-   console.log(calculateAveragePoints(training.allRounds))
+
   data = calculateAveragePoints(training.allRounds)
     return (
     <LinearGradient   
@@ -84,11 +62,7 @@ const TrainingStatistic = ({ route }) => {
                     </TouchableWithoutFeedback>    
             
             </View> 
-          
-          
-          
-        
-
+          <TrainingDiagramma data = {training.allRounds}  selectedMenu = {training.selectedMenu}/>
         </ScrollView>
         
     
