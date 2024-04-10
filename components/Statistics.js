@@ -163,7 +163,6 @@ export default function Statistics({navigation}) {
       });
     }
   });
-
   return (
    <LinearGradient
       colors={['#0f0c29', '#302b63', '#24243e']}
@@ -195,7 +194,7 @@ export default function Statistics({navigation}) {
                     </View>
                 </TouchableWithoutFeedback>        
       </View>
-      <Text style={styles.NameTarget}></Text> 
+      <Text style={styles.NameTarget}>Диграмма выстрелов</Text> 
       <TrainingDiagramma data = {data} selectedMenu = {UniqueSelectedMenus} />
       <Text style={styles.NameTarget}>Средний результат одного выстрела за серию</Text> 
       <TrainingGrafic data = {calculateAveragePoint(trainingTargetInfo)} />
@@ -225,7 +224,8 @@ export default function Statistics({navigation}) {
                 </TouchableWithoutFeedback>        
       </View>
     <TrainingGrafic data = {filterDataGrafic} />
-      
+    <Text style={styles.NameTarget}>Диграмма выстрелов : {selectedTimeItem}</Text> 
+      <TrainingDiagramma data = {filterDataByHour} selectedMenu = {UniqueSelectedMenus} />  
     </ScrollView>
      
     

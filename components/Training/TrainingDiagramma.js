@@ -8,13 +8,12 @@ import { getScoreColor, functionScoreCounts } from '../../hooks';
 
 const TrainingDiagramma = ({data, selectedMenu}) => {
 
- 
   const  scoreCounts = functionScoreCounts(data,selectedMenu)
   const barWidth = 30;
   const chartHeight = 150;
   
   return (
-    <View style={{ flex: 1, padding: 10, justifyContent:"center", alignItems:"center" }}> 
+    <View style={{ flex: 1, paddingHorizontal: "15%", paddingVertical:10}}> 
     <Svg height={chartHeight} width="100%" > 
         {scoreCounts.map((item, index) => ( 
             <React.Fragment key={index}>

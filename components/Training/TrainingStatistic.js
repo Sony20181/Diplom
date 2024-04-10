@@ -40,9 +40,9 @@ const TrainingStatistic = ({ route }) => {
     > 
         <ScrollView>
             <Text style={styles.NameTarget}>{training.selectedMenu}</Text>
-            <Text>График</Text>
+            <Text style={styles.TextGrafic} >Средний результат одного выстрела за серию</Text>
             <TrainingGrafic data = {data} />
-            
+            <Text style={styles.TextGrafic} >Общее количество попаданий</Text>
             <View style={styles.Target}>
                     <TouchableWithoutFeedback>
                         <View style={styles.canvas}>
@@ -62,6 +62,7 @@ const TrainingStatistic = ({ route }) => {
                     </TouchableWithoutFeedback>    
             
             </View> 
+            <Text style={styles.TextGrafic} >Диаграмма попаданий</Text>
           <TrainingDiagramma data = {training.allRounds}  selectedMenu = {training.selectedMenu}/>
         </ScrollView>
         
@@ -84,6 +85,15 @@ const TrainingStatistic = ({ route }) => {
             marginBottom:15,
             backgroundColor:"#a1ffce",
         },
+        TextGrafic:{
+          textAlign:"center",
+          fontSize:16,
+          paddingTop:10,
+          paddingBottom:10,
+          marginBottom:10,
+          color:"white",
+          backgroundColor:"#161930",
+      },
         Target: {
             justifyContent: 'center',
             alignItems: 'center',    
