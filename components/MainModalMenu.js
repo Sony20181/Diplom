@@ -3,7 +3,7 @@ import { Modal, View, TouchableOpacity, Text } from 'react-native';
 import { gStyle } from '../styles/style';
 import { Ionicons } from '@expo/vector-icons';
 
-const MainModalMenu = ({ visible, closeModal, goToMain, goToProfile,goToBow,goToWeather,goToNotes }) => {
+const MainModalMenu = ({ visible, closeModal, goToMain, goToProfile,goToBow,goToWeather,goToNotes,goToRules }) => {
   return (
     <Modal
         visible={visible}
@@ -28,6 +28,9 @@ const MainModalMenu = ({ visible, closeModal, goToMain, goToProfile,goToBow,goTo
 
                 <TouchableOpacity onPress={goToNotes} style={gStyle.modalNavButton}>
                     <Text style={gStyle.modalNavButtonText} >Заметки</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={goToRules} style={gStyle.modalNavButton}>
+                    <Text style={gStyle.modalNavButtonText} >Советы и правила</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={gStyle.modalNavButton} onPress={() => closeModal()}>

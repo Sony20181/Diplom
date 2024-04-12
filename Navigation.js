@@ -31,6 +31,7 @@ import TrainingSeriesList from './components/Training/TrainingInformation/Traini
 import TrainingPointsList from './components/Training/TrainingInformation/TrainingPointsList';
 import TrainingResult from './components/Training/TrainigResult';
 import TrainingStatistic from './components/Training/TrainingStatistic';
+import Rules from './components/Rules';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -207,6 +208,14 @@ export default function MainNavigation() {
           headerTintColor: '#ffffff',
         }} 
         />
+        <Stack.Screen name="Rules" component={Rules}
+        options={{
+          title: "Советы и правила",
+          headerStyle: { backgroundColor: "black", height: 80 },
+          headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
+          headerTitleAlign: 'center',
+          headerTintColor: '#ffffff',
+        }} />
         
       </Stack.Navigator>
     </NavigationContainer>

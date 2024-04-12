@@ -41,6 +41,10 @@ export default function Main({ navigation }) {
     navigation.navigate('Заметки')
     closeModal();
   };
+  const goToRules = () => {
+    navigation.navigate('Rules')
+    closeModal();
+  };
 
     return (
       <LinearGradient
@@ -83,6 +87,7 @@ export default function Main({ navigation }) {
         goToBow={goToBow}
         goToWeather={goToWeather}
         goToNotes={goToNotes}
+        goToRules={goToRules}
       />
       
       </LinearGradient>
