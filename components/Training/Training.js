@@ -8,7 +8,7 @@ import { gStyle } from "../../styles/style";
 
 import { View, Text, Modal, TouchableOpacity, StyleSheet, Animated, FlatList,Image } from 'react-native';
 
-import { getTotalScore } from '../../hooks';
+import { getTotalScore } from '../../hooks/hooks';
 
 export default function Training({navigation}) {
   const dispatch = useDispatch();

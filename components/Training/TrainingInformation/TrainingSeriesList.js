@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text,TouchableOpacity,StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getScoreStyle } from '../../../hooks';
+import { getScoreStyle } from '../../../hooks/hooks';
 
 const TrainingSeriesList = ({ route,navigation }) => {
   const { round,trainingId, index } = route.params;

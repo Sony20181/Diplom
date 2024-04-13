@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectTrainingById } from '../Store/TrainingSlice';
 import { PDFDocument, rgb } from 'react-native-pdf-lib';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getTotalScore } from '../../hooks';
-import { getScoreStyle } from '../../hooks';
+import { getTotalScore } from '../../hooks/hooks';
+import { getScoreStyle } from '../../hooks/hooks';
 
 const calculateRoundScore = (round) => {
   let roundScore = 0;

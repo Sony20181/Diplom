@@ -9,8 +9,8 @@ import WAFull from '../Target/WAFull';
 
 import TrainingDiagramma from './TrainingDiagramma';
 import { TrainingGrafic } from './TrainingGrafic';
-import { calculateAveragePoints } from '../../hooks';
 
+import { calculateAveragePoints } from '../../hooks/hooks';
 const TrainingStatistic = ({ route }) => {
     const { trainingId } = route.params;
     const training = useSelector((state) => selectTrainingById(state, trainingId));

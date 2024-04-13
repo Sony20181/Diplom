@@ -10,7 +10,7 @@ import WA6Ring from './WA6Ring';
 import WAFull from './WAFull';
 import WAVertival3_X from './WAVertical3_X';
 import { useEffect } from 'react';
-import {  getScoreStyle } from '../../hooks';
+import {  getScoreStyle } from '../../hooks/hooks';
 
 const TargetMenu = ({ route , navigation}) => {
    

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import WA6Ring from "./Target/WA6Ring";
 import WAFull from "./Target/WAFull";
 import WAVertival3_X from "./Target/WAVertical3_X";
-import { calculateAveragePoints } from "../hooks";
+import { calculateAveragePoints } from "../hooks/hooks";
 import { TrainingGrafic } from "./Training/TrainingGrafic";
 import TrainingDiagramma from "./Training/TrainingDiagramma";
 

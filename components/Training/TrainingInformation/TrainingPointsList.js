@@ -6,7 +6,7 @@ import WAVertival3_X from '../../Target/WAVertical3_X';
 import { useSelector } from 'react-redux';
 import { selectTrainingById } from '../../Store/TrainingSlice';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getScoreStyle } from '../../../hooks';
+import { getScoreStyle } from '../../../hooks/hooks';
 import { Ionicons } from '@expo/vector-icons';
 
 

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import PieChart from 'react-native-pie-chart'
 import { Text } from 'react-native-svg';
 import { Svg, Rect } from 'react-native-svg';
-import { getScoreColor, functionScoreCounts } from '../../hooks';
+import { getScoreColor, functionScoreCounts } from '../../hooks/hooks';
 
 
 const TrainingDiagramma = ({data, selectedMenu}) => {
