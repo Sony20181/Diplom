@@ -192,7 +192,7 @@ export default function MainNavigation() {
         />
         <Stack.Screen name="TrainingResult" component={TrainingResult}
         options={{
-          title: "TrainingArrow",
+          title: "Результаты",
           headerStyle: { backgroundColor: "black", height: 80 },
           headerTitleStyle: { fontWeight: "500", color: "white", fontSize:25  },
           headerTitleAlign: 'center',

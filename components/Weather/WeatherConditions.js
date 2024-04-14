@@ -85,7 +85,7 @@ export default function WeatherConditions({temp, condition,humidity,deg,gust, sp
             <View style ={styles.halfContainer}>
                 <Text style ={styles.Text}>{weatherOptions[condition].title}</Text>
                 <Text style ={styles.Text}>Влажность: {humidity}%</Text>
-                <Text style ={styles.Text}>Направление вестра: {windDirection} {deg}</Text>
+                <Text style ={styles.Text}>Направление вестра: {windDirection} </Text>
                 <Text style ={styles.Text}>Порыв ветра: {gust} м/с</Text>
                 <Text style ={styles.Text}>Скорость ветра: {speed} м/с</Text>
             </View>

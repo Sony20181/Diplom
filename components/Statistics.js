@@ -223,6 +223,7 @@ export default function Statistics({navigation}) {
                     </View>
                 </TouchableWithoutFeedback>        
       </View>
+      <Text style={styles.NameTarget}>График выстрелов</Text> 
     <TrainingGrafic data = {filterDataGrafic} />
     <Text style={styles.NameTarget}>Диграмма выстрелов : {selectedTimeItem}</Text> 
       <TrainingDiagramma data = {filterDataByHour} selectedMenu = {UniqueSelectedMenus} />  

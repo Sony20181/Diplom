@@ -209,7 +209,7 @@ const TargetMenu = ({ route , navigation}) => {
                 <Text style = {styles.title}>
                   {allPoints.reduce((acc, current) => {
                         current.forEach((point) => {
-                          acc = (acc + point.score === "X" ? 10 : parseInt(point.score, 10)) / (30 * countSeries);
+                          acc = (acc + point.score === "X" ? 10 : parseInt(point.score, 10)) / 10;
                           //acc = Number(((acc + point.score) / (30 * countSeries)).toFixed(2));
                         });
                     return acc; }, 0)}</Text> 
