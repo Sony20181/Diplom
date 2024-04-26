@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput,StyleSheet,TouchableOpacity,Image ,Text, ScrollView,TouchableWithoutFeedback, Button} from 'react-native';
+import { View, TextInput,StyleSheet,TouchableOpacity,Image ,Text, ScrollView,TouchableWithoutFeedback, Button,PanResponder } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,9 +11,11 @@ import WAFull from './WAFull';
 import WAVertival3_X from './WAVertical3_X';
 import { useEffect } from 'react';
 import {  getScoreStyle } from '../../hooks/hooks';
+import T3DIBO from './T3DIBO.js';
 
 const TargetMenu = ({ route , navigation}) => {
-   
+
+
     const { trainingName, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
       windDirection,weather,hours, minute,rounds,countSeries  } = route.params;
 
@@ -21,9 +23,7 @@ const TargetMenu = ({ route , navigation}) => {
     const [points, setPoints] = useState([]);
     const [allPoints, setAllPoints] = useState([]);
     const [allRounds, setAllRounds] = useState([]);
-    useEffect(() => {
-      console.log(allPoints)
-    }, [allPoints])
+   
     const canvasStyle = selectedMenu === 'WA вертикальный 3-х' 
     ? { width: 400, height: 640 }
     : { width: 300, height: 300 };
@@ -40,6 +40,10 @@ const TargetMenu = ({ route , navigation}) => {
       componentToRender = <WAVertival3_X />;
       scoreStyleTraget = 'WA вертикальный 3-х';
     }
+    else if (selectedMenu === '3DIBO') {
+    componentToRender = <T3DIBO />;
+    scoreStyleTraget = '3DIBO';
+  }
      
     const addTrainigs = () => {
             dispatch(addTraining({trainingName,points, formattedDate,distance,selectedArrow,selectedBow,selectedMenu,windSpeed,
@@ -128,9 +132,24 @@ const TargetMenu = ({ route , navigation}) => {
 
          // setPoints([...points, { x: locationX, y: locationY, score }]);
         }
+        else if (selectedMenu === '3DIBO') {
+          if (Math.sqrt((locationX - 150) ** 2 + (locationY - 150) ** 2) <= 150 && Math.sqrt((locationX - 160) ** 2 + (locationY - 170) ** 2) >= 115 ) {
+            score=5;
+          } else if (Math.sqrt((locationX - 165) ** 2 + (locationY - 165) ** 2) <= 115 && Math.sqrt((locationX - 160) ** 2 + (locationY - 170) ** 2) >= 80 ) {
+            score= 8;
+          } else if (Math.sqrt((locationX - 160) ** 2 + (locationY - 170) ** 2) <= 80 && Math.sqrt((locationX - 160) ** 2 + (locationY - 170) ** 2) >= 20) {
+            score= 9;
+          } else {
+            score= 10;
+          }
+        }
         
     
         setPoints([...points, { x: locationX, y: locationY, score }]);
+       // const adjustedLocationX = locationX / zoomLevel;
+      //  const adjustedLocationY = locationY / zoomLevel;
+
+       // setPoints([...points, { x: adjustedLocationX, y: adjustedLocationY, score }]);
       }
     };
    
@@ -166,6 +185,8 @@ const TargetMenu = ({ route , navigation}) => {
       else{setCurrentRound(currentRound+1);}
     }
   };
+
+ 
 
     return (
         <LinearGradient   
@@ -253,7 +274,8 @@ const TargetMenu = ({ route , navigation}) => {
                 ))}
               </View>
               
-            </View>
+            </View> 
+       
             <TouchableOpacity onPress={allPoints.length === currentSeria ? () => handleNextRound() : allRounds.length == currentRound ? () => addTrainigs() : () => handleNextSeries()}> 
    <Text style={styles.Button1}>
       {allPoints.length == currentSeria ? 'Следующий раунд' : allRounds.length == currentRound ? 'Завершить' : 'Добавить'}

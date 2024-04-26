@@ -135,6 +135,10 @@ const TrainingFreeForm = ({navigation}) => {
                     <Text style={styles.menuText}>WA вертикальный 3-х</Text>
                     <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
                   </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleMenuSelect('3DIBO')} style={styles.menuItem}>
+                  <Text style={styles.menuText}>3DIBO</Text>
+                  <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                </TouchableOpacity>
                 </View>
               </View>
             </Modal>

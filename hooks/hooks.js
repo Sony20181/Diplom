@@ -30,6 +30,8 @@ export const getTotalScore = (mas) => {
             return getScoreColorWA6Ring(score);
         case 'WA вертикальный 3-х':
             return getScoreColorWAFull(score);
+       case '3DIBO':
+            return getScoreColor3DIBO(score);
         default:
             return getScoreColorWAFull(score);
     }
@@ -63,6 +65,17 @@ export const getScoreColorWA6Ring = (score) => {
     case 6: return '#2d2b94';   
     case 5: return '#08068c';   
     
+    default: return '#2b2b2e';   
+  }  
+}; 
+
+export const getScoreColor3DIBO = (score) => {  
+  switch(score) {  
+   
+    case 10: return '#eb1515ec';  
+    case 9: return '#1c35b0ec';   
+    case 8: return '#c7b8adec';   
+    case 5: return '#401c03ec';    
     default: return '#2b2b2e';   
   }  
 }; 
