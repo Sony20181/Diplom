@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import WA6Ring from "./Target/WA6Ring";
 import WAFull from "./Target/WAFull";
 import WAVertival3_X from "./Target/WAVertical3_X";
+import T3DIBO from "./Target/T3DIBO";
 import { calculateAveragePoints } from "../hooks/hooks";
 import { TrainingGrafic } from "./Training/TrainingGrafic";
 import TrainingDiagramma from "./Training/TrainingDiagramma";
@@ -131,6 +132,9 @@ export default function Statistics({navigation}) {
   } else if (selectedTargetItem === 'WA вертикальный 3-х') {
     componentToRender = <WAVertival3_X />;
     scoreStyleTraget = 'WA вертикальный 3-х';
+  }else if (selectedTargetItem === '3DIBO') {
+    componentToRender = <T3DIBO />;
+    scoreStyleTraget = '3DIBO';
   }
 
 

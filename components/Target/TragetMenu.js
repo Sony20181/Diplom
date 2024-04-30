@@ -111,20 +111,23 @@ const TargetMenu = ({ route , navigation}) => {
           }
         }
           else if (selectedMenu === 'WA вертикальный 3-х') {
-          const distanceFromCenter = Math.sqrt(Math.pow(locationX - 200, 2) + Math.pow(locationY - 320, 2));
-          if (distanceFromCenter <= 5) {
+         const distanceFromCenter = Math.sqrt(Math.pow(locationX - 200, 2) + Math.pow(locationY - 100, 2));
+         const distanceFromCenter2 = Math.sqrt(Math.pow(locationX - 200, 2) + Math.pow(locationY - 310, 2));
+         const distanceFromCenter3 = Math.sqrt(Math.pow(locationX - 200, 2) + Math.pow(locationY - 520, 2));
+        
+         if (distanceFromCenter <= 5 || distanceFromCenter2 <= 5 || distanceFromCenter3 <= 5 ) {
             score= 12;
-          } else if ( distanceFromCenter > 5 && distanceFromCenter <= 10) {
+          } else if ( (distanceFromCenter > 5 && distanceFromCenter <= 10) || (distanceFromCenter2 > 5 && distanceFromCenter2 <= 10) ||  (distanceFromCenter3 > 5 && distanceFromCenter3 <= 10)) {
             score= 10;
-          } else if ( distanceFromCenter > 10 && distanceFromCenter <= 25) {
+          } else if ((distanceFromCenter > 10 && distanceFromCenter <= 25) || (distanceFromCenter2 > 10 && distanceFromCenter2 <= 25) || (distanceFromCenter3 > 10 && distanceFromCenter3 <= 25)) {
             score= 9;
-          } else if ( distanceFromCenter > 25 && distanceFromCenter <= 40) {
+          } else if ( (distanceFromCenter > 25 && distanceFromCenter <= 40) || (distanceFromCenter2 > 25 && distanceFromCenter2 <= 40) || (distanceFromCenter3 > 25 && distanceFromCenter3 <= 40) ) {
             score= 8;
-          } else if ( distanceFromCenter > 55 && distanceFromCenter <= 70) {
+          } else if ( (distanceFromCenter > 55 && distanceFromCenter <= 70) || (distanceFromCenter2 > 55 && distanceFromCenter2 <= 70) || (distanceFromCenter3 > 55 && distanceFromCenter3 <= 70) ) {
             score= 7;
-          } else if ( distanceFromCenter > 70 && distanceFromCenter <= 85) {
+          } else if ( (distanceFromCenter > 70 && distanceFromCenter <= 85) ||(distanceFromCenter2 > 70 && distanceFromCenter2 <= 85) || (distanceFromCenter3 > 70 && distanceFromCenter3 <= 85)) {
             score= 6;
-          } else if ( distanceFromCenter > 85 && distanceFromCenter <= 100) {
+          } else if ( (distanceFromCenter > 85 && distanceFromCenter <= 100) || (distanceFromCenter2 > 85 && distanceFromCenter2 <= 100) || (distanceFromCenter3 > 85 && distanceFromCenter3 <= 100) ) {
             score= 5;
           } else {
             score= 0;
