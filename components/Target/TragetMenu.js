@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput,StyleSheet,TouchableOpacity,Image ,Text, ScrollView,TouchableWithoutFeedback, Button,PanResponder } from 'react-native';
+import { View,StyleSheet,TouchableOpacity, Text, ScrollView,TouchableWithoutFeedback, PanResponder,Animated  } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -148,12 +148,25 @@ const TargetMenu = ({ route , navigation}) => {
         }
         
     
-        setPoints([...points, { x: locationX, y: locationY, score }]);
-       // const adjustedLocationX = locationX / zoomLevel;
-      //  const adjustedLocationY = locationY / zoomLevel;
-
-       // setPoints([...points, { x: adjustedLocationX, y: adjustedLocationY, score }]);
+       // setPoints([...points, { x: locationX , y: locationY, score }]);
+      
+      /* if(isPressed) {
+        setScale(1.19); // Увеличиваем масштаб при движении пальцем
+        setPoints([...points, { x: locationX  , y: locationY, score }]);
       }
+      else{
+        setPoints([...points, { x: locationX / scale, y: locationY / scale, score }]);
+      }*/
+      if (isPressed) {  
+        setPoints([...points, { x: locationX, y: locationY, score }]);  
+      } else {  
+        const scaledX = isWithinSelectedArea(locationX) ? (locationX - selectedAreaX) * selectedAreaScale + selectedAreaX : locationX / scale;  
+        const scaledY = isWithinSelectedArea(locationY) ? (locationY - selectedAreaY) * selectedAreaScale + selectedAreaY : locationY / scale;
+        
+        setPoints([...points, { x: scaledX, y: scaledY, score }]);  
+      }  
+      }
+     
     };
    
     const handleClearPoints = () => {
@@ -189,8 +202,49 @@ const TargetMenu = ({ route , navigation}) => {
     }
   };
 
- 
+ /*const [isPressed, setIsPressed] = useState(false);
+  const [scale, setScale] = useState(1);
 
+  const handlePressIn = () => {
+    setIsPressed(true);
+  };
+  
+  const handlePressOut = () => {
+    setIsPressed(false);
+    setScale(1); // Возвращаем к нормальному масштабу при отпускании
+  };*/
+  const isWithinSelectedArea = (x, y) => {
+    const x1 = selectedAreaX;
+    const y1 = selectedAreaY;
+    const x2 = selectedAreaX + selectedAreaWidth; // Предполагаем, что selectedAreaWidth и selectedAreaHeight - ширина и высота области
+    const y2 = selectedAreaY + selectedAreaHeight;
+  
+    return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+  };
+  
+  const [isPressed, setIsPressed] = useState(false);  
+  const [scale, setScale] = useState(1);  
+  const [selectedAreaScale, setSelectedAreaScale] = useState(1);  
+  const [selectedAreaX, setSelectedAreaX] = useState(0); // координаты левого верхнего угла области 
+  const [selectedAreaY, setSelectedAreaY] = useState(0);  
+    
+  const handlePressIn = (event) => {  
+    setIsPressed(true);
+  
+    // Устанавливаем координаты и масштаб выбранной области
+    setSelectedAreaX(event.nativeEvent.locationX);
+    setSelectedAreaY(event.nativeEvent.locationY);
+    setSelectedAreaScale(1.6);
+  };  
+      
+  const handlePressOut = () => {  
+    setIsPressed(false);  
+    setSelectedAreaScale(1);  
+  };  
+  
+  
+
+  
     return (
         <LinearGradient   
             colors={['#a1ffce', '#ffffff']}
@@ -245,20 +299,39 @@ const TargetMenu = ({ route , navigation}) => {
             
          
           </View>
-           <ScrollView>
+          
+          <ScrollView>
           <MaterialCommunityIcons  style={styles.deleteButton} name="backspace-reverse-outline" size={35} color="black"  onPress={handleClearPoints} />
          
-            <View style={styles.container2}>       
-              <TouchableWithoutFeedback onPress={handlePress}>           
-                <View  style= {[styles.canvas, canvasStyle]}>     
+           <View style={styles.container2}>       
+             {/**  <TouchableWithoutFeedback onPress={handlePress}>           
+                <View  style= {[styles.canvas, styles.canvasStyle]}>     
                 {componentToRender}
                   {points.map((point, index) => (
                     <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
                   ))} 
                   
-                </View>
-              </TouchableWithoutFeedback>
-              <Text>
+                </View> 
+              </TouchableWithoutFeedback> 
+              <TouchableWithoutFeedback onPressIn={handlePressIn} onPress={handlePress} onPressOut={handlePressOut}>
+              <View style={[{ transform: [{ scale: scale }] },styles.canvas, styles.canvasStyle ]}>
+                {componentToRender}
+                {points.map((point, index) => (
+                            <View key={index} style={[styles.point, { left: point.x, top: point.y }]}/>
+                          ))} 
+              </View>
+              </TouchableWithoutFeedback>*/}
+              <TouchableWithoutFeedback onPressIn={handlePressIn} onPress={handlePress} onPressOut={handlePressOut}>
+    <View style={[{ transform: [{ scale: selectedAreaScale }] }, styles.canvas, styles.canvasStyle ]}>
+      {componentToRender}  
+      {points.map((point, index) => (  
+        <View key={index} style={[styles.point, { left: point.x, top: point.y }]} />  
+      ))}   
+    </View>  
+  </TouchableWithoutFeedback>
+
+   
+              <Text style ={styles.PointText }>
               Очки:{" "}
               {points.reduce((acc, point) => {
                 if (point.score === "X") {
@@ -279,28 +352,13 @@ const TargetMenu = ({ route , navigation}) => {
               
             </View> 
        
-            <TouchableOpacity onPress={allPoints.length === currentSeria ? () => handleNextRound() : allRounds.length == currentRound ? () => addTrainigs() : () => handleNextSeries()}> 
-   <Text style={styles.Button1}>
-      {allPoints.length == currentSeria ? 'Следующий раунд' : allRounds.length == currentRound ? 'Завершить' : 'Добавить'}
-   </Text> 
-</TouchableOpacity>
-
-            
-           
-       
-    <View>
+              <TouchableOpacity onPress={allPoints.length === currentSeria ? () => handleNextRound() : allRounds.length == currentRound ? () => addTrainigs() : () => handleNextSeries()}> 
+                <Text style={styles.Button1}>
+                    {allPoints.length == currentSeria ? 'Следующий раунд' : allRounds.length == currentRound ? 'Завершить' : 'Добавить'}
+                </Text> 
+              </TouchableOpacity>
              
-   {/**   {allPoints[currentSeria-1] && allPoints[currentSeria-1].map((points, index) => (
-        <View key={index}>
-          <Text>{`Score: ${points.score}`}</Text>
-        </View>
-      ))}*/}
-    </View>
-    
-   
-     
-            
-             </ScrollView>   
+            </ScrollView>   
        </LinearGradient>
    )
 };
@@ -389,9 +447,12 @@ const styles = StyleSheet.create({
   position: 'absolute',
   width: 4,
   height: 4,
-  backgroundColor: 'pink',
+  backgroundColor: 'black',
   borderRadius: 2,
   
+  },
+  PointText:{
+    marginTop:50,
   },
   deleteButton: {
     padding: 10,
@@ -404,6 +465,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
   },
+ 
 
  });
  
