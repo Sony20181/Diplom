@@ -175,8 +175,22 @@ export default function Statistics({navigation}) {
 
       
     <ScrollView>
+    <View style={styles.container1}>
+  <View style={styles.yearContainer1}>
+   
+    <Text style={styles.yearText}>2024</Text>
+  </View>
+  <View style={styles.monthContainer1}>
+  <Text style={styles.monthText}>Апрель</Text>
+    <Text style={styles.monthText}>Март</Text>
+    <Text style={styles.monthText}>Апрель</Text>
+    <Text style={styles.monthText}>Май</Text>
+    
+  </View>
+</View>
     <FlatList
         data={UniqueSelectedMenus}
+        contentContainerStyle={styles.container11}
         renderItem={({ item }) => (
           <View style={styles.ContainerSelectedTimeItem}>
           <TouchableOpacity onPress={() => handleItemTargetPress(item)} style={styles.SelectedTimeItem} >
@@ -239,6 +253,63 @@ export default function Statistics({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  container11: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    
+  },
+  container1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  yearContainer1: {
+   /* backgroundColor: 'silver',
+   
+    padding: 10,
+    borderWidth: 2,
+    borderColor: 'blue',*/
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: 'rgba(0,0,0, 0.7)', 
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    borderRadius: 5, 
+    padding: 10,
+    borderWidth: 5,
+    borderColor: 'lightblue',
+    margin:5,
+  },
+  yearText: {
+
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    
+  },
+  monthContainer1: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    justifyContent: 'center', 
+    
+  },
+  monthText: {
+    backgroundColor: 'rgba(0,0,0, 0.7)', 
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    borderRadius: 5, 
+     padding: 10,
+    borderWidth: 5,
+    borderColor: 'lightblue',
+    
+   marginHorizontal:15,
+  
+  },
+
   main: {
     flex: 1,   
    
@@ -280,6 +351,7 @@ const styles = StyleSheet.create({
     padding: 10 ,
     backgroundColor: '#f0f0f0',
     borderRadius: 5,
+    marginHorizontal:15,
   },
  
 });

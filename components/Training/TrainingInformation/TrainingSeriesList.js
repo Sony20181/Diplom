@@ -79,6 +79,52 @@ const styles = StyleSheet.create({
     borderColor:"white",
     borderWidth:2,
   },
+
+
+  container1: { 
+    flex: 1, 
+    marginTop:30,
+    alignItems: 'center', 
+   // justifyContent: 'center', 
+  }, 
+ /* scrollContainer: { 
+    height:300, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+  }, */
+  card: { 
+    flex: 1, 
+    marginVertical: 4, 
+    marginHorizontal: 16, 
+    borderRadius: 5, 
+    overflow: 'hidden', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    backgroundColor: 'lightblue', 
+  }, 
+  textContainer: { 
+    backgroundColor: 'rgba(0,0,0, 0.7)', 
+    paddingHorizontal: 10, 
+    paddingVertical: 4, 
+    borderRadius: 5, 
+  }, 
+  infoText: { 
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+  }, 
+  normalDot: { 
+    height: 8, 
+    width: 8, 
+    borderRadius: 4, 
+    backgroundColor: 'silver', 
+    marginHorizontal: 4, 
+  },
+  /*indicatorContainer: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+  },  */
   
 });
 
